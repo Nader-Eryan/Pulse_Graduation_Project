@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pulse/Features/Onboarding/presentation/views/dummy.dart';
+import 'package:pulse/Features/Onboarding/presentation/views/onboarding_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -37,12 +37,12 @@ class _SplashViewState extends State<SplashView> {
                   'assets/images/splashGround.jpg',
                 ),
                 colorFilter: ColorFilter.mode(
-                    Colors.blue.withOpacity(0.2), BlendMode.colorBurn),
+                    Colors.blue.withOpacity(0.1), BlendMode.colorBurn),
               ),
             ),
             child: Center(
               child: AnimatedContainer(
-                duration: const Duration(seconds: 3),
+                duration: const Duration(milliseconds: 1200),
                 curve: Curves.fastOutSlowIn,
                 width: _logoWidth,
                 child: Image.asset(
@@ -51,7 +51,7 @@ class _SplashViewState extends State<SplashView> {
                   color: Colors.blue,
                 ),
                 onEnd: () {
-                  Get.off(() => const Dummy());
+                  Get.off(() => OnboardingView());
                 },
               ),
             ),
