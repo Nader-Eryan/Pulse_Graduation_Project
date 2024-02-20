@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "512388339994",
+    "project_id": "nabd-1fb50",
+    "storage_bucket": "nabd-1fb50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512388339994:android:741a694108738023ee74a3",
+        "android_client_info": {
+          "package_name": "com.example.pulse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByYe-oWjkxqd-oRsh2PRfevTmsKawDHBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
