@@ -11,16 +11,21 @@ class Onboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextButton(
-          onPressed: () {
-            Get.to(const HomeView());
-          },
-          child: const Text(
-            'Skip',
-            style: TextStyle(color: Color(0XFFA1A8B0)),
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextButton(
+              onPressed: () {
+                Get.to(const HomeView());
+              },
+              child: const Text(
+                'Skip',
+                style: TextStyle(color: Color(0XFFA1A8B0)),
+              ),
+            ),
+          ],
         ),
         const Spacer(
           flex: 2,
@@ -36,7 +41,7 @@ class Onboarding extends StatelessWidget {
         ),
         Text(
           text,
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.start,
           maxLines: 3,
           style: const TextStyle(
             fontSize: 20.0,
