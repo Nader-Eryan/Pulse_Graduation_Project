@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Features/Home/presentation/views/home_view.dart';
 
 class Onboarding extends StatelessWidget {
@@ -43,10 +44,7 @@ class Onboarding extends StatelessWidget {
           text,
           textAlign: TextAlign.start,
           maxLines: 3,
-          style: const TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Styles.textStyleBold22,
         ),
         const Spacer(
           flex: 3,
