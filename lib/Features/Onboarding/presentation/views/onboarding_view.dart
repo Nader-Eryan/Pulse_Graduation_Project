@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pulse/Features/Home/presentation/views/home_view.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 import 'package:pulse/Features/Onboarding/presentation/views/onboarding.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -55,7 +55,7 @@ class OnboardingView extends StatelessWidget {
                   ),
                   onPressed: () {
                     controller.page == 1
-                        ? Get.to(const HomeView())
+                        ? Get.offAll(const BottomAppBarViews())
                         : controller.nextPage(
                             duration: const Duration(milliseconds: 400),
                             curve: Curves.easeInOut,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pulse/Core/utils/styles.dart';
-import 'package:pulse/Features/Home/presentation/views/home_view.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 
 class Onboarding extends StatelessWidget {
   final String text;
@@ -19,7 +19,7 @@ class Onboarding extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () {
-                Get.to(const HomeView());
+                Get.offAll(const BottomAppBarViews());
               },
               child: const Text(
                 'Skip',
