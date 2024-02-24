@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/styles.dart';
-import 'package:pulse/Core/widgets/OutlinedButton_icon_login.dart';
 import 'package:pulse/Core/widgets/custom_appbar.dart';
 import 'package:pulse/Core/widgets/custom_materialbutton.dart';
 import 'package:pulse/Core/widgets/custom_text_form_field.dart';
 import 'package:pulse/Features/authentication/presentation/views/registration_view.dart';
+
+import '../../../../Core/widgets/outlined_button_icon_login.dart';
 
 class SignInView extends StatelessWidget {
   SignInView({super.key});
@@ -79,7 +80,7 @@ class SignInView extends StatelessWidget {
                       style: Styles.textStyleNormal14),
                   TextButton(
                     onPressed: () {
-                      Get.to(RegistrationView());
+                      Get.off(() => RegistrationView());
                     },
                     child: Text(
                       'Sign Up',

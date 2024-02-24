@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Core/widgets/custom_materialbutton.dart';
 import 'package:pulse/Core/widgets/custom_outlinedbutton.dart';
-import 'package:pulse/Features/authentication/presentation/views/Signin_view.dart';
+import 'package:pulse/Features/authentication/presentation/views/signin_view.dart';
 import 'package:pulse/Features/authentication/presentation/views/registration_view.dart';
 
 class AuthenticationView extends StatelessWidget {
@@ -39,7 +38,7 @@ class AuthenticationView extends StatelessWidget {
             CustomMaterialButton(
               screenRatio: 0.7,
               onPressed: () {
-                Get.to(() =>  SignInView());
+                Get.to(() => SignInView());
               },
               text: 'Login',
             ),

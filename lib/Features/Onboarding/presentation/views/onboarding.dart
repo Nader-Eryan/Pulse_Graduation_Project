@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pulse/Core/utils/styles.dart';
-import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 import 'package:pulse/Features/authentication/presentation/views/authentication_view.dart';
 
 class Onboarding extends StatelessWidget {
@@ -20,7 +19,7 @@ class Onboarding extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () {
-                Get.offAll(const AuthenticationView());
+                Get.offAll(() => const AuthenticationView());
               },
               child: const Text(
                 'Skip',

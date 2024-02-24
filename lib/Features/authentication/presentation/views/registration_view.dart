@@ -6,8 +6,8 @@ import 'package:pulse/Core/widgets/agreement_checkbox.dart';
 import 'package:pulse/Core/widgets/custom_appbar.dart';
 import 'package:pulse/Core/widgets/custom_materialbutton.dart';
 import 'package:pulse/Core/widgets/custom_text_form_field.dart';
-import 'package:pulse/Features/authentication/presentation/views/Signin_view.dart';
-import 'package:pulse/Features/authentication/presentation/views/authentication_view.dart';
+import 'package:pulse/Features/authentication/data/repo/auth_repo_impl.dart';
+import 'package:pulse/Features/authentication/presentation/views/signin_view.dart';
 
 class RegistrationView extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -19,6 +19,7 @@ class RegistrationView extends StatelessWidget {
       RegExp(r'''^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$''');
   final passwordRegex =
       r'''^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$''';
+  final _profileReop = ProfileRepoImpl();
   RegistrationView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -111,7 +112,8 @@ class RegistrationView extends StatelessWidget {
                   text: 'Sign Up',
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      Get.to(const AuthenticationView());
+                      _profileReop.registerUser(context, emailController.text,
+                          passwordController.text);
                     }
                   },
                 ),
@@ -122,7 +124,7 @@ class RegistrationView extends StatelessWidget {
                         style: Styles.textStyleNormal14),
                     TextButton(
                       onPressed: () {
-                        Get.to(SignInView());
+                        Get.off(() => SignInView());
                       },
                       child: Text(
                         'Sign In',
