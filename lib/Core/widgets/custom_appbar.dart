@@ -11,6 +11,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: true,
       leading: IconButton(
+        padding: const EdgeInsets.all(22),
         icon: const Icon(Icons.arrow_back_ios, size: 25, color: Colors.black),
         onPressed: () {
           Get.back();
