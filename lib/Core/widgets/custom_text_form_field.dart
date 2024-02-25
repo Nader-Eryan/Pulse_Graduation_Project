@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 
 class CustomFormField extends StatefulWidget {
   final bool isSuffixIcon;
@@ -28,29 +27,19 @@ class CustomFormField extends StatefulWidget {
 
 class _CustomFormFieldState extends State<CustomFormField> {
   bool _obscureText = true;
-
+  String? _selectedGender;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity * 0.9,
       child: TextFormField(
+        readOnly: widget.isSuffixIcon && !widget.isPassWord,
         keyboardType:
             widget.isPassWord ? TextInputType.text : TextInputType.emailAddress,
         validator: widget.validator,
         controller: widget.controller,
         style: const TextStyle(color: Colors.black),
         obscureText: widget.isPassWord ? _obscureText : false,
-        // inputFormatters: widget.hintText.contains('email')
-        //     ? [
-        //         FilteringTextInputFormatter.allow(RegExp(
-        //             r'''^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'''))
-        //       ]
-        //     : widget.hintText.contains('password')
-        //         ? [
-        //             FilteringTextInputFormatter.allow(RegExp(
-        //                 r'''^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$'''))
-        //           ]
-        //         : [FilteringTextInputFormatter.allow(RegExp('[^a-zA-Z]'))],
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(23.0),
           enabledBorder: const OutlineInputBorder(
@@ -79,7 +68,31 @@ class _CustomFormFieldState extends State<CustomFormField> {
                         });
                       },
                     )
-                  : null
+                  : PopupMenuButton<String>(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(_selectedGender ?? 'Patient'),
+                          const Icon(Icons.arrow_drop_down),
+                        ],
+                      ),
+                      itemBuilder: (context) => <String>[
+                        'patient',
+                        'Guardian',
+                        'patient&Guardian'
+                      ].map((String value) {
+                        return PopupMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onSelected: (newValue) {
+                        setState(() {
+                          _selectedGender = newValue;
+                          widget.controller.text = newValue;
+                        });
+                      },
+                    )
               : null,
         ),
       ),
