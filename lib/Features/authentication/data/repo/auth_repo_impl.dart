@@ -25,7 +25,12 @@ class ProfileRepoImpl implements ProfileRepo {
     );
 
     // Once signed in, return the UserCredential
-    await getIt.get<FirebaseAuth>().signInWithCredential(credential);
+    await getIt
+        .get<FirebaseAuth>()
+        .signInWithCredential(credential)
+        .then((val) {
+      Get.offAll(() => const BottomNavBarViews());
+    });
   }
 
   @override
@@ -62,7 +67,7 @@ class ProfileRepoImpl implements ProfileRepo {
             email: email,
             password: password,
           )
-          .then((value) => Get.offAll(() => const BottomAppBarViews()));
+          .then((value) => Get.offAll(() => const BottomNavBarViews()));
       // pushSnackBar(context, S.of(context).RegisteredSuccessfullyEnjoy);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -97,7 +102,12 @@ class ProfileRepoImpl implements ProfileRepo {
       final OAuthCredential facebookAuthCredential =
           FacebookAuthProvider.credential(loginResult.accessToken!.token);
       // Once signed in, return the UserCredential
-      getIt.get<FirebaseAuth>().signInWithCredential(facebookAuthCredential);
+      getIt
+          .get<FirebaseAuth>()
+          .signInWithCredential(facebookAuthCredential)
+          .then((val) {
+        Get.offAll(() => const BottomNavBarViews());
+      });
     }
   }
 

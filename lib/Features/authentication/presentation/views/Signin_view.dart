@@ -5,6 +5,8 @@ import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Core/widgets/custom_appbar.dart';
 import 'package:pulse/Core/widgets/custom_material_button.dart';
 import 'package:pulse/Core/widgets/custom_text_form_field.dart';
+import 'package:pulse/Features/authentication/data/repo/auth_repo.dart';
+import 'package:pulse/Features/authentication/data/repo/auth_repo_impl.dart';
 import 'package:pulse/Features/authentication/presentation/views/registration_view.dart';
 import '../../../../Core/widgets/outlined_button_icon_login.dart';
 
@@ -13,7 +15,7 @@ class SignInView extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final ProfileRepo profileRepo = ProfileRepoImpl();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,27 +126,34 @@ class SignInView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Expanded(
-                      child: Divider(),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                const OutlinedButtonIconLogin(
-                  image: 'assets/images/Google.jpg',
-                  text: 'Sign In with Google',
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                const OutlinedButtonIconLogin(
-                  image: 'assets/images/Facebook.jpg',
-                  text: 'Sign in with Facebook',
-                ),
-              ],
-            ),
+
+                  ),
+                  const Expanded(
+                    child: Divider(),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              OutlinedButtonIconLogin(
+                image: 'assets/images/Google.jpg',
+                text: 'Sign In with Google',
+                onPressed: () {
+                  profileRepo.signInWithGoogle(context);
+                },
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              OutlinedButtonIconLogin(
+                image: 'assets/images/Facebook.jpg',
+                text: 'Sign in with Facebook',
+                onPressed: () {
+                  profileRepo.signInWithFacebook(context);
+                },
+              ),
+            ],
           ),
         ),
       ),

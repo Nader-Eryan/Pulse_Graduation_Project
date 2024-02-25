@@ -4,8 +4,12 @@ import 'package:get/get.dart';
 class OutlinedButtonIconLogin extends StatelessWidget {
   final String image;
   final String text;
+  final VoidCallback onPressed;
   const OutlinedButtonIconLogin(
-      {Key? key, required this.image, required this.text})
+      {Key? key,
+      required this.image,
+      required this.text,
+      required this.onPressed})
       : super(key: key);
 
   @override
@@ -15,7 +19,7 @@ class OutlinedButtonIconLogin extends StatelessWidget {
       height: Get.height * 0.08,
       child: OutlinedButton.icon(
         icon: Image.asset(image),
-        onPressed: () {},
+        onPressed: onPressed,
         style: ButtonStyle(
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(

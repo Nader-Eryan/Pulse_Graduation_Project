@@ -3,14 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pulse/Core/utils/constants.dart';
 import 'package:pulse/Core/utils/styles.dart';
 
-class BottomAppBarViews extends StatefulWidget {
-  const BottomAppBarViews({super.key});
+class BottomNavBarViews extends StatefulWidget {
+  const BottomNavBarViews({super.key});
 
   @override
-  State<BottomAppBarViews> createState() => _BottomAppBarViewsState();
+  State<BottomNavBarViews> createState() => _BottomNavBarViewsState();
 }
 
-class _BottomAppBarViewsState extends State<BottomAppBarViews> {
+class _BottomNavBarViewsState extends State<BottomNavBarViews> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
