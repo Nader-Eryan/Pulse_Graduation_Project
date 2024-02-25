@@ -19,6 +19,7 @@ class OutlinedButtonIconLogin extends StatelessWidget {
         style: ButtonStyle(
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
+              side: const BorderSide(color: Color(0xFFE5E7EB), width: 2),
               borderRadius: BorderRadius.circular(10),
             ),
           ),

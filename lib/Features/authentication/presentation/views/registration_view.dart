@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:pulse/Core/utils/constants.dart';
 import 'package:pulse/Core/utils/styles.dart';
-import 'package:pulse/Core/widgets/agreement_checkbox.dart';
+import 'package:pulse/Features/authentication/presentation/widgets/agreement_checkbox.dart';
 import 'package:pulse/Core/widgets/custom_appbar.dart';
-import 'package:pulse/Core/widgets/custom_materialbutton.dart';
+import 'package:pulse/Core/widgets/custom_material_button.dart';
 import 'package:pulse/Core/widgets/custom_text_form_field.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo_impl.dart';
 import 'package:pulse/Features/authentication/presentation/views/signin_view.dart';
@@ -15,10 +16,6 @@ class RegistrationView extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController roleController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final emailRegex =
-      RegExp(r'''^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$''');
-  final passwordRegex =
-      r'''^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$''';
   final _profileReop = ProfileRepoImpl();
   RegistrationView({Key? key}) : super(key: key);
   @override
@@ -30,7 +27,7 @@ class RegistrationView extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(kPaddingView),
           child: Form(
             key: _formKey,
             child: Column(
@@ -44,6 +41,8 @@ class RegistrationView extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your name';
+                    } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
+                      return 'Please enter a valid name';
                     }
                     return null;
                   },
@@ -76,7 +75,9 @@ class RegistrationView extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
-                    } else if (!emailRegex.hasMatch(value)) {
+                    } else if (!RegExp(
+                            r'''^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$''')
+                        .hasMatch(value)) {
                       return 'Please enter a valid email';
                     }
                     return null;
@@ -94,7 +95,9 @@ class RegistrationView extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
-                    } else if (!RegExp(passwordRegex).hasMatch(value)) {
+                    } else if (!RegExp(
+                            r'''^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$''')
+                        .hasMatch(value)) {
                       return 'Password needs 8+ chars, 1+ digit, lower and upper case letters, and a special char';
                     }
                     return null;
