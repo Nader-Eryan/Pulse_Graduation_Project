@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/styles.dart';
-import 'package:pulse/Core/widgets/agreement_checkbox.dart';
+import 'package:pulse/Features/authentication/presentation/manager/sign_up_controller.dart';
+import 'package:pulse/Features/authentication/presentation/views/widgets/agreement_checkbox.dart';
 import 'package:pulse/Core/widgets/custom_appbar.dart';
 import 'package:pulse/Core/widgets/custom_materialbutton.dart';
 import 'package:pulse/Core/widgets/custom_text_form_field.dart';
@@ -95,7 +96,7 @@ class RegistrationView extends StatelessWidget {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     } else if (!RegExp(passwordRegex).hasMatch(value)) {
-                      return 'Password needs 8+ chars, 1+ digit, lower and upper case letters, and a special char';
+                      return '8+ length, 1+ (digit, lower, upper, special char)';
                     }
                     return null;
                   },
@@ -103,19 +104,30 @@ class RegistrationView extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                const AgreementCheckbox(),
-                SizedBox(
-                  height: Get.height * 0.19,
+                AgreementCheckbox(
+                  profileRepo: _profileReop,
                 ),
-                CustomMaterialButton(
-                  screenRatio: 0.9,
-                  text: 'Sign Up',
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _profileReop.registerUser(context, emailController.text,
-                          passwordController.text);
-                    }
-                  },
+                const SizedBox(
+                  height: 100,
+                ),
+                GetBuilder(
+                  init: SignUpController(),
+                  builder: (controller) => CustomMaterialButton(
+                    screenRatio: 0.9,
+                    text: 'Sign Up',
+                    onPressed: () {
+                      if (_formKey.currentState!.validate() &&
+                          controller.isChecked) {
+                        _profileReop.registerUser(context, emailController.text,
+                            passwordController.text);
+                      }
+                      if (_formKey.currentState!.validate() &&
+                          !controller.isChecked) {
+                        Get.snackbar('Opps',
+                            'You have to agree with our Privacy policy');
+                      }
+                    },
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
