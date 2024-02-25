@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/styles.dart';
-import 'package:pulse/Core/widgets/custom_materialbutton.dart';
-import 'package:pulse/Core/widgets/custom_outlinedbutton.dart';
+import 'package:pulse/Core/widgets/custom_material_button.dart';
+import 'package:pulse/Core/widgets/custom_outlined_button.dart';
 import 'package:pulse/Features/authentication/presentation/views/signin_view.dart';
 import 'package:pulse/Features/authentication/presentation/views/registration_view.dart';
 
@@ -38,7 +38,7 @@ class AuthenticationView extends StatelessWidget {
             CustomMaterialButton(
               screenRatio: 0.7,
               onPressed: () {
-                Get.to(() => SignInView());
+                Get.off(() => SignInView());
               },
               text: 'Login',
             ),
@@ -48,7 +48,7 @@ class AuthenticationView extends StatelessWidget {
             CustomOutlinedButton(
                 screenRatio: 0.7,
                 onPressed: () {
-                  Get.to(() => RegistrationView());
+                  Get.off(() => RegistrationView());
                 },
                 text: 'Sign Up'),
           ],
