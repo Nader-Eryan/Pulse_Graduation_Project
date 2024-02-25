@@ -96,8 +96,9 @@ class RegistrationView extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
-
-                    } else if (!RegExp(passwordRegex).hasMatch(value)) {
+                    } else if (!RegExp(
+                            r'''^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$''')
+                        .hasMatch(value)) {
                       return '8+ length, 1+ (digit, lower, upper, special char)';
                     }
                     return null;

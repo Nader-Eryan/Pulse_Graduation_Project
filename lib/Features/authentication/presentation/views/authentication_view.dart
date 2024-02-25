@@ -38,7 +38,7 @@ class AuthenticationView extends StatelessWidget {
             CustomMaterialButton(
               screenRatio: 0.7,
               onPressed: () {
-                Get.off(() => SignInView());
+                Get.to(() => SignInView());
               },
               text: 'Login',
             ),
@@ -48,7 +48,7 @@ class AuthenticationView extends StatelessWidget {
             CustomOutlinedButton(
                 screenRatio: 0.7,
                 onPressed: () {
-                  Get.off(() => RegistrationView());
+                  Get.to(() => RegistrationView());
                 },
                 text: 'Sign Up'),
           ],

@@ -126,34 +126,33 @@ class SignInView extends StatelessWidget {
                         ),
                       ),
                     ),
-
-                  ),
-                  const Expanded(
-                    child: Divider(),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              OutlinedButtonIconLogin(
-                image: 'assets/images/Google.jpg',
-                text: 'Sign In with Google',
-                onPressed: () {
-                  profileRepo.signInWithGoogle(context);
-                },
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              OutlinedButtonIconLogin(
-                image: 'assets/images/Facebook.jpg',
-                text: 'Sign in with Facebook',
-                onPressed: () {
-                  profileRepo.signInWithFacebook(context);
-                },
-              ),
-            ],
+                    const Expanded(
+                      child: Divider(),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                OutlinedButtonIconLogin(
+                  image: 'assets/images/Google.jpg',
+                  text: 'Sign In with Google',
+                  onPressed: () {
+                    profileRepo.signInWithGoogle(context);
+                  },
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                OutlinedButtonIconLogin(
+                  image: 'assets/images/Facebook.jpg',
+                  text: 'Sign in with Facebook',
+                  onPressed: () {
+                    profileRepo.signInWithFacebook(context);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
