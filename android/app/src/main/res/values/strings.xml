@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">نبض</string>
+    <string name="facebook_app_id">1457888011827369</string>
+    <string name="fb_login_protocol_scheme">fb1457888011827369</string>
+    <string name="facebook_client_token">bb8b27f70e88abe60f775e6898f0759c</string>
+</resources>
