@@ -15,7 +15,6 @@ class RegistrationView extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController roleController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _profileReop = ProfileRepoImpl();
   RegistrationView({Key? key}) : super(key: key);
@@ -44,22 +43,6 @@ class RegistrationView extends StatelessWidget {
                       return 'Please enter your name';
                     } else if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
                       return 'Please enter a valid name';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                CustomFormField(
-                  isSuffixIcon: true,
-                  isPassWord: false,
-                  hintText: 'Enter your role',
-                  controller: roleController,
-                  prefixIcon: FontAwesomeIcons.user,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your role';
                     }
                     return null;
                   },

@@ -5,6 +5,7 @@ import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Core/widgets/custom_appbar.dart';
 import 'package:pulse/Core/widgets/custom_material_button.dart';
 import 'package:pulse/Core/widgets/custom_text_form_field.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo_impl.dart';
 import 'package:pulse/Features/authentication/presentation/views/registration_view.dart';
@@ -85,7 +86,8 @@ class SignInView extends StatelessWidget {
                   screenRatio: 0.9,
                   text: 'Sign In',
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {}
+                    if (_formKey.currentState!.validate()) {
+                    }
                   },
                 ),
                 Row(
@@ -95,7 +97,7 @@ class SignInView extends StatelessWidget {
                         style: Styles.textStyleNormal14),
                     TextButton(
                       onPressed: () {
-                        Get.off(() => RegistrationView());
+                        Get.offAll(() => const BottomNavBarViews());
                       },
                       child: Text(
                         'Sign Up',

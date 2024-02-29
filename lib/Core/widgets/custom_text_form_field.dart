@@ -8,6 +8,7 @@ class CustomFormField extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
   final IconData? prefixIcon;
+  final String? data;
 
   final String? Function(String?)? validator;
 
@@ -19,6 +20,7 @@ class CustomFormField extends StatefulWidget {
     required this.controller,
     this.prefixIcon,
     required this.validator,
+    this.data,
   }) : super(key: key);
 
   @override
@@ -28,6 +30,15 @@ class CustomFormField extends StatefulWidget {
 class _CustomFormFieldState extends State<CustomFormField> {
   bool _obscureText = true;
   String? _selectedGender;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.data != null && widget.controller.text.isEmpty) {
+      widget.controller.text = widget.data!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -35,7 +46,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
       child: TextFormField(
         readOnly: widget.isSuffixIcon && !widget.isPassWord,
         keyboardType:
-        widget.isPassWord ? TextInputType.text : TextInputType.emailAddress,
+            widget.isPassWord ? TextInputType.text : TextInputType.emailAddress,
         validator: widget.validator,
         controller: widget.controller,
         style: const TextStyle(color: Colors.black),
@@ -55,44 +66,44 @@ class _CustomFormFieldState extends State<CustomFormField> {
               borderSide: BorderSide(color: Color(0xFF407CE2))),
           suffixIcon: widget.isSuffixIcon
               ? widget.isPassWord
-              ? IconButton(
-            icon: FaIcon(
-              _obscureText
-                  ? FontAwesomeIcons.eyeSlash
-                  : FontAwesomeIcons.eye,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              setState(() {
-                _obscureText = !_obscureText;
-              });
-            },
-          )
-              : PopupMenuButton<String>(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(_selectedGender ?? 'Patient'),
-                const Icon(Icons.arrow_drop_down),
-              ],
-            ),
-            itemBuilder: (context) => <String>[
-              'patient',
-              'Guardian',
-              'patient&Guardian'
-            ].map((String value) {
-              return PopupMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onSelected: (newValue) {
-              setState(() {
-                _selectedGender = newValue;
-                widget.controller.text = newValue;
-              });
-            },
-          )
+                  ? IconButton(
+                      icon: FaIcon(
+                        _obscureText
+                            ? FontAwesomeIcons.eyeSlash
+                            : FontAwesomeIcons.eye,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                    )
+                  : PopupMenuButton<String>(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(_selectedGender ?? 'Patient'),
+                          const Icon(Icons.arrow_drop_down),
+                        ],
+                      ),
+                      itemBuilder: (context) => <String>[
+                        'patient',
+                        'Guardian',
+                        'patient&Guardian'
+                      ].map((String value) {
+                        return PopupMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onSelected: (newValue) {
+                        setState(() {
+                          _selectedGender = newValue;
+                          widget.controller.text = newValue;
+                        });
+                      },
+                    )
               : null,
         ),
       ),
