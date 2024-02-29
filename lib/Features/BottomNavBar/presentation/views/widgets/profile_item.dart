@@ -22,7 +22,10 @@ class ProfileItem extends StatelessWidget {
                 const Color(0xff407CE2).withGreen(200).withOpacity(0.3),
             child: SvgPicture.asset(
               icon,
-              color: const Color(0xff407CE2),
+              colorFilter: const ColorFilter.mode(
+                Color(0xff407CE2),
+                BlendMode.srcIn,
+              ),
               height: Get.height * .03,
             ),
           ),

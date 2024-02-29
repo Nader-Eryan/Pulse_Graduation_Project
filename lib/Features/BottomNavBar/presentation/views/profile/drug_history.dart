@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:pulse/Core/utils/constants.dart';
 import 'package:pulse/Core/widgets/custom_appbar.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/Pill_reminder.dart';

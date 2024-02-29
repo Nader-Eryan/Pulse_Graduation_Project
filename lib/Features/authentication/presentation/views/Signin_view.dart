@@ -8,7 +8,6 @@ import 'package:pulse/Core/widgets/custom_text_form_field.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo_impl.dart';
-import 'package:pulse/Features/authentication/presentation/views/registration_view.dart';
 import '../../../../Core/widgets/outlined_button_icon_login.dart';
 
 class SignInView extends StatelessWidget {
