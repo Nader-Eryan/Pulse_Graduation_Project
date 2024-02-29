@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomFormField extends StatefulWidget {
@@ -7,6 +8,7 @@ class CustomFormField extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
   final IconData? prefixIcon;
+  final String? data;
 
   final String? Function(String?)? validator;
 
@@ -18,6 +20,7 @@ class CustomFormField extends StatefulWidget {
     required this.controller,
     this.prefixIcon,
     required this.validator,
+    this.data,
   }) : super(key: key);
 
   @override
@@ -27,6 +30,15 @@ class CustomFormField extends StatefulWidget {
 class _CustomFormFieldState extends State<CustomFormField> {
   bool _obscureText = true;
   String? _selectedGender;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.data != null && widget.controller.text.isEmpty) {
+      widget.controller.text = widget.data!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

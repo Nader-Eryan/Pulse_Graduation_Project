@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:pulse/Core/utils/constants.dart';
-import 'package:pulse/Core/utils/styles.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/home_view.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/interactions_view.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/medication_view.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/profile/profile_view.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/bottom_nav_bar_item.dart';
 
 class BottomNavBarViews extends StatefulWidget {
   const BottomNavBarViews({super.key});
@@ -14,22 +18,10 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: Styles.textStyleSemiBold18,
-    ),
-    Text(
-      'Index 1: Interactions',
-      style: Styles.textStyleSemiBold18,
-    ),
-    Text(
-      'Index 2: Meds history',
-      style: Styles.textStyleSemiBold18,
-    ),
-    Text(
-      'Index 3: Profile settings',
-      style: Styles.textStyleSemiBold18,
-    ),
+    HomeView(),
+    InteractionsView(),
+    MedicationView(),
+    ProfileView(),
   ];
 
   void _onItemTapped(int index) {
@@ -41,39 +33,89 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.white,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(kPaddingView),
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+      ),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+        child: BottomAppBar(
+          color: Colors.white,
+          shape: const CircularNotchedRectangle(),
+          elevation: 1.0,
+          notchMargin: 8.0,
+          height: Get.height * .09,
+          padding: EdgeInsetsDirectional.symmetric(horizontal: Get.width * .03),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              BottomNavBarItem(
+                onTap: () {
+                  _onItemTapped(0);
+                },
+                title: 'Home',
+                selectedIcon: 'assets/images/selected_home.svg',
+                unSelectedIcon: 'assets/images/unselected_home.svg',
+                isSelected: _selectedIndex == 0,
+              ),
+              BottomNavBarItem(
+                onTap: () {
+                  _onItemTapped(1);
+                },
+                title: 'Interactions',
+                selectedIcon: 'assets/images/selected_interactions.svg',
+                unSelectedIcon: 'assets/images/unselected_interactions.svg',
+                isSelected: _selectedIndex == 1,
+              ),
+              BottomNavBarItem(
+                onTap: () {
+                  _onItemTapped(2);
+                },
+                title: 'Medication',
+                selectedIcon: 'assets/images/selected_medication.svg',
+                unSelectedIcon: 'assets/images/unselected_medication.svg',
+                isSelected: _selectedIndex == 2,
+              ),
+              BottomNavBarItem(
+                onTap: () {
+                  _onItemTapped(3);
+                },
+                title: 'Profile',
+                selectedIcon: 'assets/images/selected_profile.svg',
+                unSelectedIcon: 'assets/images/unselected_profile.svg',
+                isSelected: _selectedIndex == 3,
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.pills),
-            label: 'Interactions',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.fileMedical),
-            label: 'Medications',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: kPrimaryColor,
-        unselectedItemColor: Colors.grey,
-        selectedIconTheme: const IconThemeData(size: 30),
-        selectedFontSize: 14,
-        onTap: _onItemTapped,
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: kPrimaryColor.withOpacity(.7),
+        backgroundColor: const Color(0xff407CE2).withOpacity(0.7),
         shape: const CircleBorder(),
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Container(
+                height: 800,
+                color: Colors.white,
+                child: Center(
+                  child: Text('Hello, World!'),
+                ),
+              );
+            },
+          );
+        },
         child: const Icon(
           Icons.add,
           color: Colors.white,
