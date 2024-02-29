@@ -109,7 +109,7 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
               return Container(
                 height: 800,
                 color: Colors.white,
-                child: Center(
+                child: const Center(
                   child: Text('Hello, World!'),
                 ),
               );

@@ -85,8 +85,7 @@ class SignInView extends StatelessWidget {
                   screenRatio: 0.9,
                   text: 'Sign In',
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                    }
+                    if (_formKey.currentState!.validate()) {}
                   },
                 ),
                 Row(
