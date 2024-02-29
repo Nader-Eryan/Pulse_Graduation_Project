@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:pulse/Core/utils/functions/custom_snackbar.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -39,12 +40,15 @@ class ProfileRepoImpl implements ProfileRepo {
     try {
       await getIt
           .get<FirebaseAuth>()
-          .signInWithEmailAndPassword(email: email, password: password);
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        Get.offAll(const BottomNavBarViews());
+      });
       // pushSnackBar(context, S.of(context).SignedInSuccessfullyEnjoy);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         if (context.mounted) {
-          Get.snackbar('Alert', 'No user found for that email');
+          customSnackBar(context, 'No user found for that email');
         }
       } else if (e.code == 'wrong-password') {
         if (context.mounted) {
@@ -53,6 +57,8 @@ class ProfileRepoImpl implements ProfileRepo {
             'Wrong password provided for that user',
           );
         }
+      } else {
+        Get.snackbar('Alert!', 'Wrong credentials!');
       }
     }
   }

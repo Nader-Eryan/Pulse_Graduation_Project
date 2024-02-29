@@ -58,10 +58,6 @@ class SignInView extends StatelessWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
-                    } else if (!RegExp(
-                            r'''^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$''')
-                        .hasMatch(value)) {
-                      return 'Password needs 8+ chars, 1+ digit, lower and upper case letters, and a special char';
                     }
                     return null;
                   },
@@ -85,7 +81,10 @@ class SignInView extends StatelessWidget {
                   screenRatio: 0.9,
                   text: 'Sign In',
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {}
+                    if (_formKey.currentState!.validate()) {
+                      profileRepo.signInUser(context, emailController.text,
+                          passwordController.text);
+                    }
                   },
                 ),
                 Row(

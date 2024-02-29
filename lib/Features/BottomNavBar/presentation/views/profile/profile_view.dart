@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/profile/drug_history.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/profile/profile_edit.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/profile_item.dart';
+import 'package:pulse/Features/authentication/presentation/views/authentication_view.dart';
+
+import '../../../../../Core/utils/service_locator.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -37,14 +41,14 @@ class ProfileView extends StatelessWidget {
           text: 'Profile edit',
           icon: 'assets/images/Profile.svg',
           onTap: () {
-            Get.to(() =>  ProfileEdit());
+            Get.to(() => ProfileEdit());
           },
         ),
         ProfileItem(
           text: 'Drug history',
           icon: 'assets/images/Document.svg',
           onTap: () {
-            Get.to(() =>  const DrugHistory());
+            Get.to(() => const DrugHistory());
           },
         ),
         ProfileItem(
@@ -60,7 +64,11 @@ class ProfileView extends StatelessWidget {
         ProfileItem(
           text: 'Logout',
           icon: 'assets/images/layer1.svg',
-          onTap: () {},
+          onTap: () {
+            getIt<FirebaseAuth>().signOut().then((value) {
+              Get.offAll(const AuthenticationView());
+            });
+          },
         ),
       ],
     );
