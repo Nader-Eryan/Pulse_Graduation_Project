@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/constants.dart';
 import 'package:pulse/Core/utils/styles.dart';
+import 'package:pulse/Core/widgets/custom_text_form_field.dart';
 
 import '../../../../Core/widgets/custom_material_button.dart';
 
@@ -58,8 +59,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     ),
                   ),
                   const SizedBox(height: 40),
-                  TextFormField(
-                    obscureText: false,
+                  CustomFormField(
                     controller: _emailController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -71,38 +71,9 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       }
                       return null;
                     },
-                    autofocus: false,
-                    style: Styles.textStyleMedium14,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 20),
-                      border: const OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(16.0))),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: .5, color: Colors.grey.shade500),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(
-                            16.0,
-                          ),
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1.0, color: kPrimaryColor),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            16,
-                          ),
-                        ),
-                      ),
-                      isDense: true,
-                      filled: true,
-                      errorStyle: const TextStyle(fontSize: 15),
-                      hintText: 'Email address',
-                      hintStyle: Styles.textStyleMedium12,
-                    ),
+                    isSuffixIcon: false,
+                    hintText: 'Email address',
+                    isPassWord: false,
                   ),
                   const SizedBox(height: 16),
                   const Expanded(child: SizedBox()),
