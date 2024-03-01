@@ -66,7 +66,7 @@ class ProfileView extends StatelessWidget {
           icon: 'assets/images/layer1.svg',
           onTap: () {
             getIt<FirebaseAuth>().signOut().then((value) {
-              Get.offAll(const AuthenticationView());
+              Get.offAll(() => const AuthenticationView());
             });
           },
         ),

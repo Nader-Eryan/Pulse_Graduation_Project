@@ -8,6 +8,7 @@ import 'package:pulse/Core/widgets/custom_text_form_field.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo_impl.dart';
+import 'package:pulse/Features/authentication/presentation/views/forgot_password_view.dart';
 import '../../../../Core/widgets/outlined_button_icon_login.dart';
 
 class SignInView extends StatelessWidget {
@@ -66,7 +67,9 @@ class SignInView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(const ResetPasswordView());
+                        },
                         child: Text(
                           'Forgot Password?',
                           style: Styles.textStyleMedium14

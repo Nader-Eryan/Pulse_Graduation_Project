@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:pulse/Core/utils/functions/custom_snackbar.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -48,7 +47,7 @@ class ProfileRepoImpl implements ProfileRepo {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         if (context.mounted) {
-          customSnackBar(context, 'No user found for that email');
+          Get.snackbar('Alert!', 'No user found for that email');
         }
       } else if (e.code == 'wrong-password') {
         if (context.mounted) {
