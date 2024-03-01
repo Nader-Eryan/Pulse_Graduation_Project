@@ -5,10 +5,10 @@ import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Core/widgets/custom_appbar.dart';
 import 'package:pulse/Core/widgets/custom_material_button.dart';
 import 'package:pulse/Core/widgets/custom_text_form_field.dart';
-import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo_impl.dart';
 import 'package:pulse/Features/authentication/presentation/views/forgot_password_view.dart';
+import 'package:pulse/Features/authentication/presentation/views/registration_view.dart';
 import '../../../../Core/widgets/outlined_button_icon_login.dart';
 
 class SignInView extends StatelessWidget {
@@ -97,7 +97,7 @@ class SignInView extends StatelessWidget {
                         style: Styles.textStyleNormal14),
                     TextButton(
                       onPressed: () {
-                        Get.offAll(() => const BottomNavBarViews());
+                        Get.off(() => RegistrationView());
                       },
                       child: Text(
                         'Sign Up',
