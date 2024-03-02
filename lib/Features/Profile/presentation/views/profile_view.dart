@@ -2,12 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/styles.dart';
-import 'package:pulse/Features/BottomNavBar/presentation/views/profile/drug_history.dart';
-import 'package:pulse/Features/BottomNavBar/presentation/views/profile/profile_edit.dart';
-import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/profile_item.dart';
+import 'package:pulse/Features/Profile/presentation/views/widgets/profile_item.dart';
 import 'package:pulse/Features/authentication/presentation/views/authentication_view.dart';
+import 'package:pulse/core/utils/profile_pic.dart';
 
-import '../../../../../Core/utils/service_locator.dart';
+import '../../../../Core/utils/service_locator.dart';
+import 'drug_history.dart';
+import 'profile_edit.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -18,15 +19,7 @@ class ProfileView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         //maneging mixsize in circle avatar
-        CircleAvatar(
-          radius: Get.width * .17,
-          backgroundColor: Colors.black,
-          child: CircleAvatar(
-            radius: Get.width * .168,
-            backgroundImage:
-                const AssetImage('assets/images/onboarding_meds.jpg'),
-          ),
-        ),
+        const ProfilePic(),
         SizedBox(
           height: Get.height * .02,
         ),

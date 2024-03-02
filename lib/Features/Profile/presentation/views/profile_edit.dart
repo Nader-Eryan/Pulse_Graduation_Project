@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:pulse/Core/utils/constants.dart';
-import 'package:pulse/Core/utils/styles.dart';
-import 'package:pulse/Core/widgets/custom_appbar.dart';
-import 'package:pulse/Core/widgets/custom_text_form_field.dart';
+import 'package:pulse/core/utils/constants.dart';
+import 'package:pulse/core/utils/profile_pic.dart';
+import 'package:pulse/core/utils/styles.dart';
+import 'package:pulse/core/widgets/custom_appbar.dart';
+import 'package:pulse/core/widgets/custom_text_form_field.dart';
+import 'package:pulse/Features/Profile/presentation/manager/profile_edit_controller.dart';
+
+import '../../../../core/utils/firebase_controller.dart';
 
 class ProfileEdit extends StatelessWidget {
   ProfileEdit({Key? key}) : super(key: key);
   final TextEditingController roleController = TextEditingController();
+  final controller = Get.put(FirebaseController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,22 +25,26 @@ class ProfileEdit extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CircleAvatar(
-                radius: Get.width * .17,
-                backgroundColor: Colors.black,
-                child: CircleAvatar(
-                  radius: Get.width * .168,
-                  backgroundImage:
-                      const AssetImage('assets/images/onboarding_meds.jpg'),
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Change picture',
-                  style: Styles.textStyleSemiBold16.copyWith(
-                    color: const Color(0xff407CE2),
+              GetBuilder<ProfileEditController>(
+                init: ProfileEditController(),
+                builder: (controller) => GestureDetector(
+                  child: Column(
+                    children: [
+                      const ProfilePic(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Change picture',
+                        style: Styles.textStyleSemiBold16.copyWith(
+                          color: const Color(0xff407CE2),
+                        ),
+                      ),
+                    ],
                   ),
+                  onTap: () {
+                    controller.pickPicture(context);
+                  },
                 ),
               ),
               SizedBox(

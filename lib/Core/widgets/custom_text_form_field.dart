@@ -82,14 +82,14 @@ class _CustomFormFieldState extends State<CustomFormField> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(_selectedGender ?? 'Patient'),
+                          Text(_selectedGender ?? 'Normal patient'),
                           const Icon(Icons.arrow_drop_down),
                         ],
                       ),
                       itemBuilder: (context) => <String>[
-                        'patient',
-                        'Guardian',
-                        'patient&Guardian'
+                        'Normal patient',
+                        'Care giver',
+                        'Care receiver'
                       ].map((String value) {
                         return PopupMenuItem<String>(
                           value: value,

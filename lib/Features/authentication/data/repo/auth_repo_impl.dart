@@ -41,7 +41,7 @@ class ProfileRepoImpl implements ProfileRepo {
           .get<FirebaseAuth>()
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
-        Get.offAll(const BottomNavBarViews());
+        Get.offAll(() => const BottomNavBarViews());
       });
       // pushSnackBar(context, S.of(context).SignedInSuccessfullyEnjoy);
     } on FirebaseAuthException catch (e) {

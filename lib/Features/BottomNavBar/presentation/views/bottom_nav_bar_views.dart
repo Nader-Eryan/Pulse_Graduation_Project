@@ -4,7 +4,7 @@ import 'package:pulse/Core/utils/constants.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/home_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/interactions_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/medication_view.dart';
-import 'package:pulse/Features/BottomNavBar/presentation/views/profile/profile_view.dart';
+import 'package:pulse/Features/Profile/presentation/views/profile_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/bottom_nav_bar_item.dart';
 
 class BottomNavBarViews extends StatefulWidget {
