@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 import 'package:pulse/Features/Onboarding/presentation/views/onboarding_view.dart';
+import 'package:pulse/core/utils/service_locator.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -51,7 +54,11 @@ class _SplashViewState extends State<SplashView> {
                   color: Colors.blue,
                 ),
                 onEnd: () {
-                  Get.off(() => OnboardingView());
+                  if (getIt.get<FirebaseAuth>().currentUser != null) {
+                    Get.off(() => const BottomNavBarViews());
+                  } else {
+                    Get.off(() => OnboardingView());
+                  }
                 },
               ),
             ),
