@@ -32,10 +32,8 @@ class _ProfilePicState extends State<ProfilePic> {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: Get.width / 7,
-      backgroundImage: profilePicPath != null
-          ? FileImage(File(profilePicPath!))
-          : const AssetImage('assets/images/profile.jpg') as ImageProvider,
-    );
+        radius: Get.width / 7,
+        backgroundImage:
+            profilePicPath != null ? FileImage(File(profilePicPath!)) : null);
   }
 }
