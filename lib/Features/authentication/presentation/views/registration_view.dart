@@ -104,7 +104,8 @@ class RegistrationView extends StatelessWidget {
                         _profileReop.registerUser(
                             context,
                             controller.emailController.text,
-                            controller.passwordController.text);
+                            controller.passwordController.text,
+                            name: controller.nameController.text);
                       }
                       if (_formKey.currentState!.validate() &&
                           !controller.isChecked) {

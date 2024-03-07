@@ -65,41 +65,6 @@ class ProfileRepoImpl implements ProfileRepo {
   }
 
   @override
-  Future<void> registerUser(
-      BuildContext context, String email, String password) async {
-    try {
-      await getIt
-          .get<FirebaseAuth>()
-          .createUserWithEmailAndPassword(
-            email: email,
-            password: password,
-          )
-          .then((value) => Get.offAll(() => const BottomNavBarViews()));
-      // pushSnackBar(context, S.of(context).RegisteredSuccessfullyEnjoy);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        if (context.mounted) {
-          Get.snackbar(
-            'Alert!',
-            'The password is too weak',
-          );
-        }
-      } else if (e.code == 'email-already-in-use') {
-        if (context.mounted) {
-          Get.snackbar(
-            'Alert!',
-            'The account already exists',
-          );
-        }
-      }
-    } catch (e) {
-      if (context.mounted) {
-        Get.snackbar('Opps!', '$e');
-      }
-    }
-  }
-
-  @override
   Future<void> resetPassword({required String email}) async {
     await getIt.get<FirebaseAuth>().sendPasswordResetEmail(email: email);
   }
@@ -150,6 +115,53 @@ class ProfileRepoImpl implements ProfileRepo {
     getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
       'email': userData['email'],
       'name': userData['name'],
+    });
+  }
+
+  @override
+  Future<void> registerUser(BuildContext context, String email, String password,
+      {required String name}) async {
+    try {
+      await getIt
+          .get<FirebaseAuth>()
+          .createUserWithEmailAndPassword(
+            email: email,
+            password: password,
+          )
+          .then((value) {
+        saveUserData(name, email);
+        return Get.offAll(() => const BottomNavBarViews());
+      });
+      // pushSnackBar(context, S.of(context).RegisteredSuccessfullyEnjoy);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        if (context.mounted) {
+          Get.snackbar(
+            'Alert!',
+            'The password is too weak',
+          );
+        }
+      } else if (e.code == 'email-already-in-use') {
+        if (context.mounted) {
+          Get.snackbar(
+            'Alert!',
+            'The account already exists',
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        Get.snackbar('Opps!', '$e');
+      }
+    }
+  }
+
+  @override
+  Future<void> saveUserData(String name, String email) async {
+    String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+    getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
+      'email': email,
+      'name': name,
     });
   }
 }
