@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -29,6 +30,7 @@ class ProfileRepoImpl implements ProfileRepo {
         .get<FirebaseAuth>()
         .signInWithCredential(credential)
         .then((val) {
+      saveGoogleUserData(googleUser!);
       Get.offAll(() => const BottomNavBarViews());
     });
   }
@@ -98,6 +100,29 @@ class ProfileRepoImpl implements ProfileRepo {
   }
 
   @override
+  Future<void> resetPassword({required String email}) async {
+    await getIt.get<FirebaseAuth>().sendPasswordResetEmail(email: email);
+  }
+
+  @override
+  Future<void> urlLauncher(String url) async {
+    Uri parsedUrl = Uri.parse(url);
+    if (!await launchUrl(parsedUrl)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  @override
+  Future<void> saveGoogleUserData(GoogleSignInAccount account) async {
+    String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+    getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
+      'email': account.email,
+      'name': account.displayName,
+      'profilePic': account.photoUrl,
+    });
+  }
+
+  @override
   Future<void> signInWithFacebook(BuildContext context) async {
     // Trigger the sign-in flow
     final LoginResult loginResult = await getIt.get<FacebookAuth>().login();
@@ -110,22 +135,21 @@ class ProfileRepoImpl implements ProfileRepo {
       getIt
           .get<FirebaseAuth>()
           .signInWithCredential(facebookAuthCredential)
-          .then((val) {
+          .then((val) async {
+        Map<String, dynamic> userData = await getIt<FacebookAuth>()
+            .getUserData(fields: 'email,name,picture');
+        saveFacebookUserData(userData);
         Get.offAll(() => const BottomNavBarViews());
       });
     }
   }
 
   @override
-  Future<void> resetPassword({required String email}) async {
-    await getIt.get<FirebaseAuth>().sendPasswordResetEmail(email: email);
-  }
-
-  @override
-  Future<void> urlLauncher(String url) async {
-    Uri parsedUrl = Uri.parse(url);
-    if (!await launchUrl(parsedUrl)) {
-      throw Exception('Could not launch $url');
-    }
+  Future<void> saveFacebookUserData(Map<String, dynamic> userData) async {
+    String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+    getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
+      'email': userData['email'],
+      'name': userData['name'],
+    });
   }
 }
