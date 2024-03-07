@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:pulse/core/utils/service_locator.dart';
 
-void uploadFileRemotely(String filePath, String uid) {
+void uploadFileRemotely(String filePath) {
   final file = File(filePath);
-
+  final String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
 // Create the file metadata
   final metadata = SettableMetadata(contentType: "image/jpeg");
 

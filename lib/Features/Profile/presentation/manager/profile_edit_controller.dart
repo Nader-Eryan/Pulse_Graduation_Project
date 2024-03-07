@@ -19,13 +19,13 @@ class ProfileEditController extends GetxController {
     _imgPath = await getProfileImage();
   }
 
-  void setImage(String selectedImage, uid) {
+  void setImage(String selectedImage) {
     _imgPath = selectedImage;
     update();
-    uploadFileRemotely(_imgPath!, uid);
+    uploadFileRemotely(_imgPath!);
   }
 
-  void uploadImage(String filePath, String uid) {
-    uploadFileRemotely(filePath, uid);
+  void uploadImage(String filePath) {
+    uploadFileRemotely(filePath);
   }
 }
