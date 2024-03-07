@@ -9,7 +9,6 @@ import 'package:pulse/Core/widgets/custom_appbar.dart';
 
 import '../../../../../core/utils/functions/image_picker.dart';
 import '../../Features/Profile/presentation/manager/profile_edit_controller.dart';
-import 'firebase_controller.dart';
 import 'functions/image_cropper.dart';
 import 'functions/save_image_locally.dart';
 
@@ -25,7 +24,6 @@ class _ImageCaptureState extends State<ImageCapture> {
   XFile? _imageFile;
   String? uid;
   final ProfileEditController _profileDetailsController = Get.find();
-  final FirebaseController _firebaseController = Get.find();
 
   /// Remove image
   void _clear() {
@@ -114,8 +112,7 @@ class _ImageCaptureState extends State<ImageCapture> {
                     ),
                     onPressed: () {
                       saveImagelocally(path: _imageFile!.path);
-                      _profileDetailsController.setImage(
-                          _imageFile!.path, _firebaseController.uid);
+                      _profileDetailsController.setImage(_imageFile!.path);
                       popPage();
                     }, //_saveImage
                   )
