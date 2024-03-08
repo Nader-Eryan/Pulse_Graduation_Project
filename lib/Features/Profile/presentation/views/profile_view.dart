@@ -34,7 +34,7 @@ class ProfileView extends StatelessWidget {
           text: 'Profile edit',
           icon: 'assets/images/Profile.svg',
           onTap: () {
-            Get.to(() => ProfileEdit());
+            Get.to(() => const ProfileEdit());
           },
         ),
         ProfileItem(

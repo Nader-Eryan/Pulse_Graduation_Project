@@ -84,6 +84,8 @@ class ProfileRepoImpl implements ProfileRepo {
       'email': account.email,
       'name': account.displayName,
       'profilePic': account.photoUrl,
+      'role': null,
+      'num': null
     });
   }
 
@@ -115,6 +117,9 @@ class ProfileRepoImpl implements ProfileRepo {
     getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
       'email': userData['email'],
       'name': userData['name'],
+      'profilePic': null,
+      'role': null,
+      'num': null
     });
   }
 
@@ -162,6 +167,9 @@ class ProfileRepoImpl implements ProfileRepo {
     getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
       'email': email,
       'name': name,
+      'profilePic': null,
+      'role': null,
+      'num': null
     });
   }
 }
