@@ -12,7 +12,7 @@ class AgreementCheckbox extends StatelessWidget {
     Key? key,
     required this.profileRepo,
   }) : super(key: key);
-  final ProfileRepo profileRepo;
+  final AuthRepo profileRepo;
 
   @override
   Widget build(BuildContext context) {

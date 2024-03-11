@@ -10,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../Core/utils/service_locator.dart';
 import '../../../BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 
-class ProfileRepoImpl implements ProfileRepo {
+class AuthRepoImpl implements AuthRepo {
   @override
   Future<void> signInWithGoogle(BuildContext context) async {
     // Trigger the authentication flow

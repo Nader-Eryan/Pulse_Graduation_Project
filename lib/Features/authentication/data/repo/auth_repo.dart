@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-abstract class ProfileRepo {
+abstract class AuthRepo {
   Future<void> signInWithGoogle(BuildContext context);
   Future<void> signInUser(BuildContext context, String email, String password);
   Future<void> registerUser(BuildContext context, String email, String password,
