@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pulse/Core/utils/constants.dart';
-import 'package:pulse/Features/BottomNavBar/presentation/views/home_view.dart';
+import 'package:pulse/Features/home/presentation/views/home_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/interactions_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/medication_view.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/add_new_medicine .dart';
 import 'package:pulse/Features/Profile/presentation/views/profile_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/bottom_nav_bar_item.dart';
 
@@ -34,15 +34,15 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        toolbarHeight: 0,
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor:
+            _selectedIndex == 0 ? const Color(0xffD5EDF2) : Colors.white,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(kPaddingView),
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
@@ -99,28 +99,7 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xff407CE2).withOpacity(0.7),
-        shape: const CircleBorder(),
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Container(
-                height: 800,
-                color: Colors.white,
-                child: const Center(
-                  child: Text('Hello, World!'),
-                ),
-              );
-            },
-          );
-        },
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
+      floatingActionButton: const CustomFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

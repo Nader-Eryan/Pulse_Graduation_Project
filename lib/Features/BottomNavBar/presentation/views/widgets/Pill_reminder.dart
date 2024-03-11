@@ -15,7 +15,7 @@ class PillReminder extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: const Color(0xFFF9FAFE),
+          color: const Color(0xFFEBEEFA).withOpacity(0.5),
         ),
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,17 +101,17 @@ class PillStatus extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         CircleAvatar(
-          radius: Get.width * 0.04,
-          backgroundColor: Colors.black.withOpacity(0.2),
+          radius: Get.width * 0.035,
+          backgroundColor: isTaken ? Colors.green : Colors.red,
           child: CircleAvatar(
-            radius: Get.width * 0.039,
+            radius: Get.width * 0.03,
             backgroundColor: const Color(0xffF0F3FB),
             child: isTaken
-                ? Icon(Icons.check, color: Colors.green, size: Get.width * 0.07)
+                ? Icon(Icons.check, color: Colors.green, size: Get.width * 0.06)
                 : Icon(FontAwesomeIcons.exclamation,
-                    color: Colors.red, size: Get.width * 0.06),
+                    color: Colors.red, size: Get.width * 0.05),
           ),
-        ),
+        )
       ],
     );
   }

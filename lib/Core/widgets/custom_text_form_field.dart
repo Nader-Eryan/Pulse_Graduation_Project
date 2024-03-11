@@ -8,6 +8,7 @@ class CustomFormField extends StatefulWidget {
   final TextEditingController controller;
   final IconData? prefixIcon;
   final String? data;
+  final double? radius;
 
   final String? Function(String?)? validator;
 
@@ -20,6 +21,7 @@ class CustomFormField extends StatefulWidget {
     this.prefixIcon,
     required this.validator,
     this.data,
+    this.radius,
   }) : super(key: key);
 
   @override
@@ -52,17 +54,24 @@ class _CustomFormFieldState extends State<CustomFormField> {
         obscureText: widget.isPassWord ? _obscureText : false,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(23.0),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffE4E4E5)),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Color(0xffE4E4E5)),
+            borderRadius:
+                BorderRadius.all(Radius.circular(widget.radius ?? 0.0)),
           ),
           filled: true,
           fillColor: const Color(0xffF9FAFB),
-          prefixIcon: Icon(widget.prefixIcon, color: Colors.grey),
+          prefixIcon: Icon(widget.prefixIcon,
+              color: Colors.grey,
+              size: widget.radius != null ? 20 : widget.radius),
           hintText: widget.hintText,
           hintStyle: const TextStyle(color: Colors.grey),
           border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF407CE2))),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Color(0xff407CE2)),
+            borderRadius:
+                BorderRadius.all(Radius.circular(widget.radius ?? 0.0)),
+          ),
           suffixIcon: widget.isSuffixIcon
               ? widget.isPassWord
                   ? IconButton(
