@@ -80,13 +80,15 @@ class AuthRepoImpl implements AuthRepo {
   @override
   Future<void> saveGoogleUserData(GoogleSignInAccount account) async {
     String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
-    getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
-      'email': account.email,
-      'name': account.displayName,
-      'profilePic': account.photoUrl,
-      'role': null,
-      'num': null
-    });
+    if (!await checkExist(uid)) {
+      getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
+        'email': account.email,
+        'name': account.displayName,
+        'profilePic': account.photoUrl,
+        'role': null,
+        'num': null
+      });
+    }
   }
 
   @override
@@ -114,13 +116,15 @@ class AuthRepoImpl implements AuthRepo {
   @override
   Future<void> saveFacebookUserData(Map<String, dynamic> userData) async {
     String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
-    getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
-      'email': userData['email'],
-      'name': userData['name'],
-      'profilePic': null,
-      'role': null,
-      'num': null
-    });
+    if (!await checkExist(uid)) {
+      getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
+        'email': userData['email'],
+        'name': userData['name'],
+        'profilePic': null,
+        'role': null,
+        'num': null
+      });
+    }
   }
 
   @override
@@ -171,5 +175,23 @@ class AuthRepoImpl implements AuthRepo {
       'role': null,
       'num': null
     });
+  }
+
+  Future<bool> checkExist(String docID) async {
+    bool exist = false;
+    try {
+      await getIt
+          .get<FirebaseFirestore>()
+          .collection("users")
+          .doc(docID)
+          .get()
+          .then((doc) {
+        exist = doc.exists;
+      });
+      return exist;
+    } catch (e) {
+      // If any error
+      return false;
+    }
   }
 }

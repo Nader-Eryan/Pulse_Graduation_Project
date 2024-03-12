@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -29,7 +30,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   final TextEditingController numController = TextEditingController();
   final ProfileRepo profileRepo = ProfileRepoImpl();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
   @override
   void dispose() {
     roleController.dispose();
@@ -52,7 +53,7 @@ class _ProfileEditState extends State<ProfileEdit> {
               future: getIt
                   .get<FirebaseFirestore>()
                   .collection('users')
-                  .doc(ProfileRepoImpl.uid)
+                  .doc(uid)
                   .get(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pulse/Core/utils/constants.dart';
 import 'package:pulse/Core/widgets/custom_appbar.dart';
-import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/Pill_reminder.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/pill_reminder.dart';
 
 class DrugHistory extends StatelessWidget {
   const DrugHistory({super.key});
