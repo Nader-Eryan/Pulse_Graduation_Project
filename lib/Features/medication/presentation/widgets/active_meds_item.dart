@@ -15,34 +15,35 @@ class ActiveMedsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: Image.asset(
-              image,
-              height: Get.height,
-              width: Get.width * 0.3,
-              // fit:  BoxFit.cover,
-              // filterQuality: FilterQuality.high,
-            ),
-            title: Text(
-              title,
-              style: Styles.textStyleMedium18.copyWith(
-                color: Colors.black,
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Column(
+        children: [
+          ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Image.asset(
+                image,
+                height: Get.height,
+                width: Get.width * 0.3,
               ),
-            ),
-            subtitle: Text(
-              subtitle,
-              style: Styles.textStyleNormal12.copyWith(
-                color: Colors.black.withOpacity(0.5),
+              title: Text(
+                title,
+                style: Styles.textStyleMedium18.copyWith(
+                  color: Colors.black,
+                ),
               ),
-            )),
-        const Divider(
-          color: Colors.black,
-          thickness: 0.5,
-        )
-      ],
+              subtitle: Text(
+                subtitle,
+                style: Styles.textStyleNormal12.copyWith(
+                  color: Colors.black.withOpacity(0.5),
+                ),
+              )),
+          const Divider(
+            color: Colors.black,
+            thickness: 0.5,
+          )
+        ],
+      ),
     );
   }
 }
