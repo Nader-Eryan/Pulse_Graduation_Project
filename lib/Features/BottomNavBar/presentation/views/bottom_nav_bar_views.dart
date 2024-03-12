@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Features/home/presentation/views/home_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/interactions_view.dart';
-import 'package:pulse/Features/BottomNavBar/presentation/views/medication_view.dart';
+import 'package:pulse/Features/medication/presentation/views/medication_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/add_new_medicine .dart';
 import 'package:pulse/Features/Profile/presentation/views/profile_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/bottom_nav_bar_item.dart';
