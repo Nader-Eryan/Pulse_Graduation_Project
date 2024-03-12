@@ -16,7 +16,7 @@ class SignInView extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final ProfileRepo profileRepo = ProfileRepoImpl();
+  final AuthRepo profileRepo = AuthRepoImpl();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

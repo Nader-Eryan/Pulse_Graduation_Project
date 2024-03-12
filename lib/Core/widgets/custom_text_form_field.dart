@@ -9,6 +9,7 @@ class CustomFormField extends StatefulWidget {
   final IconData? prefixIcon;
   final String? data;
   final double? radius;
+  final bool? isPhone;
 
   final String? Function(String?)? validator;
 
@@ -21,6 +22,7 @@ class CustomFormField extends StatefulWidget {
     this.prefixIcon,
     required this.validator,
     this.data,
+    this.isPhone,
     this.radius,
   }) : super(key: key);
 
@@ -46,8 +48,11 @@ class _CustomFormFieldState extends State<CustomFormField> {
       width: double.infinity * 0.9,
       child: TextFormField(
         readOnly: widget.isSuffixIcon && !widget.isPassWord,
-        keyboardType:
-            widget.isPassWord ? TextInputType.text : TextInputType.emailAddress,
+        keyboardType: widget.isPassWord
+            ? TextInputType.text
+            : widget.isPhone == null
+                ? TextInputType.emailAddress
+                : TextInputType.phone,
         validator: widget.validator,
         controller: widget.controller,
         style: const TextStyle(color: Colors.black),
