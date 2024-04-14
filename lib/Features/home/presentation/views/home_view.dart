@@ -21,7 +21,7 @@ class HomeView extends StatelessWidget {
         children: [
           Container(
             width: Get.width,
-            height: Get.height * .23,
+            height: Get.height * 22,
             padding: const EdgeInsetsDirectional.only(start: kPaddingView),
             color: const Color(0xffD5EDF2),
             child: Column(
@@ -41,13 +41,12 @@ class HomeView extends StatelessWidget {
                     const Text('Sarah', style: Styles.textStyleSemiBold14),
                   ],
                 ),
-                // const SizedBox(height: 5.0),
                 const CurrentDate(),
               ],
             ),
           ),
           Positioned(
-            top: Get.height * .23,
+            top: Get.height * .24,
             child: Container(
               width: Get.width,
               height: Get.height,
