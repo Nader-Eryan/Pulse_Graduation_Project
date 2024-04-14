@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:pulse/core/utils/constants.dart';
-import 'package:pulse/core/utils/styles.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class CurrentDate extends StatefulWidget {
