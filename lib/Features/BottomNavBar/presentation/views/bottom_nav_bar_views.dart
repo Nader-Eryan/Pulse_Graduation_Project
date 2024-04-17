@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pulse/Features/BottomNavBar/utils/functions/check_role.dart';
+import 'package:pulse/Features/Profile/presentation/views/profile_edit.dart';
 import 'package:pulse/Features/home/presentation/views/home_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/interactions_view.dart';
 import 'package:pulse/Features/medication/presentation/views/medication_view.dart';
-import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/add_new_medicine .dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/add_new_medicine_view.dart';
 import 'package:pulse/Features/Profile/presentation/views/profile_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/bottom_nav_bar_item.dart';
 
@@ -16,6 +18,11 @@ class BottomNavBarViews extends StatefulWidget {
 
 class _BottomNavBarViewsState extends State<BottomNavBarViews> {
   int _selectedIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    checkRole();
+  }
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeView(),
@@ -28,6 +35,37 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Future<void> checkRole() async {
+    bool roleIsNull = await isRoleNull();
+    if (roleIsNull) {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Alert !'),
+            content: const Text(
+                'Please enter your role and main meals of the day to continue'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () async {
+                  //_onItemTapped(3);
+                  await Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const ProfileEdit(),
+                    ),
+                  );
+                  checkRole();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
