@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -32,7 +34,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   TextEditingController dinnerTimeController = TextEditingController();
   final ProfileRepo profileRepo = ProfileRepoImpl();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
   @override
   void dispose() {
     roleController.dispose();
@@ -44,16 +46,25 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      init: ProfileEditController(),
-      builder: (controller) => Scaffold(
-        appBar: const CustomAppBar(title: 'Profile'),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(kPaddingView),
-            child: Obx(
-              () {
-                if (controller.isLoading.value) {
+
+    return Scaffold(
+      appBar: const CustomAppBar(
+        title: 'Profile',
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(kPaddingView),
+        child: SingleChildScrollView(
+          child: FutureBuilder<DocumentSnapshot>(
+              future: getIt
+                  .get<FirebaseFirestore>()
+                  .collection('users')
+                  .doc(uid)
+                  .get(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Center(child: Text('Something went wrong'));
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
