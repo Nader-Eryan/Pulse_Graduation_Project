@@ -33,19 +33,19 @@ class PillBoxView extends StatelessWidget {
               CustomMaterialButton(
                   text: 'As a patient',
                   onPressed: () {
-                    getIt.get<FirebaseDatabase>().ref(uid).set({"emb": 1});
+                    getIt.get<FirebaseDatabase>().ref('box').set({"emb": 1});
                   },
                   screenRatio: 0.9),
               CustomMaterialButton(
                   text: 'As a Care giver',
                   onPressed: () {
-                    getIt.get<FirebaseDatabase>().ref(uid).set({"emb": 2});
+                    getIt.get<FirebaseDatabase>().ref('box').set({"emb": 2});
                   },
                   screenRatio: 0.9),
               CustomMaterialButton(
                   text: 'Close box',
                   onPressed: () {
-                    getIt.get<FirebaseDatabase>().ref(uid).set({"emb": 0});
+                    getIt.get<FirebaseDatabase>().ref('box').set({"emb": 0});
                   },
                   screenRatio: 0.9),
             ],
