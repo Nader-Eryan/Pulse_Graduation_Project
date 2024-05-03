@@ -29,27 +29,17 @@ class SqlDb {
   FutureOr<void> _onCreate(Database db, int version) async {
     Batch batch = db.batch();
     batch.execute('''
-      CREATE TABLE 'notes' (
+      CREATE TABLE 'meds' (
         'id' INTEGER NOT NULL PRIMARY KEY,
-        'note' TEXT NOT NULL,
-        'title' TEXT NOT NULL,
-        'date' TEXT,
-        'startTime' TEXT,
+        'name' TEXT NOT NULL,
+        'type' TEXT NOT NULL,
+        'note' TEXT,
+        'how often a day' TEXT,
         'endTime' TEXT,
-        'repeat' TEXT,
         'isCompleted' INT,
         'color' INT,
-        'remind' INT
       )
     ''');
-    db.execute('''
-      CREATE TABLE 'images' (
-        'id' INTEGER NOT NULL PRIMARY KEY,
-        'image' TEXT,
-        'noteId' INT
-      )   
-    ''');
-
     await batch.commit();
     print('onCreate==============================');
   }

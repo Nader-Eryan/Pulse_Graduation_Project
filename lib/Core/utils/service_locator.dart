@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -14,4 +15,5 @@ void serviceLocatorSetup() {
   getIt.registerSingleton<FacebookAuth>(FacebookAuth.instance);
   getIt.registerSingleton<FirebaseMessaging>(FirebaseMessaging.instance);
   getIt.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
+  getIt.registerSingleton<FirebaseDatabase>(FirebaseDatabase.instance);
 }

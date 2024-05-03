@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/constants.dart';
+import 'package:pulse/Features/Box/presentation/pill_box.dart';
 import 'package:pulse/Features/home/presentation/widgets/current_date.dart';
 import 'package:pulse/Features/home/presentation/widgets/refill_drugs&pill_box_circle.dart';
 import 'package:pulse/Features/home/presentation/widgets/reserved_medicine.dart';
@@ -76,16 +77,21 @@ class HomeView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20.0),
-                  const Row(
+                  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        RefillDrugsPillBoxCircle(
+                        const RefillDrugsPillBoxCircle(
                           text: 'Refill Drugs',
                           image: 'assets/images/refill drugs.svg',
                         ),
-                        RefillDrugsPillBoxCircle(
-                          text: 'Pill Box',
-                          image: 'assets/images/unselected_medication.svg',
+                        InkWell(
+                          child: const RefillDrugsPillBoxCircle(
+                            text: 'Pill Box',
+                            image: 'assets/images/unselected_medication.svg',
+                          ),
+                          onTap: () {
+                            Get.to(PillBoxView());
+                          },
                         ),
                       ]),
                   const SizedBox(height: 30.0),
