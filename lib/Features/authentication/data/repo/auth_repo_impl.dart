@@ -86,7 +86,13 @@ class AuthRepoImpl implements AuthRepo {
         'name': account.displayName,
         'profilePic': account.photoUrl,
         'role': null,
-        'num': null
+        'num': null,
+        'bfH': 12,
+        'bfM': 0,
+        'luH': 12,
+        'luM': 0,
+        'diH': 12,
+        'diM': 0
       });
     }
   }
@@ -122,7 +128,13 @@ class AuthRepoImpl implements AuthRepo {
         'name': userData['name'],
         'profilePic': null,
         'role': null,
-        'num': null
+        'num': null,
+        'bfH': 12,
+        'bfM': 0,
+        'luH': 12,
+        'luM': 0,
+        'diH': 12,
+        'diM': 0
       });
     }
   }
@@ -173,7 +185,13 @@ class AuthRepoImpl implements AuthRepo {
       'name': name,
       'profilePic': null,
       'role': null,
-      'num': null
+      'num': null,
+      'bfH': 12,
+      'bfM': 0,
+      'luH': 12,
+      'luM': 0,
+      'diH': 12,
+      'diM': 0
     });
   }
 

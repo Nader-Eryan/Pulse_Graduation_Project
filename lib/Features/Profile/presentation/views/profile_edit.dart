@@ -31,6 +31,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   final ProfileRepo profileRepo = ProfileRepoImpl();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+  TimeOfDay? bf = TimeOfDay.now(), lu = TimeOfDay.now(), di = TimeOfDay.now();
   @override
   void dispose() {
     roleController.dispose();
@@ -183,18 +184,91 @@ class _ProfileEditState extends State<ProfileEdit> {
                         },
                       ),
                       const SizedBox(
+                        height: 15,
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            MaterialButton(
+                                onPressed: () async {
+                                  final breakfastT = showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay(
+                                          hour: snapshot.data!['bfH'],
+                                          minute: snapshot.data!['bfM']));
+                                  bf = await breakfastT;
+                                },
+                                child: Text(
+                                  'Breakfast time',
+                                  style: Styles.textStyleSemiBold14
+                                      .copyWith(color: Colors.blue),
+                                )),
+                            MaterialButton(
+                              onPressed: () async {
+                                final lunchT = showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay(
+                                        hour: snapshot.data!['luH'],
+                                        minute: snapshot.data!['luM']));
+                                lu = await lunchT;
+                              },
+                              child: Text(
+                                'Lunch time',
+                                style: Styles.textStyleSemiBold14
+                                    .copyWith(color: Colors.blue),
+                              ),
+                            ),
+                            MaterialButton(
+                              onPressed: () async {
+                                final dinnerT = showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay(
+                                        hour: snapshot.data!['diH'],
+                                        minute: snapshot.data!['diM']));
+                                di = await dinnerT;
+                              },
+                              child: Text(
+                                'Dinner time',
+                                style: Styles.textStyleSemiBold14
+                                    .copyWith(color: Colors.blue),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
                         height: 20,
                       ),
                       CustomMaterialButton(
                           text: 'Save Changes',
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
+                            if (_formKey.currentState!.validate() &&
+                                (bf != null || snapshot.data!['bfH'] != null) &&
+                                (lu != null || snapshot.data!['luH'] != null) &&
+                                (di != null || snapshot.data!['diH'] != null)) {
                               profileRepo.updateUserData(
                                 email: emailController.text,
                                 name: nameController.text,
                                 num: numController.text,
                                 role: roleController.text,
+                                breakfast: bf ??
+                                    TimeOfDay(
+                                        hour: snapshot.data!['bfH'],
+                                        minute: snapshot.data!['bfM']),
+                                lunch: lu ??
+                                    TimeOfDay(
+                                        hour: snapshot.data!['luH'],
+                                        minute: snapshot.data!['luM']),
+                                dinner: di ??
+                                    TimeOfDay(
+                                        hour: snapshot.data!['diH'],
+                                        minute: snapshot.data!['diM']),
                               );
+                            } else if (bf == null || lu == null || di == null) {
+                              Get.snackbar('Opps!',
+                                  'Make sure that you picked all meals time');
                             }
                           },
                           screenRatio: .9),
