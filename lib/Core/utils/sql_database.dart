@@ -34,10 +34,8 @@ class SqlDb {
         'name' TEXT NOT NULL,
         'type' TEXT NOT NULL,
         'note' TEXT,
-        'how often a day' TEXT,
-        'endTime' TEXT,
-        'isCompleted' INT,
-        'color' INT,
+        'periods' INT NOT NULL,
+        'isActive' INT NOT NULL
       )
     ''');
     await batch.commit();
@@ -62,6 +60,8 @@ class SqlDb {
   ) async {
     Database? mydb = await db;
     int response = await mydb!.insert(table, values);
+    print('inserted==================================');
+
     return response;
   }
 

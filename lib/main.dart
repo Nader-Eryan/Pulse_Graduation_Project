@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pulse/Features/Onboarding/presentation/views/splash_view.dart';
 import 'package:pulse/core/utils/service_locator.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:pulse/core/utils/sql_database.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -10,6 +11,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  SqlDb sqlDb = SqlDb();
+  await sqlDb.initiateDb();
   serviceLocatorSetup();
   runApp(const MyApp());
 }
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home:  const SplashView(),
+      home: const SplashView(),
     );
   }
 }

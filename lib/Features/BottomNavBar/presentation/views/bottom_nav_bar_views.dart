@@ -99,7 +99,15 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
           ),
         ),
       ),
-      floatingActionButton: const CustomFloatingActionButton(),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(
+          Icons.add,
+          color: Colors.blue,
+        ),
+        onPressed: () {
+          Get.to(const CustomFloatingActionButton());
+        },
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
