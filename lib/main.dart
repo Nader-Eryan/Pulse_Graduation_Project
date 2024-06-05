@@ -13,6 +13,7 @@ void main() async {
   );
   SqlDb sqlDb = SqlDb();
   await sqlDb.initiateDb();
+  //sqlDb.myDeleteDatabase();
   serviceLocatorSetup();
   runApp(const MyApp());
 }

@@ -28,13 +28,14 @@ class SqlDb {
 
   FutureOr<void> _onCreate(Database db, int version) async {
     Batch batch = db.batch();
-    batch.execute('''
+    batch.execute(
+        '''
       CREATE TABLE 'meds' (
         'id' INTEGER NOT NULL PRIMARY KEY,
         'name' TEXT NOT NULL,
         'type' TEXT NOT NULL,
         'note' TEXT,
-        'periods' INT NOT NULL,
+        'periods' TEXT NOT NULL,
         'isActive' INT NOT NULL
       )
     ''');
