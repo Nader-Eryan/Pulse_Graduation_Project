@@ -14,6 +14,7 @@ class MedicationView extends StatefulWidget {
 
 List<Map> activeMeds = [];
 List<Map> inactiveMeds = [];
+List<Map> allMeds = [];
 List<List<String>> activePeriods = [];
 List<List<String>> inactivePeriods = [];
 
@@ -30,10 +31,18 @@ class _MedicationViewState extends State<MedicationView> {
     inactiveMeds = [];
     activePeriods = [];
     inactivePeriods = [];
-    activeMeds.addAll(await sqlDb.read('meds'));
+    allMeds = [];
+    allMeds.addAll(await sqlDb.read('meds'));
+    for (var element in allMeds) {
+      if (element['isActive'] == 1) {
+        activeMeds.add(element);
+      } else {
+        inactiveMeds.add(element);
+      }
+    }
     ////test
     //inactiveMeds.addAll(await sqlDb.read('meds'));
-    for (var element in activeMeds) {
+    for (var element in allMeds) {
       List<String> tmp = medPeriod(element['periods']);
       if (element['isActive'] == 1) {
         activePeriods.add(tmp);
@@ -41,14 +50,6 @@ class _MedicationViewState extends State<MedicationView> {
         //inactivePeriods.add(tmp);
       } else {
         inactivePeriods.add(tmp);
-      }
-    }
-    for (var element in activeMeds) {
-      if (element['isActive'] != 1) {
-        activeMeds.removeWhere((item) {
-          return item['id'] == element['id'];
-        });
-        inactiveMeds.add(element);
       }
     }
     setState(() {});
@@ -89,6 +90,8 @@ class _MedicationViewState extends State<MedicationView> {
                           itemCount: activeMeds.length,
                           itemBuilder: (context, i) {
                             return ActiveMedsItem(
+                              isActive: activeMeds[i]['isActive'],
+                              id: activeMeds[i]['id'],
                               periods: activePeriods[i],
                               title: activeMeds[i]['name'],
                               subtitle: activeMeds[i]['note'],
@@ -124,6 +127,8 @@ class _MedicationViewState extends State<MedicationView> {
                           itemCount: inactiveMeds.length,
                           itemBuilder: (context, i) {
                             return ActiveMedsItem(
+                              isActive: inactiveMeds[i]['isActive'],
+                              id: inactiveMeds[i]['id'],
                               periods: inactivePeriods[i],
                               title: inactiveMeds[i]['name'],
                               subtitle: inactiveMeds[i]['note'],

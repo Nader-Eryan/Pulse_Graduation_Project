@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 import 'package:pulse/core/utils/styles.dart';
 
-class ActiveMedsItem extends StatelessWidget {
+import '../../../../core/utils/sql_database.dart';
+
+// ignore: must_be_immutable
+class ActiveMedsItem extends StatefulWidget {
   final String title;
   final String subtitle;
   final String image;
   final List<String> periods;
-  const ActiveMedsItem(
+  final int id;
+  int isActive;
+  ActiveMedsItem(
       {Key? key,
       required this.title,
       required this.subtitle,
       required this.image,
-      required this.periods})
+      required this.periods,
+      required this.id,
+      required this.isActive})
       : super(key: key);
 
+  @override
+  State<ActiveMedsItem> createState() => _ActiveMedsItemState();
+}
+
+class _ActiveMedsItemState extends State<ActiveMedsItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,12 +37,12 @@ class ActiveMedsItem extends StatelessWidget {
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: Image.asset(
-              image,
+              widget.image,
               height: Get.height,
               width: Get.width * 0.3,
             ),
             title: Text(
-              title,
+              widget.title,
               style: Styles.textStyleMedium18.copyWith(
                 color: Colors.black,
               ),
@@ -41,20 +54,20 @@ class ActiveMedsItem extends StatelessWidget {
             //   ),
             // ),
             subtitle: SizedBox(
-              height: periods.length * 17,
+              height: widget.periods.length * 17 + 20,
               child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: periods.length + 1,
+                  itemCount: widget.periods.length + 1,
                   itemBuilder: (context, i) {
-                    if (i < periods.length) {
+                    if (i < widget.periods.length) {
                       return Text(
-                        periods[i],
+                        widget.periods[i],
                         style: Styles.textStyleNormal12
                             .copyWith(color: Colors.black.withOpacity(0.5)),
                       );
                     } else {
                       return Text(
-                        subtitle,
+                        widget.subtitle,
                         style: Styles.textStyleNormal12.copyWith(
                           color: Colors.black.withOpacity(0.5),
                         ),
@@ -63,6 +76,74 @@ class ActiveMedsItem extends StatelessWidget {
                   }),
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                  onPressed: () async {
+                    //print(task.id);
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              content: const Text(
+                                  'Are you sure you want to delete the selected med? '),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('CANCEL'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    await _deleteMed(context);
+                                  },
+                                  child: const Text('SUBMIT'),
+                                ),
+                              ],
+                            ));
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Color.fromARGB(255, 144, 10, 10),
+                  )),
+              IconButton(
+                onPressed: () async {
+                  setState(
+                    () {
+                      widget.isActive = widget.isActive == 1 ? 0 : 1;
+                    },
+                  );
+                  SqlDb sqlDb = SqlDb();
+                  int response = await sqlDb.updateData('''
+                                    UPDATE meds SET 'isActive'= ${widget.isActive} WHERE id = ${widget.id}
+                                    ''');
+                  if (response > 0) {
+                    Get.snackbar('Updated Success!',
+                        'update appears next time you load the page');
+                  }
+                },
+                icon: Icon(
+                  widget.isActive == 1
+                      ? Icons.done
+                      : Icons.unpublished_outlined,
+                  color: const Color.fromARGB(255, 6, 81, 8),
+                ),
+              ),
+              // IconButton(
+              //   onPressed: () {
+              //     Navigator.of(context).push(
+              //       MaterialPageRoute(
+              //         builder: (context) => EditNote(
+              //           note: note,
+              //         ),
+              //       ),
+              //     );
+              //   },
+              //   icon: const Icon(Icons.access_alarm),
+              // )
+            ],
+          ),
           const Divider(
             color: Colors.black,
             thickness: 0.5,
@@ -70,5 +151,17 @@ class ActiveMedsItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _deleteMed(BuildContext context) async {
+    SqlDb sqlDb = SqlDb();
+    int response = await sqlDb.deleteData('''
+                                   DELETE FROM meds WHERE id = ${widget.id}
+                                      ''');
+    if (response > 0) {
+      Get.back();
+      Get.snackbar('Deleted Successfully!', 'Refresh to show changes');
+      Get.off(const BottomNavBarViews());
+    }
   }
 }
