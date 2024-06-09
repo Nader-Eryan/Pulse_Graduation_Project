@@ -137,6 +137,11 @@ class _MedicationViewState extends State<MedicationView> {
                           }),
                     ),
                   ),
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 70,
+              ),
+            )
           ],
         ),
       ),
