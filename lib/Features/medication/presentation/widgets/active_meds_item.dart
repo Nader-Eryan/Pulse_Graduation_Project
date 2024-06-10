@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 import 'package:pulse/core/utils/styles.dart';
 
+import '../../../../core/utils/service_locator.dart';
 import '../../../../core/utils/sql_database.dart';
 
 // ignore: must_be_immutable
@@ -119,6 +122,7 @@ class _ActiveMedsItemState extends State<ActiveMedsItem> {
                                     UPDATE meds SET 'isActive'= ${widget.isActive} WHERE id = ${widget.id}
                                     ''');
                   if (response > 0) {
+                    _updateMedRemote(widget.isActive);
                     Get.snackbar('Updated Success!',
                         'update appears next time you load the page');
                   }
@@ -160,8 +164,21 @@ class _ActiveMedsItemState extends State<ActiveMedsItem> {
                                       ''');
     if (response > 0) {
       Get.back();
+      _deleteMedRemote();
       Get.snackbar('Deleted Successfully!', 'Refresh to show changes');
       Get.off(const BottomNavBarViews());
     }
+  }
+
+  void _deleteMedRemote() {
+    final String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+    getIt.get<FirebaseDatabase>().ref('uMeds/$uid/${widget.id}').remove();
+  }
+
+  void _updateMedRemote(int isActive) {
+    final String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+    getIt.get<FirebaseDatabase>().ref('uMeds/$uid/${widget.id}').update({
+      'isActive': isActive,
+    });
   }
 }

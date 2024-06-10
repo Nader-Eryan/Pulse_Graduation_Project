@@ -5,6 +5,7 @@ class Med {
   String? periods;
   String? note;
   String? isActive;
+  String? isTaken;
   Med({
     this.id,
     this.name,
@@ -12,5 +13,6 @@ class Med {
     this.periods,
     this.note,
     this.isActive,
+    this.isTaken,
   });
 }

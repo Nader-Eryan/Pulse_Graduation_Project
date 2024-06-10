@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/styles.dart';
@@ -8,6 +10,7 @@ import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/choose_me
 import 'package:pulse/core/utils/sql_database.dart';
 import 'package:pulse/core/widgets/custom_appbar.dart';
 
+import '../../../../../core/utils/service_locator.dart';
 import '../../../../../core/widgets/custom_text_form_field.dart';
 import '../../manager/med_time_controller.dart';
 
@@ -141,10 +144,10 @@ class _CustomFloatingActionButtonState
                 ),
               ),
               CustomMaterialButton(
-                text: 'Add Medical',
+                text: 'Add Medication',
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    addMed();
+                    addMedLocal();
                   }
                 },
                 screenRatio: 0.9,
@@ -156,24 +159,38 @@ class _CustomFloatingActionButtonState
     );
   }
 
-  Future<void> addMed() async {
+  SqlDb sqlDb = SqlDb();
+  Future<void> addMedLocal() async {
     String periods = '';
     for (var element in timeController.selectedIndexes) {
       periods += element.toString();
     }
-    print(periods);
-    SqlDb sqlDb = SqlDb();
+    //print(periods);
     int response = await sqlDb.insert('meds', {
       'name': _nameController.text,
       'type': typeController.chosen,
       'note': _noteController.text,
       'periods': periods,
       'isActive': 1,
+      'isTaken': 1,
     });
     if (response > 0) {
       Get.back();
+      addMedRemote(response, periods);
     } else {
       Get.snackbar('Failure', 'Make sure you filled all the needed fields!');
     }
+  }
+
+  void addMedRemote(int id, String periods) {
+    final String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+    getIt.get<FirebaseDatabase>().ref('uMeds/$uid/$id').set({
+      'name': _nameController.text,
+      'type': typeController.chosen,
+      'note': _noteController.text,
+      'periods': periods,
+      'isActive': 1,
+      'isTaken': 1,
+    });
   }
 }

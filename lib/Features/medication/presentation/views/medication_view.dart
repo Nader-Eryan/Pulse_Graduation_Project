@@ -39,6 +39,8 @@ class _MedicationViewState extends State<MedicationView> {
       } else {
         inactiveMeds.add(element);
       }
+      //print('==================================');
+      //print(element['id']);
     }
     ////test
     //inactiveMeds.addAll(await sqlDb.read('meds'));

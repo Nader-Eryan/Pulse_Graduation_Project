@@ -6,6 +6,7 @@ import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Features/Profile/presentation/views/widgets/profile_item.dart';
 import 'package:pulse/Features/authentication/presentation/views/authentication_view.dart';
 import 'package:pulse/core/utils/profile_pic.dart';
+import 'package:pulse/core/utils/sql_database.dart';
 
 import '../../../../Core/utils/service_locator.dart';
 import 'drug_history.dart';
@@ -61,7 +62,9 @@ class ProfileView extends StatelessWidget {
             text: 'Logout',
             icon: 'assets/images/layer1.svg',
             onTap: () {
-              getIt<FirebaseAuth>().signOut().then((value) {
+              getIt<FirebaseAuth>().signOut().then((value) async {
+                SqlDb sqlDb = SqlDb();
+                await sqlDb.myDeleteDatabase();
                 Get.offAll(() => const AuthenticationView());
               });
             },

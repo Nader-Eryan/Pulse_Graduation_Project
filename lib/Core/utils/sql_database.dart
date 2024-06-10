@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class SqlDb {
-  static Database? _db;
+  Database? _db;
   Future<Database?> get db async {
     if (_db != null) return _db;
     _db = await initiateDb();
@@ -36,7 +36,8 @@ class SqlDb {
         'type' TEXT NOT NULL,
         'note' TEXT,
         'periods' TEXT NOT NULL,
-        'isActive' INT NOT NULL
+        'isActive' INT NOT NULL,
+        'isTaken' INT NOT NULL
       )
     ''');
     await batch.commit();
@@ -97,6 +98,6 @@ class SqlDb {
   myDeleteDatabase() async {
     String databasePath = await getDatabasesPath();
     String path = join(databasePath, 'myDb.db');
-    deleteDatabase(path);
+    await deleteDatabase(path);
   }
 }

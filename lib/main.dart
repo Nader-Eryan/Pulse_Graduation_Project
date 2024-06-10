@@ -11,10 +11,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  serviceLocatorSetup();
   SqlDb sqlDb = SqlDb();
   await sqlDb.initiateDb();
   //sqlDb.myDeleteDatabase();
-  serviceLocatorSetup();
   runApp(const MyApp());
 }
 
