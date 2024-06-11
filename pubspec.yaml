@@ -57,6 +57,10 @@ dependencies:
   sqflite: ^2.3.2
   firebase_database: ^10.4.9
   path_to_regexp: ^0.4.0
+  flutter_launcher_icons: ^0.13.1
+  connectivity_plus: ^5.0.2
+  timezone: ^0.9.3
+  flutter_timezone: ^1.0.8
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +72,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logoFree.png"
+  min_sdk_android: 21
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
