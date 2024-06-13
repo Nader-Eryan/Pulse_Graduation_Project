@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pulse/Core/utils/constants.dart';
 import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Core/widgets/custom_text_form_field.dart';
+import 'package:pulse/generated/l10n.dart';
 
 import '../../../../Core/widgets/custom_material_button.dart';
 
@@ -50,11 +51,12 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     child: const Icon(Icons.close),
                   ),
                   const SizedBox(height: 70),
-                  const Text("Forgot Password", style: Styles.textStyleBold22),
+                  Text(S.of(context).resetPassword,
+                      style: Styles.textStyleBold22),
                   const SizedBox(height: 10),
-                  const Text(
-                    'Please enter your email address to recover your password.',
-                    style: TextStyle(
+                  Text(
+                    S.of(context).forgotPasswordText,
+                    style: const TextStyle(
                       fontSize: 15,
                     ),
                   ),
@@ -63,16 +65,16 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     controller: _emailController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return S.of(context).confirmEmail;
                       } else if (!RegExp(
                               r'''^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$''')
                           .hasMatch(value)) {
-                        return 'Please enter a valid email';
+                        return S.of(context).validateEmail;
                       }
                       return null;
                     },
                     isSuffixIcon: false,
-                    hintText: 'Email address',
+                    hintText: S.of(context).email,
                     isPassWord: false,
                   ),
                   const SizedBox(height: 16),
@@ -81,7 +83,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                     elevation: 2,
                     borderRadius: BorderRadius.circular(20),
                     child: CustomMaterialButton(
-                      text: 'Recover password',
+                      text: S.of(context).recoverPassword,
                       screenRatio: .9,
                       onPressed: () async {
                         if (_key.currentState!.validate()) {
@@ -89,11 +91,12 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                             await resetPassword(
                                     email: _emailController.text.trim())
                                 .then((value) {
-                              Get.snackbar('success!', 'Check your email');
+                              Get.snackbar(S.of(context).successSnackBar,
+                                  S.of(context).checkYourEmail);
                             });
                           } catch (e) {
-                            Get.snackbar('Opps!',
-                                'There was an error reseting your password');
+                            Get.snackbar(S.of(context).failedSnackBar,
+                                S.of(context).errorResettingPassword);
                           }
                         }
                       },

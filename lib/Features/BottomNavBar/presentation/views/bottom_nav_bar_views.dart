@@ -6,6 +6,7 @@ import 'package:pulse/Features/medication/presentation/views/medication_view.dar
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/add_new_medicine .dart';
 import 'package:pulse/Features/Profile/presentation/views/profile_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/bottom_nav_bar_item.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class BottomNavBarViews extends StatefulWidget {
   const BottomNavBarViews({super.key});
@@ -63,7 +64,7 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
                 onTap: () {
                   _onItemTapped(0);
                 },
-                title: 'Home',
+                title: S.of(context).home,
                 selectedIcon: 'assets/images/selected_home.svg',
                 unSelectedIcon: 'assets/images/unselected_home.svg',
                 isSelected: _selectedIndex == 0,
@@ -72,7 +73,7 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
                 onTap: () {
                   _onItemTapped(1);
                 },
-                title: 'Interactions',
+                title: S.of(context).interactions,
                 selectedIcon: 'assets/images/selected_interactions.svg',
                 unSelectedIcon: 'assets/images/unselected_interactions.svg',
                 isSelected: _selectedIndex == 1,
@@ -81,7 +82,7 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
                 onTap: () {
                   _onItemTapped(2);
                 },
-                title: 'Medication',
+                title: S.of(context).medication,
                 selectedIcon: 'assets/images/selected_medication.svg',
                 unSelectedIcon: 'assets/images/unselected_medication.svg',
                 isSelected: _selectedIndex == 2,
@@ -90,7 +91,7 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
                 onTap: () {
                   _onItemTapped(3);
                 },
-                title: 'Profile',
+                title: S.of(context).profile,
                 selectedIcon: 'assets/images/selected_profile.svg',
                 unSelectedIcon: 'assets/images/unselected_profile.svg',
                 isSelected: _selectedIndex == 3,

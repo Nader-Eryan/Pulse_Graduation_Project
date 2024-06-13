@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pulse/Core/widgets/custom_appbar.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/manager/medication_type_controller.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/medication_types.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class SelectMedicationTypesView extends StatelessWidget {
   const SelectMedicationTypesView({Key? key}) : super(key: key);
@@ -10,8 +11,8 @@ class SelectMedicationTypesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Medication Types',
+      appBar: CustomAppBar(
+        title: S.of(context).medicationTypes,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -33,9 +34,9 @@ class SelectMedicationTypesView extends StatelessWidget {
                     decoration: controller.chosen == 'Tablet'
                         ? chosenMedDecoration()
                         : null,
-                    child: const MedicationTypes(
+                    child: MedicationTypes(
                       image: 'assets/images/tablet.png',
-                      title: 'Tablet',
+                      title: S.of(context).tablet,
                     ),
                   ),
                 ),
@@ -48,9 +49,9 @@ class SelectMedicationTypesView extends StatelessWidget {
                     decoration: controller.chosen == 'Drop'
                         ? chosenMedDecoration()
                         : null,
-                    child: const MedicationTypes(
+                    child: MedicationTypes(
                       image: 'assets/images/drop.png',
-                      title: 'Drop',
+                      title: S.of(context).drop,
                     ),
                   ),
                 ),
@@ -63,9 +64,9 @@ class SelectMedicationTypesView extends StatelessWidget {
                     decoration: controller.chosen == 'Cream'
                         ? chosenMedDecoration()
                         : null,
-                    child: const MedicationTypes(
+                    child: MedicationTypes(
                       image: 'assets/images/cream.png',
-                      title: 'Cream',
+                      title: S.of(context).cream,
                     ),
                   ),
                 ),
@@ -78,9 +79,9 @@ class SelectMedicationTypesView extends StatelessWidget {
                     decoration: controller.chosen == 'Solution'
                         ? chosenMedDecoration()
                         : null,
-                    child: const MedicationTypes(
+                    child: MedicationTypes(
                       image: 'assets/images/solution.png',
-                      title: 'Solution',
+                      title: S.of(context).solution,
                     ),
                   ),
                 ),
@@ -93,9 +94,9 @@ class SelectMedicationTypesView extends StatelessWidget {
                     decoration: controller.chosen == 'Injection'
                         ? chosenMedDecoration()
                         : null,
-                    child: const MedicationTypes(
+                    child: MedicationTypes(
                       image: 'assets/images/injection.png',
-                      title: 'Injection',
+                      title: S.of(context).injection,
                     ),
                   ),
                 ),
@@ -108,9 +109,9 @@ class SelectMedicationTypesView extends StatelessWidget {
                     decoration: controller.chosen == 'Inhaler'
                         ? chosenMedDecoration()
                         : null,
-                    child: const MedicationTypes(
+                    child: MedicationTypes(
                       image: 'assets/images/inhaler.png',
-                      title: 'Inhaler',
+                      title: S.of(context).inhaler,
                     ),
                   ),
                 ),
@@ -123,9 +124,9 @@ class SelectMedicationTypesView extends StatelessWidget {
                     decoration: controller.chosen == 'Spray'
                         ? chosenMedDecoration()
                         : null,
-                    child: const MedicationTypes(
+                    child: MedicationTypes(
                       image: 'assets/images/spray.png',
-                      title: 'Spray',
+                      title: S.of(context).spray,
                     ),
                   ),
                 ),

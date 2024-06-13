@@ -5,6 +5,7 @@ import 'package:pulse/Core/widgets/custom_material_button.dart';
 import 'package:pulse/Core/widgets/custom_outlined_button.dart';
 import 'package:pulse/Features/authentication/presentation/views/signin_view.dart';
 import 'package:pulse/Features/authentication/presentation/views/registration_view.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class AuthenticationView extends StatelessWidget {
   const AuthenticationView({super.key});
@@ -28,8 +29,8 @@ class AuthenticationView extends StatelessWidget {
               height: Get.height * 0.5,
               color: const Color(0xFF407CE2),
             ),
-            const Text(
-              'Let’s get started!',
+            Text(
+              S.of(context).authenticationText,
               style: Styles.textStyleBold22,
             ),
             const SizedBox(
@@ -40,17 +41,18 @@ class AuthenticationView extends StatelessWidget {
               onPressed: () {
                 Get.to(() => SignInView());
               },
-              text: 'Login',
+              text: S.of(context).login,
             ),
             const SizedBox(
               height: 20.0,
             ),
             CustomOutlinedButton(
-                screenRatio: 0.7,
-                onPressed: () {
-                  Get.to(() => RegistrationView());
-                },
-                text: 'Sign Up'),
+              screenRatio: 0.7,
+              onPressed: () {
+                Get.to(() => RegistrationView());
+              },
+              text: S.of(context).signUp,
+            ),
           ],
         ),
       ),

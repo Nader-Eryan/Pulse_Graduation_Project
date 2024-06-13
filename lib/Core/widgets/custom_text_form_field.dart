@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class CustomFormField extends StatefulWidget {
   final bool isSuffixIcon;
@@ -96,14 +97,14 @@ class _CustomFormFieldState extends State<CustomFormField> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(_selectedGender ?? 'Normal patient'),
+                          Text(_selectedGender ?? S.of(context).normalPatient),
                           const Icon(Icons.arrow_drop_down),
                         ],
                       ),
                       itemBuilder: (context) => <String>[
-                        'Normal patient',
-                        'Care giver',
-                        'Care receiver'
+                        S.of(context).normalPatient,
+                        S.of(context).careGiver,
+                        S.of(context).careReceiver,
                       ].map((String value) {
                         return PopupMenuItem<String>(
                           value: value,

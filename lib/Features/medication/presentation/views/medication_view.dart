@@ -4,6 +4,7 @@ import 'package:pulse/Core/utils/constants.dart';
 import 'package:pulse/Features/medication/presentation/widgets/active_meds_item.dart';
 import 'package:pulse/core/utils/sql_database.dart';
 import 'package:pulse/core/utils/styles.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class MedicationView extends StatefulWidget {
   const MedicationView({super.key});
@@ -67,7 +68,7 @@ class _MedicationViewState extends State<MedicationView> {
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
-              child: Text('Active meds',
+              child: Text(S.of(context).activeMeds,
                   style: Styles.textStyleMedium18.copyWith(
                     color: Colors.black.withOpacity(0.5),
                   )),
@@ -76,10 +77,10 @@ class _MedicationViewState extends State<MedicationView> {
               child: SizedBox(height: 20),
             ),
             activeMeds.isEmpty
-                ? const SliverToBoxAdapter(
+                ? SliverToBoxAdapter(
                     child: Center(
                       child: Text(
-                        'No meds to Present',
+                        S.of(context).noMeds,
                         style: Styles.textStyleBold18,
                       ),
                     ),
@@ -104,7 +105,7 @@ class _MedicationViewState extends State<MedicationView> {
                     ),
                   ),
             SliverToBoxAdapter(
-              child: Text('Inactive meds',
+              child: Text(S.of(context).inactiveMeds,
                   style: Styles.textStyleMedium18.copyWith(
                     color: Colors.black.withOpacity(0.5),
                   )),
@@ -113,10 +114,10 @@ class _MedicationViewState extends State<MedicationView> {
               child: SizedBox(height: 20),
             ),
             inactiveMeds.isEmpty
-                ? const SliverToBoxAdapter(
+                ? SliverToBoxAdapter(
                     child: Center(
                       child: Text(
-                        'No meds to Present',
+                        S.of(context).noMeds,
                         style: Styles.textStyleBold18,
                       ),
                     ),

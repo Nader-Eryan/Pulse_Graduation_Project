@@ -13,7 +13,7 @@ import 'package:pulse/core/widgets/custom_appbar.dart';
 import 'package:pulse/core/widgets/custom_material_button.dart';
 import 'package:pulse/core/widgets/custom_text_form_field.dart';
 import 'package:pulse/Features/Profile/presentation/manager/profile_edit_controller.dart';
-
+import 'package:pulse/generated/l10n.dart';
 import '../../../authentication/presentation/views/forgot_password_view.dart';
 
 class ProfileEdit extends StatefulWidget {
@@ -44,8 +44,8 @@ class _ProfileEditState extends State<ProfileEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Profile',
+      appBar:  CustomAppBar(
+        title:S.of(context).profileEdit,
       ),
       body: Padding(
         padding: const EdgeInsets.all(kPaddingView),
@@ -80,7 +80,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 height: 20,
                               ),
                               Text(
-                                'Change picture',
+                                S.of(context).changePicture,
                                 style: Styles.textStyleSemiBold16.copyWith(
                                   color: const Color(0xff407CE2),
                                 ),
@@ -100,7 +100,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                           Get.to(const ResetPasswordView());
                         },
                         child: Text(
-                          'Change Password',
+                          S.of(context).changePassword,
                           style: Styles.textStyleSemiBold16
                               .copyWith(color: const Color(0xFF407CE2)),
                         ),
@@ -112,12 +112,12 @@ class _ProfileEditState extends State<ProfileEdit> {
                         data: snapshot.data!['role'],
                         isSuffixIcon: true,
                         isPassWord: false,
-                        hintText: 'Enter your role',
+                        hintText: S.of(context).enterYourRole,
                         controller: roleController,
                         prefixIcon: FontAwesomeIcons.user,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your role';
+                            return S.of(context).enterYourRole;
                           }
                           return null;
                         },
@@ -129,14 +129,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                         prefixIcon: FontAwesomeIcons.user,
                         isSuffixIcon: false,
                         isPassWord: false,
-                        hintText: 'Name',
+                        hintText: S.of(context).name,
                         data: snapshot.data!['name'],
                         controller: nameController,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
+                            return S.of(context).confirmName;
                           } else if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
-                            return 'Please enter a valid name';
+                            return S.of(context).validateName;
                           }
                           return null;
                         },
@@ -148,16 +148,16 @@ class _ProfileEditState extends State<ProfileEdit> {
                         data: snapshot.data!['email'],
                         isSuffixIcon: false,
                         isPassWord: false,
-                        hintText: 'Enter your email',
+                        hintText: S.of(context).email,
                         controller: emailController,
                         prefixIcon: Icons.email_outlined,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
+                            return S.of(context).confirmEmail;
                           } else if (!RegExp(
                                   r'''^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$''')
                               .hasMatch(value)) {
-                            return 'Please enter a valid email';
+                            return S.of(context).validateEmail;
                           }
                           return null;
                         },
@@ -170,7 +170,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                         isSuffixIcon: false,
                         isPassWord: false,
                         isPhone: true,
-                        hintText: 'Phone number (optional)',
+                        hintText: S.of(context).phoneNumber,
                         controller: numController,
                         prefixIcon: Icons.phone_in_talk,
                         validator: (value) {
@@ -178,7 +178,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             return null;
                           } else if (!RegExp(r'''(^(?:[+0]9)?[0-9]{10,12}$)''')
                               .hasMatch(value)) {
-                            return 'Please enter a valid number';
+                            return S.of(context).invalidNumber;
                           }
                           return null;
                         },
@@ -201,7 +201,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   bf = await breakfastT;
                                 },
                                 child: Text(
-                                  'Breakfast time',
+                                  S.of(context).breakfastTime,
                                   style: Styles.textStyleSemiBold14
                                       .copyWith(color: Colors.blue),
                                 )),
@@ -215,7 +215,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 lu = await lunchT;
                               },
                               child: Text(
-                                'Lunch time',
+                                S.of(context).lunchTime,
                                 style: Styles.textStyleSemiBold14
                                     .copyWith(color: Colors.blue),
                               ),
@@ -230,7 +230,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 di = await dinnerT;
                               },
                               child: Text(
-                                'Dinner time',
+                                S.of(context).dinnerTime,
                                 style: Styles.textStyleSemiBold14
                                     .copyWith(color: Colors.blue),
                               ),
@@ -242,7 +242,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                         height: 20,
                       ),
                       CustomMaterialButton(
-                          text: 'Save Changes',
+                          text: S.of(context).saveChanges,
                           onPressed: () {
                             if (_formKey.currentState!.validate() &&
                                 (bf != null || snapshot.data!['bfH'] != null) &&

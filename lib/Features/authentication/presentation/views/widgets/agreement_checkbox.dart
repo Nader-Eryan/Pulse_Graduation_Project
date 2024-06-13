@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo.dart';
 import 'package:pulse/Features/authentication/presentation/manager/sign_up_controller.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class AgreementCheckbox extends StatelessWidget {
   const AgreementCheckbox({
@@ -32,18 +33,22 @@ class AgreementCheckbox extends StatelessWidget {
             text: TextSpan(
               style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
-                const TextSpan(
-                    text: 'I agree to', style: Styles.textStyleNormal14),
-                const TextSpan(
-                    text: ' نبض ', style: Styles.textStyleSemiBold16),
                 TextSpan(
-                  text: 'Privacy Policy',
+                  text: S.of(context).iAgreeToThe,
+                  style: Styles.textStyleNormal14,
+                ),
+                TextSpan(
+                  text: S.of(context).privacyPolicy,
                   style: Styles.textStyleNormal14.copyWith(color: Colors.blue),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       profileRepo.urlLauncher(
                           'https://github.com/Nader-Eryan/-_privacy_policy/tree/main');
                     },
+                ),
+                TextSpan(
+                  text: S.of(context).app_name,
+                  style: Styles.textStyleSemiBold16,
                 ),
               ],
             ),

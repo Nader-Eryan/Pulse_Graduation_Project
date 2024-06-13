@@ -9,6 +9,7 @@ import 'package:pulse/Features/authentication/data/repo/auth_repo.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo_impl.dart';
 import 'package:pulse/Features/authentication/presentation/views/forgot_password_view.dart';
 import 'package:pulse/Features/authentication/presentation/views/registration_view.dart';
+import 'package:pulse/generated/l10n.dart';
 import '../../../../Core/widgets/outlined_button_icon_login.dart';
 
 class SignInView extends StatelessWidget {
@@ -20,8 +21,8 @@ class SignInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Sign In',
+      appBar: CustomAppBar(
+        title: S.of(context).signIn,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -33,16 +34,16 @@ class SignInView extends StatelessWidget {
                 CustomFormField(
                   isSuffixIcon: false,
                   isPassWord: false,
-                  hintText: 'Enter your email',
+                  hintText: S.of(context).email,
                   controller: emailController,
                   prefixIcon: Icons.email_outlined,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return S.of(context).confirmEmail;
                     } else if (!RegExp(
                             r'''^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$''')
                         .hasMatch(value)) {
-                      return 'Please enter a valid email';
+                      return S.of(context).validateEmail;
                     }
                     return null;
                   },
@@ -53,12 +54,12 @@ class SignInView extends StatelessWidget {
                 CustomFormField(
                   isSuffixIcon: true,
                   isPassWord: true,
-                  hintText: 'Enter your password',
+                  hintText: S.of(context).password,
                   controller: passwordController,
                   prefixIcon: Icons.lock_outline,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
+                      return S.of(context).confirmPassword;
                     }
                     return null;
                   },
@@ -71,7 +72,7 @@ class SignInView extends StatelessWidget {
                           Get.to(const ResetPasswordView());
                         },
                         child: Text(
-                          'Forgot Password?',
+                          S.of(context).forgotPassword,
                           style: Styles.textStyleMedium14
                               .copyWith(color: const Color(0xFF407CE2)),
                         ))
@@ -82,7 +83,7 @@ class SignInView extends StatelessWidget {
                 ),
                 CustomMaterialButton(
                   screenRatio: 0.9,
-                  text: 'Sign In',
+                  text: S.of(context).signIn,
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       profileRepo.signInUser(context, emailController.text,
@@ -93,14 +94,14 @@ class SignInView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don’t have an account?",
+                     Text( S.of(context).doNotHaveAnAccount,
                         style: Styles.textStyleNormal14),
                     TextButton(
                       onPressed: () {
                         Get.off(() => RegistrationView());
                       },
                       child: Text(
-                        'Sign Up',
+                        S.of(context).signUp,
                         style: Styles.textStyleSemiBold14
                             .copyWith(color: const Color(0xFF407CE2)),
                       ),
@@ -122,7 +123,7 @@ class SignInView extends StatelessWidget {
                           horizontal: 8,
                         ),
                         child: Text(
-                          'OR',
+                          S.of(context).or,
                           style: Styles.textStyleNormal16
                               .copyWith(color: const Color(0xffA1A8B0)),
                         ),
@@ -138,7 +139,7 @@ class SignInView extends StatelessWidget {
                 ),
                 OutlinedButtonIconLogin(
                   image: 'assets/images/Google.jpg',
-                  text: 'Sign In with Google',
+                  text: S.of(context).signInWithGoogle,
                   onPressed: () {
                     profileRepo.signInWithGoogle(context);
                   },
@@ -148,7 +149,7 @@ class SignInView extends StatelessWidget {
                 ),
                 OutlinedButtonIconLogin(
                   image: 'assets/images/Facebook.jpg',
-                  text: 'Sign in with Facebook',
+                  text: S.of(context).signInWithFacebook,
                   onPressed: () {
                     profileRepo.signInWithFacebook(context);
                   },
