@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/constants.dart';
+import 'package:pulse/Features/medication/data/repo/med_repo.dart';
 import 'package:pulse/Features/medication/presentation/widgets/active_meds_item.dart';
 import 'package:pulse/core/utils/sql_database.dart';
 import 'package:pulse/core/utils/styles.dart';
@@ -17,6 +18,7 @@ List<Map> inactiveMeds = [];
 List<Map> allMeds = [];
 List<List<String>> activePeriods = [];
 List<List<String>> inactivePeriods = [];
+MedRepo medRepo = MedRepo();
 
 class _MedicationViewState extends State<MedicationView> {
   @override
@@ -45,7 +47,7 @@ class _MedicationViewState extends State<MedicationView> {
     ////test
     //inactiveMeds.addAll(await sqlDb.read('meds'));
     for (var element in allMeds) {
-      List<String> tmp = medPeriod(element['periods']);
+      List<String> tmp = medRepo.medPeriod(element['periods']);
       if (element['isActive'] == 1) {
         activePeriods.add(tmp);
         //test
@@ -97,7 +99,7 @@ class _MedicationViewState extends State<MedicationView> {
                               periods: activePeriods[i],
                               title: activeMeds[i]['name'],
                               subtitle: activeMeds[i]['note'],
-                              image: medIcon(activeMeds[i]['type']),
+                              image: medRepo.medIcon(activeMeds[i]['type']),
                               //periods: periods(activemeds[i]['periods']),
                             );
                           }),
@@ -134,7 +136,7 @@ class _MedicationViewState extends State<MedicationView> {
                               periods: inactivePeriods[i],
                               title: inactiveMeds[i]['name'],
                               subtitle: inactiveMeds[i]['note'],
-                              image: medIcon(inactiveMeds[i]['type']),
+                              image: medRepo.medIcon(inactiveMeds[i]['type']),
                             );
                           }),
                     ),
@@ -148,50 +150,5 @@ class _MedicationViewState extends State<MedicationView> {
         ),
       ),
     );
-  }
-
-  String medIcon(String type) {
-    switch (type) {
-      case 'Drop':
-        return 'assets/images/drop.png';
-      case 'Cream':
-        return 'assets/images/cream.png';
-      case 'Injection':
-        return 'assets/images/injection.png';
-      case 'Inhaler':
-        return 'assets/images/inhaler.png';
-      case 'Solution':
-        return 'assets/images/solution.png';
-      case 'Spray':
-        return 'assets/images/spray.png';
-      case 'Tablet':
-        return 'assets/images/tablet.png';
-      default:
-        return 'assets/images/tablet.png';
-    }
-  }
-
-  List<String> medPeriod(String period) {
-    String pString = period;
-    List<String> periods = [];
-    if (pString.contains('0')) {
-      periods.add('Before breakfast');
-    }
-    if (pString.contains('1')) {
-      periods.add('After breakfast');
-    }
-    if (pString.contains('2')) {
-      periods.add('Before lunch');
-    }
-    if (pString.contains('3')) {
-      periods.add('After lunch');
-    }
-    if (pString.contains('4')) {
-      periods.add('Before dinner');
-    }
-    if (pString.contains('5')) {
-      periods.add('After dinner');
-    }
-    return periods;
   }
 }

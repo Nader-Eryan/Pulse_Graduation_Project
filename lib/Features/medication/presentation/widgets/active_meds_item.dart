@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pulse/Features/BottomNavBar/data/repo/fire_repo.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 import 'package:pulse/core/utils/styles.dart';
 
@@ -159,12 +160,17 @@ class _ActiveMedsItemState extends State<ActiveMedsItem> {
 
   Future<void> _deleteMed(BuildContext context) async {
     SqlDb sqlDb = SqlDb();
+    FireRepo fireRepo = FireRepo();
+    final drugToBeRemoved =
+        await sqlDb.readData("SELECT * FROM meds WHERE id == ${widget.id}");
+
     int response = await sqlDb.deleteData('''
                                    DELETE FROM meds WHERE id = ${widget.id}
                                       ''');
     if (response > 0) {
       Get.back();
       _deleteMedRemote();
+      fireRepo.removeMedFromFire(drugToBeRemoved[0]['name']);
       Get.snackbar('Deleted Successfully!', 'Refresh to show changes');
       Get.off(const BottomNavBarViews());
     }
