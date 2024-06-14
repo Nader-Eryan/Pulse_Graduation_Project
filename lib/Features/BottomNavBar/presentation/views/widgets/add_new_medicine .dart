@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Core/widgets/custom_material_button.dart';
+import 'package:pulse/Features/BottomNavBar/data/repo/fire_repo.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/manager/medication_type_controller.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/select_medication_types_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/choose_medicine.dart';
@@ -30,6 +31,7 @@ class _CustomFloatingActionButtonState
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
+  FireRepo fireRepo = FireRepo();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -179,6 +181,7 @@ class _CustomFloatingActionButtonState
     if (response > 0) {
       Get.back();
       addMedRemote(response, periods);
+      fireRepo.addMedToFire(_nameController.text);
     } else {
       Get.snackbar(S.of(context).failure,
           S.of(context).makeSureYouFilledAllTheNeededFields);
