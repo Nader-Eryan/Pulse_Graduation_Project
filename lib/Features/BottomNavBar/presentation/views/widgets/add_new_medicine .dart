@@ -10,6 +10,7 @@ import 'package:pulse/Features/BottomNavBar/presentation/views/select_medication
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/choose_medicine.dart';
 import 'package:pulse/core/utils/sql_database.dart';
 import 'package:pulse/core/widgets/custom_appbar.dart';
+import 'package:pulse/generated/l10n.dart';
 
 import '../../../../../core/utils/service_locator.dart';
 import '../../../../../core/widgets/custom_text_form_field.dart';
@@ -27,14 +28,6 @@ class _CustomFloatingActionButtonState
     extends State<CustomFloatingActionButton> {
   final typeController = Get.put(MedicationTypeController());
   final timeController = Get.put(MedTimeController());
-  List<String> whenList = [
-    'Before breakfast',
-    'After breakfast',
-    'Before lunch',
-    'After lunch',
-    'Before dinner',
-    'After dinner'
-  ];
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
@@ -42,8 +35,17 @@ class _CustomFloatingActionButtonState
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    //TODO: implement build
+    List<String> whenList = [
+      S.of(context).beforeBreakfast,
+      S.of(context).afterBreakfast,
+      S.of(context).beforeLunch,
+      S.of(context).afterLunch,
+      S.of(context).beforeDinner,
+      S.of(context).afterDinner
+    ];
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Add New Medicine '),
+      appBar: CustomAppBar(title: S.of(context).addMedication),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -70,8 +72,8 @@ class _CustomFloatingActionButtonState
                   onPressed: () {
                     Get.to(() => const SelectMedicationTypesView());
                   },
-                  child: const Text(
-                    'See All',
+                  child: Text(
+                    S.of(context).seeAll,
                     style: Styles.textStyleMedium18,
                   )),
               SizedBox(
@@ -80,11 +82,11 @@ class _CustomFloatingActionButtonState
                   isSuffixIcon: false,
                   isPassWord: false,
                   radius: 50.0,
-                  hintText: 'Medicine name',
+                  hintText: S.of(context).medicineName,
                   controller: _nameController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return S.of(context).pleaseEnterSomeText;
                     }
                     return null;
                   },
@@ -96,7 +98,7 @@ class _CustomFloatingActionButtonState
                   isSuffixIcon: false,
                   isPassWord: false,
                   radius: 50.0,
-                  hintText: 'Extra note (optional)',
+                  hintText: S.of(context).extraNoteOptional,
                   controller: _noteController,
                   validator: (value) {
                     return null;
@@ -106,8 +108,8 @@ class _CustomFloatingActionButtonState
               const SizedBox(
                 height: 5,
               ),
-              const Text(
-                'When the drug is taken',
+              Text(
+                S.of(context).whenTheDrugIsTaken,
                 style: Styles.textStyleBold18,
               ),
               GetBuilder<MedTimeController>(
@@ -146,7 +148,7 @@ class _CustomFloatingActionButtonState
                 ),
               ),
               CustomMaterialButton(
-                text: 'Add Medication',
+                text: S.of(context).addMedication,
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     addMedLocal();
@@ -181,7 +183,8 @@ class _CustomFloatingActionButtonState
       addMedRemote(response, periods);
       fireRepo.addMedToFire(_nameController.text);
     } else {
-      Get.snackbar('Failure', 'Make sure you filled all the needed fields!');
+      Get.snackbar(S.of(context).failure,
+          S.of(context).makeSureYouFilledAllTheNeededFields);
     }
   }
 

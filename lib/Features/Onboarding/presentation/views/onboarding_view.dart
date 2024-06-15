@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Features/Onboarding/presentation/views/onboarding.dart';
 import 'package:pulse/Features/authentication/presentation/views/authentication_view.dart';
+import 'package:pulse/generated/l10n.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingView extends StatelessWidget {
@@ -24,14 +25,13 @@ class OnboardingView extends StatelessWidget {
             Expanded(
               child: PageView(
                 controller: controller,
-                children: const [
+                children: [
                   Onboarding(
                       image: 'assets/images/Animation - 1708289378340.json',
-                      text:
-                          'Add as many meds as you want and get notified in time '),
+                      text: S.of(context).onboardingText1),
                   Onboarding(
                       image: 'assets/images/onboarding_meds.jpg',
-                      text: 'Get drug-drug interactions, if any'),
+                      text: S.of(context).onboardingText2),
                 ],
               ),
             ),

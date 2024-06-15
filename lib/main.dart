@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:pulse/Core/utils/connectivity_services.dart';
+import 'package:pulse/Core/managers/connectivity_services.dart';
+import 'package:pulse/Core/managers/language.dart';
 import 'package:pulse/Features/Onboarding/presentation/views/splash_view.dart';
 import 'package:pulse/core/utils/service_locator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:pulse/core/utils/sql_database.dart';
 import 'firebase_options.dart';
+import 'generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +23,7 @@ void main() async {
   final connectivityController = Get.put(ConnectivityController());
   await connectivityController.initConnectivity();
 
+
   runApp(const MyApp());
 }
 
@@ -29,30 +33,36 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final connectivityController = Get.find<ConnectivityController>();
+    final languageController = Get.find<LanguageController>(); // Get the instance of LanguageController
+
     //for testing
     return Obx(() {
-      if (!connectivityController.isConnected.value) {
-        return const MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: Scaffold(
-            body: AlertDialog(
-              title: Text('No Internet Connection'),
-              content:
-                  Text('Please check your internet connection and try again.'),
-            ),
+      return GetMaterialApp(
+        locale: Locale(languageController.language.value, ''),
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          useMaterial3: true,
+        ),
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        home: !connectivityController.isConnected.value
+            ? const Scaffold(
+          body: AlertDialog(
+            title: Text('No Internet Connection'),
+            content: Text('Please check your internet connection and try again.'),
           ),
-        );
-      } else {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-            useMaterial3: true,
-          ),
-          home: const SplashView(),
-        );
-      }
+        )
+            : const SplashView(),
+      );
     });
   }
 }
+
+

@@ -57,6 +57,7 @@ class _CurrentDateState extends State<CurrentDate> {
       height: Get.height / 9,
       daysCount: 7,
       selectedTextColor: Colors.white,
+      locale: Localizations.localeOf(context).languageCode,
       onDateChange: (date) {
         // New date selected
         setState(() {

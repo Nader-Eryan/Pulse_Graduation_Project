@@ -27,14 +27,17 @@ class RefillDrugsPillBoxCircle extends StatelessWidget {
               end: Alignment.bottomCenter,
             ),
           ),
-          child: SvgPicture.asset(
-            image,
-            colorFilter: text.contains('Refill')
-                ? null
-                : const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-            width: 15.0,
-            height: 15.0,
-            fit: BoxFit.scaleDown,
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: SvgPicture.asset(
+              image,
+              colorFilter: text.contains('Refill')
+                  ? null
+                  : const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              width: 15.0,
+              height: 15.0,
+              fit: BoxFit.scaleDown,
+            ),
           ),
         ),
         const SizedBox(height: 5.0),

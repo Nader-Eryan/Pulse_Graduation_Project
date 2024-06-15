@@ -8,6 +8,7 @@ import 'package:pulse/Features/home/presentation/widgets/refill_drugs&pill_box_c
 import 'package:pulse/Features/home/presentation/widgets/reserved_medicine.dart';
 import 'package:pulse/core/utils/styles.dart';
 import 'package:pulse/core/widgets/custom_text_form_field.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -37,7 +38,7 @@ class HomeView extends StatelessWidget {
                       height: Get.height * .12,
                       fit: BoxFit.cover,
                     ),
-                    const Text('Welcome!', style: Styles.textStyleNormal14),
+                    Text(S.of(context).welcome, style: Styles.textStyleNormal14),
                     const SizedBox(width: 10.0),
                     const Text('Sarah', style: Styles.textStyleSemiBold14),
                   ],
@@ -65,11 +66,11 @@ class HomeView extends StatelessWidget {
                       isSuffixIcon: false,
                       isPassWord: false,
                       radius: 50.0,
-                      hintText: 'Search drugs',
+                      hintText: S.of(context).searchDrugs,
                       controller: TextEditingController(),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
+                          return S.of(context).pleaseEnterSomeText;
                         }
                         return null;
                       },
@@ -80,13 +81,13 @@ class HomeView extends StatelessWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        const RefillDrugsPillBoxCircle(
-                          text: 'Refill Drugs',
+                        RefillDrugsPillBoxCircle(
+                          text: S.of(context).refillDrugs,
                           image: 'assets/images/refill drugs.svg',
                         ),
                         InkWell(
-                          child: const RefillDrugsPillBoxCircle(
-                            text: 'Pill Box',
+                          child:  RefillDrugsPillBoxCircle(
+                            text: S.of(context).pillBox,
                             image: 'assets/images/unselected_medication.svg',
                           ),
                           onTap: () {
@@ -95,25 +96,25 @@ class HomeView extends StatelessWidget {
                         ),
                       ]),
                   const SizedBox(height: 30.0),
-                  const Text('Selected day’s meds',
+                  Text(S.of(context).selectedDaysMeds,
                       style: Styles.textStyleSemiBold16),
                   const SizedBox(height: 20.0),
-                  const ReservedMedicine(
+                  ReservedMedicine(
                     isTaken: true,
-                    text: 'Paracetamol',
+                    text: S.of(context).paracetamol,
                     image: 'assets/images/tablet.png',
-                    medicationTime: '10:00 AM',
-                    date: '02/12/2022',
-                    frequency: '2x/day',
+                    medicationTime: S.of(context).medicationTime,
+                    date: S.of(context).date,
+                    frequency: S.of(context).frequency,
                   ),
                   SizedBox(height: Get.height * .01),
-                  const ReservedMedicine(
+                  ReservedMedicine(
                     isTaken: false,
-                    text: 'Paracetamol',
+                    text: S.of(context).paracetamol,
                     image: 'assets/images/tablet.png',
-                    medicationTime: '10:00 AM',
-                    date: '02/12/2022',
-                    frequency: 'weekly',
+                    medicationTime: S.of(context).medicationTime,
+                    date: S.of(context).date,
+                    frequency: S.of(context).weekly,
                   ),
                 ],
               ),
@@ -124,3 +125,4 @@ class HomeView extends StatelessWidget {
     );
   }
 }
+

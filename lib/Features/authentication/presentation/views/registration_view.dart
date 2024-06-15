@@ -10,6 +10,7 @@ import 'package:pulse/Core/widgets/custom_material_button.dart';
 import 'package:pulse/Core/widgets/custom_text_form_field.dart';
 import 'package:pulse/Features/authentication/data/repo/auth_repo_impl.dart';
 import 'package:pulse/Features/authentication/presentation/views/signin_view.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class RegistrationView extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -18,8 +19,8 @@ class RegistrationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Sign Up',
+      appBar: CustomAppBar(
+        title: S.of(context).signUp,
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -34,14 +35,14 @@ class RegistrationView extends StatelessWidget {
                   CustomFormField(
                     isSuffixIcon: false,
                     isPassWord: false,
-                    hintText: 'Enter your name',
+                    hintText: S.of(context).name,
                     controller: controller.nameController,
                     prefixIcon: FontAwesomeIcons.user,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
+                        return S.of(context).confirmName;
                       } else if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
-                        return 'Please enter a valid name';
+                        return S.of(context).validateName;
                       }
                       return null;
                     },
@@ -52,16 +53,16 @@ class RegistrationView extends StatelessWidget {
                   CustomFormField(
                     isSuffixIcon: false,
                     isPassWord: false,
-                    hintText: 'Enter your email',
+                    hintText: S.of(context).email,
                     controller: controller.emailController,
                     prefixIcon: Icons.email_outlined,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return S.of(context).confirmEmail;
                       } else if (!RegExp(
                               r'''^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$''')
                           .hasMatch(value)) {
-                        return 'Please enter a valid email';
+                        return S.of(context).validateEmail;
                       }
                       return null;
                     },
@@ -72,15 +73,15 @@ class RegistrationView extends StatelessWidget {
                   CustomFormField(
                     isSuffixIcon: true,
                     isPassWord: true,
-                    hintText: 'Enter your password',
+                    hintText: S.of(context).password,
                     controller: controller.passwordController,
                     prefixIcon: Icons.lock_outline,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
+                        return S.of(context).confirmPassword;
                       } else if (!RegExp(
-                              r'''^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$''')
-                          .hasMatch(value)) {
+                        r'''^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$''',
+                      ).hasMatch(value)) {
                         return '8+ length, 1+ (digit, lower, upper, special char)';
                       }
                       return null;
@@ -97,7 +98,7 @@ class RegistrationView extends StatelessWidget {
                   ),
                   CustomMaterialButton(
                     screenRatio: 0.9,
-                    text: 'Sign Up',
+                    text: S.of(context).signUp,
                     onPressed: () {
                       if (_formKey.currentState!.validate() &&
                           controller.isChecked) {
@@ -109,22 +110,21 @@ class RegistrationView extends StatelessWidget {
                       }
                       if (_formKey.currentState!.validate() &&
                           !controller.isChecked) {
-                        Get.snackbar('Opps',
-                            'You have to agree with our Privacy policy');
+                        Get.snackbar(S.of(context).failedSnackBar,S.of(context).agreePrivacyPolicy);
                       }
                     },
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Already have an account?",
+                      Text(S.of(context).alreadyHaveAnAccount,
                           style: Styles.textStyleNormal14),
                       TextButton(
                         onPressed: () {
                           Get.off(() => SignInView());
                         },
                         child: Text(
-                          'Sign In',
+                          S.of(context).signIn,
                           style: Styles.textStyleSemiBold14
                               .copyWith(color: const Color(0xFF407CE2)),
                         ),
