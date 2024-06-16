@@ -1,8 +1,14 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/utils/constants.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/manager/nav_controller.dart';
 import 'package:pulse/Features/medication/data/repo/med_repo.dart';
 import 'package:pulse/Features/medication/presentation/widgets/active_meds_item.dart';
+import 'package:pulse/core/utils/service_locator.dart';
 import 'package:pulse/core/utils/sql_database.dart';
 import 'package:pulse/core/utils/styles.dart';
 import 'package:pulse/generated/l10n.dart';
@@ -70,10 +76,61 @@ class _MedicationViewState extends State<MedicationView> {
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
-              child: Text(S.of(context).activeMeds,
-                  style: Styles.textStyleMedium18.copyWith(
-                    color: Colors.black.withOpacity(0.5),
-                  )),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    S.of(context).activeMeds,
+                    style: Styles.textStyleMedium18.copyWith(
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                  ),
+                  GetBuilder<NavController>(
+                    init: NavController(),
+                    builder: (controller) => IconButton(
+                      onPressed: () async {
+                        SqlDb sqlDb = SqlDb();
+                        sqlDb.deleteAllRows('meds');
+                        final String uid =
+                            getIt.get<FirebaseAuth>().currentUser!.uid;
+                        final snapshot = await getIt
+                            .get<FirebaseDatabase>()
+                            .ref('uMeds/$uid')
+                            .get();
+                        if (snapshot.exists) {
+                          for (var element in snapshot.children) {
+                            print(element.value);
+                            var mp = element.value as Map;
+                            print(mp['name']);
+                            int response = await sqlDb.insert('meds', {
+                              'id': mp['id'],
+                              'name': mp['name'],
+                              'type': mp['type'],
+                              'note': mp['note'],
+                              'periods': mp['periods'],
+                              'isActive': mp['isActive'],
+                              'isTaken': mp['isTaken'],
+                            });
+                            if (response > 0) {
+                              print('done');
+                            }
+                          }
+                          //print(snapshot.children.first.value);
+                        } else {
+                          Get.snackbar('Alert!', 'No data available.');
+                        }
+                        controller.onItemTapped(3);
+                        //print(controller.index);
+                        Future.delayed(const Duration(milliseconds: 50), () {
+                          controller.onItemTapped(2);
+                          //print(controller.index);
+                        });
+                      },
+                      icon: const Icon(Icons.refresh_sharp),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SliverToBoxAdapter(
               child: SizedBox(height: 20),

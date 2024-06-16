@@ -100,4 +100,11 @@ class SqlDb {
     String path = join(databasePath, 'myDb.db');
     await deleteDatabase(path);
   }
+
+  Future<void> deleteAllRows(String tableName) async {
+    Database? mydb = await db;
+    if (mydb != null) {
+      await mydb.delete(tableName);
+    }
+  }
 }

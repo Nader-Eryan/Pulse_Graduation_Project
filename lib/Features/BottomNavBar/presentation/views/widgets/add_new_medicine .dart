@@ -183,14 +183,17 @@ class _CustomFloatingActionButtonState
       addMedRemote(response, periods);
       fireRepo.addMedToFire(_nameController.text);
     } else {
-      Get.snackbar(S.of(context).failure,
-          S.of(context).makeSureYouFilledAllTheNeededFields);
+      if (mounted) {
+        Get.snackbar(S.of(context).failure,
+            S.of(context).makeSureYouFilledAllTheNeededFields);
+      }
     }
   }
 
   void addMedRemote(int id, String periods) {
     final String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
     getIt.get<FirebaseDatabase>().ref('uMeds/$uid/$id').set({
+      'id': id,
       'name': _nameController.text,
       'type': typeController.chosen,
       'note': _noteController.text,

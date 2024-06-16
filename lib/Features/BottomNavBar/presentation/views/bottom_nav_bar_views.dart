@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pulse/Features/BottomNavBar/presentation/manager/nav_controller.dart';
 import 'package:pulse/Features/home/presentation/views/home_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/interactions_view.dart';
 import 'package:pulse/Features/medication/presentation/views/medication_view.dart';
@@ -16,7 +17,7 @@ class BottomNavBarViews extends StatefulWidget {
 }
 
 class _BottomNavBarViewsState extends State<BottomNavBarViews> {
-  int _selectedIndex = 0;
+  //int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeView(),
@@ -25,91 +26,95 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
     ProfileView(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        toolbarHeight: 0,
-        elevation: 0.0,
-        backgroundColor:
-            _selectedIndex == 0 ? const Color(0xffD5EDF2) : Colors.white,
-      ),
-      body: SingleChildScrollView(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
+    return GetBuilder<NavController>(
+      init: NavController(),
+      builder: (c) => Scaffold(
+        backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          toolbarHeight: 0,
+          elevation: 0.0,
+          backgroundColor:
+              c.index == 0 ? const Color(0xffD5EDF2) : Colors.white,
         ),
-        child: BottomAppBar(
-          color: Colors.white,
-          shape: const CircularNotchedRectangle(),
-          elevation: 1.0,
-          notchMargin: 8.0,
-          height: Get.height * .09,
-          padding: EdgeInsetsDirectional.symmetric(horizontal: Get.width * .03),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              BottomNavBarItem(
-                onTap: () {
-                  _onItemTapped(0);
-                },
-                title: S.of(context).home,
-                selectedIcon: 'assets/images/selected_home.svg',
-                unSelectedIcon: 'assets/images/unselected_home.svg',
-                isSelected: _selectedIndex == 0,
-              ),
-              BottomNavBarItem(
-                onTap: () {
-                  _onItemTapped(1);
-                },
-                title: S.of(context).interactions,
-                selectedIcon: 'assets/images/selected_interactions.svg',
-                unSelectedIcon: 'assets/images/unselected_interactions.svg',
-                isSelected: _selectedIndex == 1,
-              ),
-              BottomNavBarItem(
-                onTap: () {
-                  _onItemTapped(2);
-                },
-                title: S.of(context).medication,
-                selectedIcon: 'assets/images/selected_medication.svg',
-                unSelectedIcon: 'assets/images/unselected_medication.svg',
-                isSelected: _selectedIndex == 2,
-              ),
-              BottomNavBarItem(
-                onTap: () {
-                  _onItemTapped(3);
-                },
-                title: S.of(context).profile,
-                selectedIcon: 'assets/images/selected_profile.svg',
-                unSelectedIcon: 'assets/images/unselected_profile.svg',
-                isSelected: _selectedIndex == 3,
-              ),
-            ],
+        body: SingleChildScrollView(
+          child: _widgetOptions.elementAt(c.index),
+        ),
+        bottomNavigationBar: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+          child: BottomAppBar(
+            color: Colors.white,
+            shape: const CircularNotchedRectangle(),
+            elevation: 1.0,
+            notchMargin: 8.0,
+            height: Get.height * .09,
+            padding:
+                EdgeInsetsDirectional.symmetric(horizontal: Get.width * .03),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                BottomNavBarItem(
+                  onTap: () {
+                    c.onItemTapped(0);
+                  },
+                  title: S.of(context).home,
+                  selectedIcon: 'assets/images/selected_home.svg',
+                  unSelectedIcon: 'assets/images/unselected_home.svg',
+                  isSelected: c.index == 0,
+                ),
+                BottomNavBarItem(
+                  onTap: () {
+                    c.onItemTapped(1);
+                  },
+                  title: S.of(context).interactions,
+                  selectedIcon: 'assets/images/selected_interactions.svg',
+                  unSelectedIcon: 'assets/images/unselected_interactions.svg',
+                  isSelected: c.index == 1,
+                ),
+                BottomNavBarItem(
+                  onTap: () {
+                    c.onItemTapped(2);
+                  },
+                  title: S.of(context).medication,
+                  selectedIcon: 'assets/images/selected_medication.svg',
+                  unSelectedIcon: 'assets/images/unselected_medication.svg',
+                  isSelected: c.index == 2,
+                ),
+                BottomNavBarItem(
+                  onTap: () {
+                    c.onItemTapped(3);
+                  },
+                  title: S.of(context).profile,
+                  selectedIcon: 'assets/images/selected_profile.svg',
+                  unSelectedIcon: 'assets/images/unselected_profile.svg',
+                  isSelected: c.index == 3,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(
-          Icons.add,
-          color: Colors.blue,
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(
+            Icons.add,
+            color: Colors.blue,
+          ),
+          onPressed: () {
+            Get.to(const CustomFloatingActionButton());
+          },
         ),
-        onPressed: () {
-          Get.to(const CustomFloatingActionButton());
-        },
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
