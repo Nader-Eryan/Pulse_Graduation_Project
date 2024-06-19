@@ -56,7 +56,7 @@ class Onboarding extends StatelessWidget {
           text,
           textAlign: TextAlign.start,
           maxLines: 3,
-          style: Styles.textStyleBold22,
+          style: Styles.textStyleSemiBold20,
         ),
         const Spacer(
           flex: 3,

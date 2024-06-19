@@ -60,7 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "date": MessageLookupByLibrary.simpleMessage("02/12/2022"),
         "dinnerTime": MessageLookupByLibrary.simpleMessage("Dinner time"),
         "doNotHaveAnAccount":
-            MessageLookupByLibrary.simpleMessage("Don\'\'t have an account?"),
+            MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "donation": MessageLookupByLibrary.simpleMessage("Donation"),
         "drop": MessageLookupByLibrary.simpleMessage("Drop"),
         "drugHistory": MessageLookupByLibrary.simpleMessage("Drug history"),

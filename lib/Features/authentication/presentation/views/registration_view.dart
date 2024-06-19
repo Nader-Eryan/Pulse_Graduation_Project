@@ -110,15 +110,18 @@ class RegistrationView extends StatelessWidget {
                       }
                       if (_formKey.currentState!.validate() &&
                           !controller.isChecked) {
-                        Get.snackbar(S.of(context).failedSnackBar,S.of(context).agreePrivacyPolicy);
+                        Get.snackbar(S.of(context).failedSnackBar,
+                            S.of(context).agreePrivacyPolicy);
                       }
                     },
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(S.of(context).alreadyHaveAnAccount,
-                          style: Styles.textStyleNormal14),
+                      Flexible(
+                        child: Text(S.of(context).alreadyHaveAnAccount,
+                            style: Styles.textStyleNormal14),
+                      ),
                       TextButton(
                         onPressed: () {
                           Get.off(() => SignInView());

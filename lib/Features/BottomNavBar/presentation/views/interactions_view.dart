@@ -15,7 +15,13 @@ class InteractionsView extends StatefulWidget {
 }
 
 class _InteractionsViewState extends State<InteractionsView> {
-  String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+  String? toUseUid;
+
+  @override
+  void initState() {
+    getInteractions();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,7 @@ class _InteractionsViewState extends State<InteractionsView> {
           children: [
             Text(
               'Drug-drug interaction',
-              style: Styles.textStyleBold22,
+              style: Styles.textStyleBold18,
             ),
           ],
         ),
@@ -39,7 +45,7 @@ class _InteractionsViewState extends State<InteractionsView> {
               future: getIt
                   .get<FirebaseFirestore>()
                   .collection('dList')
-                  .doc(uid)
+                  .doc(toUseUid)
                   .get(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -49,8 +55,8 @@ class _InteractionsViewState extends State<InteractionsView> {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (!snapshot.hasData) {
-                  const Center(child: NoInt());
+                } else if (!snapshot.hasData && snapshot.data != null) {
+                  return const Center(child: NoInt());
                 }
                 try {
                   return Column(
@@ -61,44 +67,47 @@ class _InteractionsViewState extends State<InteractionsView> {
                             .copyWith(color: Colors.red[900]),
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 20,
                       ),
                       SizedBox(
-                        height: Get.height / 2,
+                        height: Get.height / 2.2,
                         child: ListView.builder(
                           itemCount: snapshot.data!['interactions'].length,
                           itemBuilder: (BuildContext context, int index) {
-                            return Flexible(
-                              child: Card(
-                                child: Center(
-                                  child: SizedBox(
-                                    width: Get.width,
-                                    child: Flexible(
+                            return Expanded(
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Card(
+                                    child: Center(
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            '${snapshot.data!['interactions'][index]['existing_drug']} '
-                                                .toString(),
-                                            style: Styles.textStyleBold18,
+                                          Flexible(
+                                            child: Text(
+                                              '${snapshot.data!['interactions'][index]['existing_drug']}',
+                                              style: Styles.textStyleMedium14,
+                                            ),
                                           ),
                                           Icon(
                                             Icons.close,
                                             color: Colors.red[800],
-                                            size: 60,
+                                            size: 50,
                                           ),
-                                          Text(
-                                            '  ${snapshot.data!['interactions'][index]['new_drug']}'
-                                                .toString(),
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Styles.textStyleBold18,
+                                          Flexible(
+                                            child: Text(
+                                              '${snapshot.data!['interactions'][index]['new_drug']}',
+                                              style: Styles.textStyleMedium14,
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
                             );
                           },
@@ -113,5 +122,21 @@ class _InteractionsViewState extends State<InteractionsView> {
         ),
       ],
     );
+  }
+
+  void getInteractions() async {
+    String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+    String? cgUid;
+    final res =
+        await getIt.get<FirebaseFirestore>().collection('users').doc(uid).get();
+    if (res.exists) {
+      cgUid = res.data()!['cgUid'];
+    }
+    if (cgUid != null && cgUid.isNotEmpty && cgUid.length >= 28) {
+      toUseUid = cgUid;
+    } else {
+      toUseUid = uid;
+    }
+    setState(() {});
   }
 }

@@ -94,16 +94,20 @@ class SignInView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     Text( S.of(context).doNotHaveAnAccount,
-                        style: Styles.textStyleNormal14),
+                    Flexible(
+                      child: Text(S.of(context).doNotHaveAnAccount,
+                          style: Styles.textStyleNormal14),
+                    ),
                     TextButton(
                       onPressed: () {
                         Get.off(() => RegistrationView());
                       },
-                      child: Text(
-                        S.of(context).signUp,
-                        style: Styles.textStyleSemiBold14
-                            .copyWith(color: const Color(0xFF407CE2)),
+                      child: Flexible(
+                        child: Text(
+                          S.of(context).signUp,
+                          style: Styles.textStyleSemiBold14
+                              .copyWith(color: const Color(0xFF407CE2)),
+                        ),
                       ),
                     ),
                   ],
