@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/managers/notification_services.dart';
 import 'package:pulse/Core/utils/edit_database.dart';
+import 'package:pulse/Core/utils/functions/notifiction_scheduler.dart';
 import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Core/widgets/custom_material_button.dart';
 import 'package:pulse/Features/BottomNavBar/data/repo/fire_repo.dart';
@@ -37,7 +38,6 @@ class _CustomFloatingActionButtonState
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    //TODO: implement build
     List<String> whenList = [
       S.of(context).beforeBreakfast,
       S.of(context).afterBreakfast,
@@ -155,13 +155,12 @@ class _CustomFloatingActionButtonState
                   text: 'Add Medical',
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      int medId =
-                          await addMedLocal(); // Save medication information
-                      // Schedule a notification for each selected time
-                      LocalNotificationServices.showScheduledNotification(
-                          medId: medId,
-                          listOfScheduled: controller.selectedIndexes,
-                          title: _nameController.text);
+                      int medId = await addMedLocal();
+                      await notificationScheduler(
+                        listOfScheduled: controller.selectedIndexes,
+                        medId: medId,
+                      );
+                      LocalNotificationServices().showScheduledNotification();
                     }
                   },
                   screenRatio: 0.9,
@@ -190,6 +189,7 @@ class _CustomFloatingActionButtonState
       'periods': periods,
       'isActive': 1,
       'isTaken': isTaken,
+      'history': "0000000"
     });
     if (response > 0) {
       Get.back();
