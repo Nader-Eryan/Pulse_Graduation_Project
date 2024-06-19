@@ -48,7 +48,9 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
           backgroundColor:
               c.index == 0 ? const Color(0xffD5EDF2) : Colors.white,
         ),
-        body: _widgetOptions.elementAt(c.index),
+        body: SingleChildScrollView(
+          child: _widgetOptions.elementAt(c.index),
+        ),
         bottomNavigationBar: ClipRRect(
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(24),
