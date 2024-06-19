@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:pulse/core/utils/styles.dart';
 
 class RefillDrugsPillBoxCircle extends StatelessWidget {
@@ -13,10 +14,12 @@ class RefillDrugsPillBoxCircle extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 50.0,
-          height: 50.0,
+          height: 50,
+          width: Get.width - 100,
+          margin: const EdgeInsets.only(top: 0, left: 10, right: 10),
           decoration: const BoxDecoration(
-            shape: BoxShape.circle,
+            borderRadius: BorderRadius.all(Radius.elliptical(100, 50)),
+            //shape: BoxShape.circle,
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               colors: [
