@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 abstract class ProfileRepo {
   Future<void> updateUserData({
     required String email,
+    required String cgUid,
     required String name,
     required String num,
     required String role,

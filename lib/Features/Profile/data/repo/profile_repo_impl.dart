@@ -8,6 +8,7 @@ import 'package:pulse/core/utils/service_locator.dart';
 class ProfileRepoImpl implements ProfileRepo {
   @override
   Future<void> updateUserData({
+    required String cgUid,
     required String email,
     required String name,
     required String num,
@@ -21,6 +22,7 @@ class ProfileRepoImpl implements ProfileRepo {
     String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
     return users.doc(uid).update({
       'email': email,
+      'cgUid': cgUid,
       'name': name,
       'num': num,
       'role': role,

@@ -82,6 +82,7 @@ class AuthRepoImpl implements AuthRepo {
     String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
     if (!await checkExist(uid)) {
       getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
+        'cgUid': null,
         'email': account.email,
         'name': account.displayName,
         'profilePic': account.photoUrl,
@@ -124,6 +125,7 @@ class AuthRepoImpl implements AuthRepo {
     String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
     if (!await checkExist(uid)) {
       getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
+        'cgUid': null,
         'email': userData['email'],
         'name': userData['name'],
         'profilePic': null,
@@ -181,6 +183,7 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> saveUserData(String name, String email) async {
     String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
     getIt.get<FirebaseFirestore>().collection('users').doc(uid).set({
+      'cgUid': null,
       'email': email,
       'name': name,
       'profilePic': null,
