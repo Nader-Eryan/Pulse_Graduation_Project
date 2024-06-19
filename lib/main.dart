@@ -3,11 +3,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/managers/connectivity_services.dart';
 import 'package:pulse/Core/managers/language.dart';
-import 'package:pulse/Core/managers/notification_services.dart';
-import 'package:pulse/Core/utils/edit_database.dart';
 import 'package:pulse/Features/Onboarding/presentation/views/splash_view.dart';
 import 'package:pulse/core/utils/service_locator.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:pulse/core/utils/sql_database.dart';
 import 'firebase_options.dart';
 import 'generated/l10n.dart';
 
@@ -17,16 +16,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   serviceLocatorSetup();
-  // SqlDb sqlDb = SqlDb();
-  // await sqlDb.initiateDb();
-  USqlDb sqlDb = USqlDb();
+  SqlDb sqlDb = SqlDb();
   await sqlDb.initiateDb();
 
   // Initialize the ConnectivityController
   final connectivityController = Get.put(ConnectivityController());
   await connectivityController.initConnectivity();
 
-  LocalNotificationServices().initialize();
 
   runApp(const MyApp());
 }
@@ -37,8 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final connectivityController = Get.find<ConnectivityController>();
-    final languageController = Get.find<
-        LanguageController>(); // Get the instance of LanguageController
+    final languageController = Get.find<LanguageController>(); // Get the instance of LanguageController
 
     //for testing
     return Obx(() {
@@ -59,14 +54,15 @@ class MyApp extends StatelessWidget {
         supportedLocales: S.delegate.supportedLocales,
         home: !connectivityController.isConnected.value
             ? const Scaffold(
-                body: AlertDialog(
-                  title: Text('No Internet Connection'),
-                  content: Text(
-                      'Please check your internet connection and try again.'),
-                ),
-              )
+          body: AlertDialog(
+            title: Text('No Internet Connection'),
+            content: Text('Please check your internet connection and try again.'),
+          ),
+        )
             : const SplashView(),
       );
     });
   }
 }
+
+

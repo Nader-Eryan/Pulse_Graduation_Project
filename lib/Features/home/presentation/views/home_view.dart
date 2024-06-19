@@ -10,16 +10,9 @@ import 'package:pulse/core/utils/styles.dart';
 import 'package:pulse/core/widgets/custom_text_form_field.dart';
 import 'package:pulse/generated/l10n.dart';
 
-
-
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,8 +38,7 @@ class _HomeViewState extends State<HomeView> {
                       height: Get.height * .12,
                       fit: BoxFit.cover,
                     ),
-                    Text(S.of(context).welcome,
-                        style: Styles.textStyleNormal14),
+                    Text(S.of(context).welcome, style: Styles.textStyleNormal14),
                     const SizedBox(width: 10.0),
                     const Text('Sarah', style: Styles.textStyleSemiBold14),
                   ],
@@ -109,13 +101,19 @@ class _HomeViewState extends State<HomeView> {
                   const SizedBox(height: 20.0),
                   ReservedMedicine(
                     isTaken: true,
-                    medName : S.of(context).paracetamol,
+                    text: S.of(context).paracetamol,
+                    image: 'assets/images/tablet.png',
+                    medicationTime: S.of(context).medicationTime,
+                    date: S.of(context).date,
                     frequency: S.of(context).frequency,
                   ),
                   SizedBox(height: Get.height * .01),
                   ReservedMedicine(
                     isTaken: false,
-                    medName: S.of(context).paracetamol,
+                    text: S.of(context).paracetamol,
+                    image: 'assets/images/tablet.png',
+                    medicationTime: S.of(context).medicationTime,
+                    date: S.of(context).date,
                     frequency: S.of(context).weekly,
                   ),
                 ],

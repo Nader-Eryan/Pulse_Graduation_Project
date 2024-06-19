@@ -2,16 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pulse/Core/managers/notification_services.dart';
-import 'package:pulse/Core/utils/edit_database.dart';
-import 'package:pulse/Core/utils/functions/notifiction_scheduler.dart';
 import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Core/widgets/custom_material_button.dart';
 import 'package:pulse/Features/BottomNavBar/data/repo/fire_repo.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/manager/medication_type_controller.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/select_medication_types_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/choose_medicine.dart';
-import 'package:pulse/Features/home/presentation/manager/meds_controller.dart';
+import 'package:pulse/core/utils/sql_database.dart';
 import 'package:pulse/core/widgets/custom_appbar.dart';
 import 'package:pulse/generated/l10n.dart';
 
@@ -38,6 +35,7 @@ class _CustomFloatingActionButtonState
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    //TODO: implement build
     List<String> whenList = [
       S.of(context).beforeBreakfast,
       S.of(context).afterBreakfast,
@@ -149,23 +147,15 @@ class _CustomFloatingActionButtonState
                   ),
                 ),
               ),
-              GetBuilder<MedTimeController>(
-                init: MedTimeController(),
-                builder: (controller) => CustomMaterialButton(
-                  text: 'Add Medical',
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      int medId = await addMedLocal();
-                      await notificationScheduler(
-                        listOfScheduled: controller.selectedIndexes,
-                        medId: medId,
-                      );
-                      LocalNotificationServices().showScheduledNotification();
-                    }
-                  },
-                  screenRatio: 0.9,
-                ),
-              )
+              CustomMaterialButton(
+                text: S.of(context).addMedication,
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    addMedLocal();
+                  }
+                },
+                screenRatio: 0.9,
+              ),
             ],
           ),
         ),
@@ -173,36 +163,30 @@ class _CustomFloatingActionButtonState
     );
   }
 
-  USqlDb sqlDb = USqlDb();
-  Future<int> addMedLocal() async {
+  SqlDb sqlDb = SqlDb();
+  Future<void> addMedLocal() async {
     String periods = '';
-    String isTaken = '';
     for (var element in timeController.selectedIndexes) {
       periods += element.toString();
-      isTaken += '0';
     }
-    print(periods);
+    //print(periods);
     int response = await sqlDb.insert('meds', {
       'name': _nameController.text,
       'type': typeController.chosen,
       'note': _noteController.text,
       'periods': periods,
       'isActive': 1,
-      'isTaken': isTaken,
-      'history': "0000000"
+      'isTaken': 1,
     });
     if (response > 0) {
       Get.back();
       addMedRemote(response, periods);
       fireRepo.addMedToFire(_nameController.text);
-      await MedsController().getMeds();
-      return response;
     } else {
       if (mounted) {
         Get.snackbar(S.of(context).failure,
             S.of(context).makeSureYouFilledAllTheNeededFields);
       }
-      return 0;
     }
   }
 
