@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/managers/notification_services.dart';
 import 'package:pulse/Core/utils/edit_database.dart';
+import 'package:pulse/Core/utils/functions/get_user_role.dart';
 import 'package:pulse/Core/utils/functions/notifiction_scheduler.dart';
 import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Core/widgets/custom_material_button.dart';
@@ -160,7 +161,10 @@ class _CustomFloatingActionButtonState
                         listOfScheduled: controller.selectedIndexes,
                         medId: medId,
                       );
-                      LocalNotificationServices().showScheduledNotification();
+                      String role = await getUserRole();
+                      if (role == 'Normal patient') {
+                        LocalNotificationServices().showScheduledNotification();
+                      }
                     }
                   },
                   screenRatio: 0.9,
@@ -189,7 +193,6 @@ class _CustomFloatingActionButtonState
       'periods': periods,
       'isActive': 1,
       'isTaken': isTaken,
-      'history': "0000000"
     });
     if (response > 0) {
       Get.back();

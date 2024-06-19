@@ -69,16 +69,13 @@ class LocalNotificationServices {
 
       String? periods = await USqlDb().getPeriods(int.parse(medId));
       List<int> listOfScheduled = [];
-      print('periods: $periods');
       listOfScheduled = periods!.split('').map(int.parse).toList();
-      print('listOfScheduled: ${listOfScheduled.last}');
       if (listOfScheduled.last == indexOfScheduled) {
         if (isTaken!.contains("0")) {
           await USqlDb().updateHistory(int.parse(medId), '0');
         } else {
           await USqlDb().updateHistory(int.parse(medId), '1');
         }
-        print(listOfScheduled.length);
         isTaken = List.filled(listOfScheduled.length, '0').join('');
         print('after last time isTaken: $isTaken');
         await USqlDb().updateIsTaken(int.parse(medId), isTaken);
@@ -108,7 +105,6 @@ class LocalNotificationServices {
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
     var now = tz.TZDateTime.now(tz.local);
     List notificationList = await USqlDb().getAllNotifications();
-    print("notificationList: $notificationList");
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       'daily_scheduled_notification',
@@ -140,14 +136,15 @@ class LocalNotificationServices {
       }
       print("Notification time is after now");
       print(notification.notificationTime);
+      String? medName = await USqlDb().getMedName(notification.medId!);
       await flutterLocalNotificationsPlugin.zonedSchedule(
         notification.id!,
-        'Daily reminder to take your {notification.medName} medication',
+        'Reminder to take your $medName medication',
         'Please take your prescribed medication on time',
         notification.notificationTime,
         notificationDetails,
         payload:
-            '${notification.indexOfNotification}, {notification.medName}, ${notification.medId}',
+            '${notification.indexOfNotification}, $medName, ${notification.medId}',
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
