@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -89,42 +90,7 @@ class _MedicationViewState extends State<MedicationView> {
                     init: NavController(),
                     builder: (controller) => IconButton(
                       onPressed: () async {
-                        SqlDb sqlDb = SqlDb();
-                        sqlDb.deleteAllRows('meds');
-                        final String uid =
-                            getIt.get<FirebaseAuth>().currentUser!.uid;
-                        final snapshot = await getIt
-                            .get<FirebaseDatabase>()
-                            .ref('uMeds/$uid')
-                            .get();
-                        if (snapshot.exists) {
-                          for (var element in snapshot.children) {
-                            print(element.value);
-                            var mp = element.value as Map;
-                            print(mp['name']);
-                            int response = await sqlDb.insert('meds', {
-                              'id': mp['id'],
-                              'name': mp['name'],
-                              'type': mp['type'],
-                              'note': mp['note'],
-                              'periods': mp['periods'],
-                              'isActive': mp['isActive'],
-                              'isTaken': mp['isTaken'],
-                            });
-                            if (response > 0) {
-                              print('done');
-                            }
-                          }
-                          //print(snapshot.children.first.value);
-                        } else {
-                          Get.snackbar('Alert!', 'No data available.');
-                        }
-                        controller.onItemTapped(3);
-                        //print(controller.index);
-                        Future.delayed(const Duration(milliseconds: 50), () {
-                          controller.onItemTapped(2);
-                          //print(controller.index);
-                        });
+                        await getRemoteMeds(controller);
                       },
                       icon: const Icon(Icons.refresh_sharp),
                     ),
@@ -208,5 +174,54 @@ class _MedicationViewState extends State<MedicationView> {
         ),
       ),
     );
+  }
+
+  Future<void> getRemoteMeds(NavController controller) async {
+    SqlDb sqlDb = SqlDb();
+    sqlDb.deleteAllRows('meds');
+    final String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+    String? cgUid;
+    String toUseUid;
+    final res =
+        await getIt.get<FirebaseFirestore>().collection('users').doc(uid).get();
+    if (res.exists) {
+      cgUid = res.data()!['cgUid'];
+    }
+    if (cgUid != null && cgUid.isNotEmpty && cgUid.length >= 28) {
+      toUseUid = cgUid;
+    } else {
+      toUseUid = uid;
+    }
+    DataSnapshot snapshot;
+    try {
+      snapshot =
+          await getIt.get<FirebaseDatabase>().ref('uMeds/$toUseUid').get();
+    } catch (e) {
+      snapshot = await getIt.get<FirebaseDatabase>().ref('uMeds/$uid').get();
+    }
+
+    if (snapshot.exists) {
+      for (var element in snapshot.children) {
+        //print(element.value);
+        var mp = element.value as Map;
+        int response = await sqlDb.insert('meds', {
+          'id': mp['id'],
+          'name': mp['name'],
+          'type': mp['type'],
+          'note': mp['note'],
+          'periods': mp['periods'],
+          'isActive': mp['isActive'],
+          'isTaken': mp['isTaken'],
+        });
+      }
+    } else {
+      Get.snackbar('Alert!', 'No data available.');
+    }
+    controller.onItemTapped(3);
+    //print(controller.index);
+    Future.delayed(const Duration(milliseconds: 50), () {
+      controller.onItemTapped(2);
+      //print(controller.index);
+    });
   }
 }

@@ -26,6 +26,7 @@ class ProfileEdit extends StatefulWidget {
 class _ProfileEditState extends State<ProfileEdit> {
   final TextEditingController roleController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController cgUidController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController numController = TextEditingController();
   final ProfileRepo profileRepo = ProfileRepoImpl();
@@ -38,14 +39,15 @@ class _ProfileEditState extends State<ProfileEdit> {
     nameController.dispose();
     emailController.dispose();
     numController.dispose();
+    cgUidController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  CustomAppBar(
-        title:S.of(context).profileEdit,
+      appBar: CustomAppBar(
+        title: S.of(context).profileEdit,
       ),
       body: Padding(
         padding: const EdgeInsets.all(kPaddingView),
@@ -121,6 +123,29 @@ class _ProfileEditState extends State<ProfileEdit> {
                           }
                           return null;
                         },
+                      ),
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          CustomFormField(
+                            data: snapshot.data!['cgUid'],
+                            isSuffixIcon: false,
+                            isPassWord: false,
+                            hintText: 'Care giver uid (optional)',
+                            controller: cgUidController,
+                            prefixIcon: Icons.link,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return null;
+                              } else if (cgUidController.text.length < 28) {
+                                return 'Wrong uid';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 20,
@@ -249,6 +274,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 (lu != null || snapshot.data!['luH'] != null) &&
                                 (di != null || snapshot.data!['diH'] != null)) {
                               profileRepo.updateUserData(
+                                cgUid: cgUidController.text,
                                 email: emailController.text,
                                 name: nameController.text,
                                 num: numController.text,

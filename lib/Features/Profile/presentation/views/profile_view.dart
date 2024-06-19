@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:pulse/Core/managers/language.dart';
 import 'package:pulse/Core/utils/constants.dart';
 import 'package:pulse/Core/utils/styles.dart';
+import 'package:pulse/Features/Profile/presentation/views/uid.dart';
 import 'package:pulse/Features/Profile/presentation/views/widgets/profile_item.dart';
 import 'package:pulse/Features/authentication/presentation/views/authentication_view.dart';
 import 'package:pulse/core/utils/profile_pic.dart';
@@ -42,7 +43,7 @@ class ProfileView extends StatelessWidget {
             leading: CircleAvatar(
               radius: Get.width * .06,
               backgroundColor:
-              const Color(0xff407CE2).withGreen(200).withOpacity(0.3),
+                  const Color(0xff407CE2).withGreen(200).withOpacity(0.3),
               child: SvgPicture.asset(
                 'assets/images/language.svg',
                 colorFilter: const ColorFilter.mode(
@@ -52,19 +53,28 @@ class ProfileView extends StatelessWidget {
                 height: Get.height * .03,
               ),
             ),
-            title: Text(S.of(context).changeLanguage,style: Styles.textStyleSemiBold16,),
+            title: Text(
+              S.of(context).changeLanguage,
+              style: Styles.textStyleSemiBold16,
+            ),
             trailing: Obx(() => DropdownButton<String>(
-              value: LanguageController.to.language.value,
-              items: LanguageController.to.languages.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (newValue) {
-                LanguageController.to.switchLanguage();
-              },
-            )),
+                  value: LanguageController.to.language.value,
+                  items: LanguageController.to.languages.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    LanguageController.to.switchLanguage();
+                  },
+                )),
+          ),
+          Divider(
+            endIndent: 10.0,
+            indent: 10.0,
+            thickness: 1,
+            color: const Color(0xff407CE2).withOpacity(0.15),
           ),
           SizedBox(
             height: Get.height * .01,
@@ -84,15 +94,18 @@ class ProfileView extends StatelessWidget {
             },
           ),
           ProfileItem(
-            text: S.of(context).donation,
+            text: 'Show my UID',
             icon: 'assets/images/Wallet.svg',
-            onTap: () {},
+            onTap: () {
+              Get.to(UidView());
+            },
           ),
           ProfileItem(
             text: S.of(context).faqs,
             icon: 'assets/images/Chat.svg',
             onTap: () {},
           ),
+
           ProfileItem(
             text: S.of(context).logout,
             icon: 'assets/images/layer1.svg',

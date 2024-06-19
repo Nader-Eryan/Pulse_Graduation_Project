@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -86,26 +87,41 @@ class _ActiveMedsItemState extends State<ActiveMedsItem> {
               IconButton(
                   onPressed: () async {
                     //print(task.id);
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              content: const Text(
-                                  'Are you sure you want to delete the selected med? '),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('CANCEL'),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    await _deleteMed(context);
-                                  },
-                                  child: const Text('SUBMIT'),
-                                ),
-                              ],
-                            ));
+                    final String uid =
+                        getIt.get<FirebaseAuth>().currentUser!.uid;
+
+                    final res = await getIt
+                        .get<FirebaseFirestore>()
+                        .collection('users')
+                        .doc(uid)
+                        .get();
+                    if (res.exists &&
+                        res.data()!['role'] != null &&
+                        res.data()!['role'] == 'Care receiver') {
+                      Get.snackbar('Unauthorized edit',
+                          'Change the role in edit profile!');
+                    } else if (mounted) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                content: const Text(
+                                    'Are you sure you want to delete the selected med? '),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('CANCEL'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      await _deleteMed(context);
+                                    },
+                                    child: const Text('SUBMIT'),
+                                  ),
+                                ],
+                              ));
+                    }
                   },
                   icon: const Icon(
                     Icons.delete,
@@ -113,19 +129,33 @@ class _ActiveMedsItemState extends State<ActiveMedsItem> {
                   )),
               IconButton(
                 onPressed: () async {
-                  setState(
-                    () {
-                      widget.isActive = widget.isActive == 1 ? 0 : 1;
-                    },
-                  );
-                  SqlDb sqlDb = SqlDb();
-                  int response = await sqlDb.updateData('''
+                  final String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+
+                  final res = await getIt
+                      .get<FirebaseFirestore>()
+                      .collection('users')
+                      .doc(uid)
+                      .get();
+                  if (res.exists &&
+                      res.data()!['role'] != null &&
+                      res.data()!['role'] == 'Care receiver') {
+                    Get.snackbar('Unauthorized edit',
+                        'Change the role in edit profile!');
+                  } else {
+                    setState(
+                      () {
+                        widget.isActive = widget.isActive == 1 ? 0 : 1;
+                      },
+                    );
+                    SqlDb sqlDb = SqlDb();
+                    int response = await sqlDb.updateData('''
                                     UPDATE meds SET 'isActive'= ${widget.isActive} WHERE id = ${widget.id}
                                     ''');
-                  if (response > 0) {
-                    _updateMedRemote(widget.isActive);
-                    Get.snackbar('Updated Success!',
-                        'update appears next time you load the page');
+                    if (response > 0) {
+                      _updateMedRemote(widget.isActive);
+                      Get.snackbar('Updated Success!',
+                          'update appears next time you load the page');
+                    }
                   }
                 },
                 icon: Icon(

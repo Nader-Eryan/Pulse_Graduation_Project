@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/manager/nav_controller.dart';
@@ -7,6 +9,7 @@ import 'package:pulse/Features/medication/presentation/views/medication_view.dar
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/add_new_medicine .dart';
 import 'package:pulse/Features/Profile/presentation/views/profile_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/bottom_nav_bar_item.dart';
+import 'package:pulse/core/utils/service_locator.dart';
 import 'package:pulse/generated/l10n.dart';
 
 class BottomNavBarViews extends StatefulWidget {
@@ -107,8 +110,22 @@ class _BottomNavBarViewsState extends State<BottomNavBarViews> {
             Icons.add,
             color: Colors.blue,
           ),
-          onPressed: () {
-            Get.to(const CustomFloatingActionButton());
+          onPressed: () async {
+            final String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+
+            final res = await getIt
+                .get<FirebaseFirestore>()
+                .collection('users')
+                .doc(uid)
+                .get();
+            if (res.exists &&
+                res.data()!['role'] != null &&
+                res.data()!['role'] == 'Care receiver') {
+              Get.snackbar(
+                  'Unauthorized edit', 'Change the role in edit profile!');
+            } else {
+              Get.to(const CustomFloatingActionButton());
+            }
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
