@@ -3,16 +3,15 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pulse/Core/managers/notification_services.dart';
-import 'package:pulse/Core/utils/edit_database.dart';
 import 'package:pulse/Core/utils/functions/get_user_role.dart';
-import 'package:pulse/Core/utils/functions/notifiction_scheduler.dart';
+import 'package:pulse/Core/utils/functions/notification_scheduler.dart';
+import 'package:pulse/Core/utils/sql_database.dart';
 import 'package:pulse/Core/utils/styles.dart';
 import 'package:pulse/Core/widgets/custom_material_button.dart';
 import 'package:pulse/Features/BottomNavBar/data/repo/fire_repo.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/manager/medication_type_controller.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/select_medication_types_view.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/widgets/choose_medicine.dart';
-import 'package:pulse/Features/home/presentation/manager/meds_controller.dart';
 import 'package:pulse/core/widgets/custom_appbar.dart';
 import 'package:pulse/generated/l10n.dart';
 
@@ -177,13 +176,11 @@ class _CustomFloatingActionButtonState
     );
   }
 
-  USqlDb sqlDb = USqlDb();
+  SqlDb sqlDb = SqlDb();
   Future<int> addMedLocal() async {
     String periods = '';
-    String isTaken = '';
     for (var element in timeController.selectedIndexes) {
       periods += element.toString();
-      isTaken += '0';
     }
     print(periods);
     int response = await sqlDb.insert('meds', {
@@ -192,13 +189,12 @@ class _CustomFloatingActionButtonState
       'note': _noteController.text,
       'periods': periods,
       'isActive': 1,
-      'isTaken': isTaken,
+      'isTaken': 0,
     });
     if (response > 0) {
       Get.back();
       addMedRemote(response, periods);
       fireRepo.addMedToFire(_nameController.text);
-      await MedsController().getMeds();
       return response;
     } else {
       if (mounted) {
@@ -218,7 +214,7 @@ class _CustomFloatingActionButtonState
       'note': _noteController.text,
       'periods': periods,
       'isActive': 1,
-      'isTaken': 1,
+      'isTaken': 0,
     });
   }
 }

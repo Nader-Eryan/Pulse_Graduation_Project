@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:pulse/Core/managers/connectivity_services.dart';
 import 'package:pulse/Core/managers/language.dart';
 import 'package:pulse/Core/managers/notification_services.dart';
-import 'package:pulse/Core/utils/edit_database.dart';
 import 'package:pulse/Core/utils/functions/get_user_role.dart';
+import 'package:pulse/Core/utils/sql_database.dart';
 import 'package:pulse/Features/Onboarding/presentation/views/splash_view.dart';
 import 'package:pulse/core/utils/service_locator.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,10 +18,10 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   serviceLocatorSetup();
-  // SqlDb sqlDb = SqlDb();
-  // await sqlDb.initiateDb();
-  USqlDb sqlDb = USqlDb();
+  SqlDb sqlDb = SqlDb();
   await sqlDb.initiateDb();
+  // USqlDb sqlDb = USqlDb();
+  // await sqlDb.initiateDb();
 
   // Initialize the ConnectivityController
   final connectivityController = Get.put(ConnectivityController());

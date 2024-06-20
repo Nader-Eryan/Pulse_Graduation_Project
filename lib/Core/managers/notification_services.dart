@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:pulse/Core/utils/edit_database.dart';
+import 'package:pulse/Core/utils/sql_database.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -14,7 +14,6 @@ class LocalNotificationServices {
     final title = parts[1].trim();
     final medId = parts[2].trim();
 
-    String? isTaken = '';
     tz.initializeTimeZones();
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
@@ -58,27 +57,20 @@ class LocalNotificationServices {
       print('User pressed Remind me later');
       print(details.id);
     } else if (details.actionId == 'will_take_it') {
-      isTaken = await USqlDb().getIsTaken(int.parse(medId));
-      print('isTaken before replacement: $isTaken');
-      isTaken =
-          isTaken?.replaceRange(indexOfScheduled, indexOfScheduled + 1, "1");
-      print('isTaken after replacement: $isTaken');
-      if (isTaken != null) {
-        await USqlDb().updateIsTaken(int.parse(medId), isTaken);
-      }
-
-      String? periods = await USqlDb().getPeriods(int.parse(medId));
+      int? isTaken = await SqlDb().getIsTaken(int.parse(medId));
+      isTaken = isTaken! + 1;
+      await SqlDb().updateIsTaken(int.parse(medId), isTaken);
+      String? periods = await SqlDb().getPeriods(int.parse(medId));
       List<int> listOfScheduled = [];
       listOfScheduled = periods!.split('').map(int.parse).toList();
+      print(listOfScheduled);
       if (listOfScheduled.last == indexOfScheduled) {
-        if (isTaken!.contains("0")) {
-          await USqlDb().updateHistory(int.parse(medId), '0');
+        await SqlDb().updateIsTaken(int.parse(medId), 0);
+        if (isTaken == listOfScheduled.length) {
+          await SqlDb().updateHistory(int.parse(medId), '1');
         } else {
-          await USqlDb().updateHistory(int.parse(medId), '1');
+          await SqlDb().updateHistory(int.parse(medId), '0');
         }
-        isTaken = List.filled(listOfScheduled.length, '0').join('');
-        print('after last time isTaken: $isTaken');
-        await USqlDb().updateIsTaken(int.parse(medId), isTaken);
       }
       print('User pressed I will took it ');
     }
@@ -104,7 +96,7 @@ class LocalNotificationServices {
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
     var now = tz.TZDateTime.now(tz.local);
-    List notificationList = await USqlDb().getAllNotifications();
+    List notificationList = await SqlDb().getAllNotifications();
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       'daily_scheduled_notification',
@@ -136,7 +128,7 @@ class LocalNotificationServices {
       }
       print("Notification time is after now");
       print(notification.notificationTime);
-      String? medName = await USqlDb().getMedName(notification.medId!);
+      String? medName = await SqlDb().getMedName(notification.medId!);
       await flutterLocalNotificationsPlugin.zonedSchedule(
         notification.id!,
         'Reminder to take your $medName medication',
