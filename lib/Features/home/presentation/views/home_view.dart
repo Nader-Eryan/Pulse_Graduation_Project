@@ -80,30 +80,27 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: Get.height * .06,
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(FontAwesomeIcons.magnifyingGlass,
-                            color: Colors.grey, size: 22),
-                        hintText: 'Search for alternatives',
-                        border: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xff407CE2)),
-                          borderRadius: BorderRadius.all(Radius.circular(40)),
-                        ),
-                        contentPadding: EdgeInsets.all(23.0),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xffE4E4E5)),
-                          borderRadius: BorderRadius.all(Radius.circular(40)),
-                        ),
+                  TextField(
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(FontAwesomeIcons.magnifyingGlass,
+                          color: Colors.grey, size: 22),
+                      hintText: 'Search for alternatives',
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff407CE2)),
+                        borderRadius: BorderRadius.all(Radius.circular(40)),
                       ),
-                      onSubmitted: (value) {
-                        print(value);
-                        isSearched = true;
-                        searchForAlternatives(value);
-                      },
+                      contentPadding: EdgeInsets.all(23.0),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xffE4E4E5)),
+                        borderRadius: BorderRadius.all(Radius.circular(40)),
+                      ),
                     ),
+                    onSubmitted: (value) {
+                      print(value);
+                      isSearched = true;
+                      searchForAlternatives(value);
+                    },
                   ),
                   const SizedBox(height: 15.0),
                   Row(
