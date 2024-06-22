@@ -74,41 +74,39 @@ class _InteractionsViewState extends State<InteractionsView> {
                         child: ListView.builder(
                           itemCount: snapshot.data!['interactions'].length,
                           itemBuilder: (BuildContext context, int index) {
-                            return Expanded(
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Card(
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              '${snapshot.data!['interactions'][index]['existing_drug']}',
-                                              style: Styles.textStyleMedium14,
-                                            ),
+                            return Column(
+                              children: [
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Card(
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            '${snapshot.data!['interactions'][index]['existing_drug']}',
+                                            style: Styles.textStyleMedium14,
                                           ),
-                                          Icon(
-                                            Icons.close,
-                                            color: Colors.red[800],
-                                            size: 50,
+                                        ),
+                                        Icon(
+                                          Icons.close,
+                                          color: Colors.red[800],
+                                          size: 50,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            '${snapshot.data!['interactions'][index]['new_drug']}',
+                                            style: Styles.textStyleMedium14,
                                           ),
-                                          Flexible(
-                                            child: Text(
-                                              '${snapshot.data!['interactions'][index]['new_drug']}',
-                                              style: Styles.textStyleMedium14,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             );
                           },
                         ),
