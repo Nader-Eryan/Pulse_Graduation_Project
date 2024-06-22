@@ -14,11 +14,11 @@ class RefillDrugsPillBoxCircle extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 50,
+          height: 69,
           width: Get.width - 100,
           margin: const EdgeInsets.only(top: 0, left: 10, right: 10),
           decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.elliptical(100, 50)),
+            borderRadius: BorderRadius.all(Radius.elliptical(50, 50)),
             //shape: BoxShape.circle,
             gradient: LinearGradient(
               begin: Alignment.topCenter,

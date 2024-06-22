@@ -55,7 +55,7 @@ class _InteractionsViewState extends State<InteractionsView> {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (!snapshot.hasData && snapshot.data != null) {
+                } else if (!snapshot.hasData || snapshot.data == null) {
                   return const Center(child: NoInt());
                 }
                 try {
