@@ -979,6 +979,326 @@ class S {
       args: [],
     );
   }
+
+  /// `Show my UID`
+  String get showMyUID {
+    return Intl.message(
+      'Show my UID',
+      name: 'showMyUID',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `UID`
+  String get uidViewTitle {
+    return Intl.message(
+      'UID',
+      name: 'uidViewTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap over the uid to get it copied`
+  String get uidViewTapToCopy {
+    return Intl.message(
+      'Tap over the uid to get it copied',
+      name: 'uidViewTapToCopy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copied!`
+  String get uidViewCopied {
+    return Intl.message(
+      'Copied!',
+      name: 'uidViewCopied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Text copied to clipboard.`
+  String get uidViewTextCopiedToClipboard {
+    return Intl.message(
+      'Text copied to clipboard.',
+      name: 'uidViewTextCopiedToClipboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Drug-drug interaction`
+  String get drugDrugInteraction {
+    return Intl.message(
+      'Drug-drug interaction',
+      name: 'drugDrugInteraction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong`
+  String get somethingWentWrong {
+    return Intl.message(
+      'Something went wrong',
+      name: 'somethingWentWrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No drug-drug interaction found!`
+  String get noInteractionText {
+    return Intl.message(
+      'No drug-drug interaction found!',
+      name: 'noInteractionText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Our algorithms discovered that there are bad interactions between the following drugs.\nRefer back to your doctor with these results!`
+  String get interactionText {
+    return Intl.message(
+      'Our algorithms discovered that there are bad interactions between the following drugs.\nRefer back to your doctor with these results!',
+      name: 'interactionText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Awesome!`
+  String get awesome {
+    return Intl.message(
+      'Awesome!',
+      name: 'awesome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Medical`
+  String get addMedical {
+    return Intl.message(
+      'Add Medical',
+      name: 'addMedical',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unauthorized edit`
+  String get activeMedsItemUnauthorizedEdit {
+    return Intl.message(
+      'Unauthorized edit',
+      name: 'activeMedsItemUnauthorizedEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change the role in edit profile!`
+  String get activeMedsItemChangeRoleInEditProfile {
+    return Intl.message(
+      'Change the role in edit profile!',
+      name: 'activeMedsItemChangeRoleInEditProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete the selected med?`
+  String get activeMedsItemAreYouSureYouWantToDeleteTheSelectedMed {
+    return Intl.message(
+      'Are you sure you want to delete the selected med?',
+      name: 'activeMedsItemAreYouSureYouWantToDeleteTheSelectedMed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CANCEL`
+  String get activeMedsItemCancel {
+    return Intl.message(
+      'CANCEL',
+      name: 'activeMedsItemCancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SUBMIT`
+  String get activeMedsItemSubmit {
+    return Intl.message(
+      'SUBMIT',
+      name: 'activeMedsItemSubmit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updated Success!`
+  String get activeMedsItemUpdatedSuccess {
+    return Intl.message(
+      'Updated Success!',
+      name: 'activeMedsItemUpdatedSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update appears next time you load the page`
+  String get activeMedsItemUpdateAppearsNextTimeYouLoadThePage {
+    return Intl.message(
+      'Update appears next time you load the page',
+      name: 'activeMedsItemUpdateAppearsNextTimeYouLoadThePage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deleted Successfully!`
+  String get activeMedsItemDeletedSuccessfully {
+    return Intl.message(
+      'Deleted Successfully!',
+      name: 'activeMedsItemDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh to show changes`
+  String get activeMedsItemRefreshToShowChanges {
+    return Intl.message(
+      'Refresh to show changes',
+      name: 'activeMedsItemRefreshToShowChanges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alert!`
+  String get alert {
+    return Intl.message(
+      'Alert!',
+      name: 'alert',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No data available`
+  String get noDataAvailable {
+    return Intl.message(
+      'No data available',
+      name: 'noDataAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open box request:`
+  String get openBoxRequest {
+    return Intl.message(
+      'Open box request:',
+      name: 'openBoxRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `As a patient`
+  String get asPatient {
+    return Intl.message(
+      'As a patient',
+      name: 'asPatient',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `As a care giver`
+  String get asCareGiver {
+    return Intl.message(
+      'As a care giver',
+      name: 'asCareGiver',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close box`
+  String get closeBox {
+    return Intl.message(
+      'Close box',
+      name: 'closeBox',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a med to get alternatives`
+  String get enterAMedToGetAlternatives {
+    return Intl.message(
+      'Enter a med to get alternatives',
+      name: 'enterAMedToGetAlternatives',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for alternatives`
+  String get searchForAlternatives {
+    return Intl.message(
+      'Search for alternatives',
+      name: 'searchForAlternatives',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a complete med name`
+  String get enterACompleteMedName {
+    return Intl.message(
+      'Enter a complete med name',
+      name: 'enterACompleteMedName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alternatives`
+  String get alternatives {
+    return Intl.message(
+      'Alternatives',
+      name: 'alternatives',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Internet Connection`
+  String get noInternet {
+    return Intl.message(
+      'No Internet Connection',
+      name: 'noInternet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please check your internet connection and try again.`
+  String get noInternetText {
+    return Intl.message(
+      'Please check your internet connection and try again.',
+      name: 'noInternetText',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

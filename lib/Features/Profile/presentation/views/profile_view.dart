@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,12 +14,22 @@ import 'package:pulse/core/utils/sql_database.dart';
 import 'package:pulse/generated/l10n.dart';
 
 import '../../../../Core/utils/service_locator.dart';
-import 'drug_history.dart';
 import 'profile_edit.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
 
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  String userName = '';
+  @override
+  void initState() {
+    getUserName();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,8 +42,8 @@ class ProfileView extends StatelessWidget {
           SizedBox(
             height: Get.height * .02,
           ),
-          const Text(
-            'Ruchita',
+          Text(
+            userName,
             style: Styles.textStyleSemiBold14,
           ),
           SizedBox(
@@ -43,7 +54,7 @@ class ProfileView extends StatelessWidget {
             leading: CircleAvatar(
               radius: Get.width * .06,
               backgroundColor:
-                  const Color(0xff407CE2).withGreen(200).withOpacity(0.3),
+              const Color(0xff407CE2).withGreen(200).withOpacity(0.3),
               child: SvgPicture.asset(
                 'assets/images/language.svg',
                 colorFilter: const ColorFilter.mode(
@@ -58,17 +69,17 @@ class ProfileView extends StatelessWidget {
               style: Styles.textStyleSemiBold16,
             ),
             trailing: Obx(() => DropdownButton<String>(
-                  value: LanguageController.to.language.value,
-                  items: LanguageController.to.languages.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) {
-                    LanguageController.to.switchLanguage();
-                  },
-                )),
+              value: LanguageController.to.language.value,
+              items: LanguageController.to.languages.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                LanguageController.to.switchLanguage();
+              },
+            )),
           ),
           Divider(
             endIndent: 10.0,
@@ -86,15 +97,15 @@ class ProfileView extends StatelessWidget {
               Get.to(() => const ProfileEdit());
             },
           ),
+          // ProfileItem(
+          //   text: S.of(context).drugHistory,
+          //   icon: 'assets/images/Document.svg',
+          //   onTap: () {
+          //     Get.to(() => const DrugHistory());
+          //   },
+          // ),
           ProfileItem(
-            text: S.of(context).drugHistory,
-            icon: 'assets/images/Document.svg',
-            onTap: () {
-              Get.to(() => const DrugHistory());
-            },
-          ),
-          ProfileItem(
-            text: 'Show my UID',
+            text: S.of(context).showMyUID,
             icon: 'assets/images/Wallet.svg',
             onTap: () {
               Get.to(UidView());
@@ -121,4 +132,14 @@ class ProfileView extends StatelessWidget {
       ),
     );
   }
+  void getUserName() async {
+    final String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+    final res =
+    await getIt.get<FirebaseFirestore>().collection('users').doc(uid).get();
+    List<String> ls = res.data()!['name'].toString().split(' ');
+    //print(ls);
+    userName = ls[0];
+    setState(() {});
+  }
 }
+

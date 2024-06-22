@@ -63,11 +63,10 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: S.delegate.supportedLocales,
         home: !connectivityController.isConnected.value
-            ? const Scaffold(
+            ? Scaffold(
                 body: AlertDialog(
-                  title: Text('No Internet Connection'),
-                  content: Text(
-                      'Please check your internet connection and try again.'),
+                  title: Text(S.of(context).noInternet),
+                  content: Text(S.of(context).noInternetText),
                 ),
               )
             : const SplashView(),

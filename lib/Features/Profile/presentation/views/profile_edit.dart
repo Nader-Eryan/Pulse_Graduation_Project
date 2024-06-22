@@ -50,7 +50,7 @@ class _ProfileEditState extends State<ProfileEdit> {
         title: S.of(context).profileEdit,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(kPaddingView),
+        padding: const EdgeInsets.symmetric(horizontal: kPaddingView),
         child: SingleChildScrollView(
           child: FutureBuilder<DocumentSnapshot>(
               future: getIt
@@ -79,7 +79,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             children: [
                               const ProfilePic(),
                               const SizedBox(
-                                height: 20,
+                                height: 5,
                               ),
                               Text(
                                 S.of(context).changePicture,
@@ -94,10 +94,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                           },
                         ),
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
+                      // const SizedBox(
+                      //   height: 5,
+                      // ),
                       TextButton(
+                        style: ButtonStyle(
+                          padding:  MaterialStateProperty.all(EdgeInsets.zero),
+                          visualDensity:  VisualDensity.compact,
+                        ),
                         onPressed: () {
                           Get.to(const ResetPasswordView());
                         },
@@ -108,7 +112,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                         ),
                       ),
                       SizedBox(
-                        height: Get.height * .03,
+                        height: Get.height * .022,
                       ),
                       CustomFormField(
                         data: snapshot.data!['role'],
@@ -126,8 +130,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                       ),
                       Column(
                         children: [
-                          const SizedBox(
-                            height: 20,
+                          SizedBox(
+                            height: Get.height * 0.022,
                           ),
                           CustomFormField(
                             data: snapshot.data!['cgUid'],
@@ -147,8 +151,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: Get.height * 0.022,
                       ),
                       CustomFormField(
                         prefixIcon: FontAwesomeIcons.user,
@@ -166,8 +170,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                           return null;
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: Get.height * 0.022,
                       ),
                       CustomFormField(
                         data: snapshot.data!['email'],
@@ -180,15 +184,15 @@ class _ProfileEditState extends State<ProfileEdit> {
                           if (value == null || value.isEmpty) {
                             return S.of(context).confirmEmail;
                           } else if (!RegExp(
-                                  r'''^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$''')
+                              r'''^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$''')
                               .hasMatch(value)) {
                             return S.of(context).validateEmail;
                           }
                           return null;
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: Get.height * 0.022,
                       ),
                       CustomFormField(
                         data: snapshot.data?['num'],
@@ -263,8 +267,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: Get.height * 0.022,
                       ),
                       CustomMaterialButton(
                           text: S.of(context).saveChanges,

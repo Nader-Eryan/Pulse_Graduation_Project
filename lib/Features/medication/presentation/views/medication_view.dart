@@ -26,7 +26,7 @@ List<Map> inactiveMeds = [];
 List<Map> allMeds = [];
 List<List<String>> activePeriods = [];
 List<List<String>> inactivePeriods = [];
-MedRepo medRepo = MedRepo();
+MedRepo medRepo = MedRepo(context: Get.context!);
 
 class _MedicationViewState extends State<MedicationView> {
   @override
@@ -215,7 +215,7 @@ class _MedicationViewState extends State<MedicationView> {
         });
       }
     } else {
-      Get.snackbar('Alert!', 'No data available.');
+      Get.snackbar(S.of(context).alert, S.of(context).noDataAvailable);
     }
     controller.onItemTapped(3);
     //print(controller.index);

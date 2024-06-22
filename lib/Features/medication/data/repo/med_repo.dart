@@ -1,24 +1,29 @@
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:pulse/generated/l10n.dart';
+
 class MedRepo {
+  BuildContext context;
+  MedRepo({required this.context});
   List<String> medPeriod(String period) {
     String pString = period;
     List<String> periods = [];
     if (pString.contains('0')) {
-      periods.add('Before breakfast');
+      periods.add(S.of(context).beforeBreakfast);
     }
     if (pString.contains('1')) {
-      periods.add('After breakfast');
+      periods.add(S.of(context).afterBreakfast);
     }
     if (pString.contains('2')) {
-      periods.add('Before lunch');
+      periods.add(S.of(context).beforeLunch);
     }
     if (pString.contains('3')) {
-      periods.add('After lunch');
+      periods.add(S.of(context).afterLunch);
     }
     if (pString.contains('4')) {
-      periods.add('Before dinner');
+      periods.add(S.of(context).beforeDinner);
     }
     if (pString.contains('5')) {
-      periods.add('After dinner');
+      periods.add(S.of(context).afterDinner);
     }
     return periods;
   }
