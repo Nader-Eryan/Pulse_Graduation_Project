@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pulse/core/utils/styles.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class NoInt extends StatelessWidget {
   const NoInt({super.key});
@@ -12,7 +13,7 @@ class NoInt extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Awesome',
+              S.of(context).awesome,
               style: Styles.textStyleBold22.copyWith(color: Colors.green[800]),
             ),
             const SizedBox(
@@ -29,7 +30,7 @@ class NoInt extends StatelessWidget {
           height: 20,
         ),
         Text(
-          'No drug-drug interaction found!',
+          S.of(context).noInteractionText,
           style: Styles.textStyleMedium18.copyWith(color: Colors.green[800]),
         ),
       ]),

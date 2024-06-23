@@ -53,6 +53,9 @@ class _CustomFloatingActionButtonState
           key: _formKey,
           child: Column(
             children: [
+              const SizedBox(
+                height: 20,
+              ),
               SizedBox(
                 height: Get.height * .1,
                 child: const Row(
@@ -93,6 +96,9 @@ class _CustomFloatingActionButtonState
                     return null;
                   },
                 ),
+              ),
+              SizedBox(
+                height: Get.height * .03,
               ),
               SizedBox(
                 height: Get.height * .08,

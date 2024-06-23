@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:pulse/core/utils/service_locator.dart';
 import 'package:pulse/core/utils/styles.dart';
 import 'package:pulse/core/widgets/custom_appbar.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class UidView extends StatelessWidget {
   final dataController = Get.put(DataController());
@@ -16,8 +17,8 @@ class UidView extends StatelessWidget {
   Widget build(BuildContext context) {
     dataController.getData(uid);
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'UID',
+      appBar: CustomAppBar(
+        title: S.of(context).uidViewTitle,
       ),
       body: Center(
         child: Column(
@@ -27,7 +28,8 @@ class UidView extends StatelessWidget {
               onTap: () {
                 _controller.text = dataController.data.value;
                 Clipboard.setData(ClipboardData(text: _controller.text));
-                Get.snackbar('Copied!', 'Text copied to clipboard.',
+                Get.snackbar(S.of(context).uidViewCopied,
+                    S.of(context).uidViewTextCopiedToClipboard,
                     snackPosition: SnackPosition.BOTTOM);
               },
               child: Text(
@@ -35,7 +37,7 @@ class UidView extends StatelessWidget {
                 style: Styles.textStyleSemiBold16,
               ),
             ),
-            const Text('Tap over the uid to get it copied')
+            Text(S.of(context).uidViewTapToCopy)
           ],
         ),
       ),

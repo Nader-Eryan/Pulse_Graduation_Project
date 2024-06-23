@@ -50,7 +50,7 @@ class _ProfileEditState extends State<ProfileEdit> {
         title: S.of(context).profileEdit,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(kPaddingView),
+        padding: const EdgeInsets.symmetric(horizontal: kPaddingView),
         child: SingleChildScrollView(
           child: FutureBuilder<DocumentSnapshot>(
               future: getIt
@@ -60,7 +60,10 @@ class _ProfileEditState extends State<ProfileEdit> {
                   .get(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return const Center(child: Text('Something went wrong'));
+                  return Center(
+                      child: Text(
+                    S.of(context).somethingWentWrong,
+                  ));
                 } else if (snapshot.connectionState ==
                     ConnectionState.waiting) {
                   return const Center(
@@ -78,9 +81,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                           child: Column(
                             children: [
                               const ProfilePic(),
-                              const SizedBox(
-                                height: 20,
-                              ),
                               Text(
                                 S.of(context).changePicture,
                                 style: Styles.textStyleSemiBold16.copyWith(
@@ -94,10 +94,11 @@ class _ProfileEditState extends State<ProfileEdit> {
                           },
                         ),
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
                       TextButton(
+                        style: ButtonStyle(
+                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          visualDensity: VisualDensity.compact,
+                        ),
                         onPressed: () {
                           Get.to(const ResetPasswordView());
                         },
@@ -108,7 +109,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                         ),
                       ),
                       SizedBox(
-                        height: Get.height * .03,
+                        height: Get.height * 0.022,
                       ),
                       CustomFormField(
                         data: snapshot.data!['role'],
@@ -126,14 +127,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                       ),
                       Column(
                         children: [
-                          const SizedBox(
-                            height: 20,
+                          SizedBox(
+                            height: Get.height * 0.022,
                           ),
                           CustomFormField(
                             data: snapshot.data!['cgUid'],
                             isSuffixIcon: false,
                             isPassWord: false,
-                            hintText: 'Care giver uid (optional)',
+                            hintText: S.of(context).careGiverUid,
                             controller: cgUidController,
                             prefixIcon: Icons.link,
                             validator: (value) {
@@ -147,8 +148,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: Get.height * 0.022,
                       ),
                       CustomFormField(
                         prefixIcon: FontAwesomeIcons.user,
@@ -166,8 +167,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                           return null;
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: Get.height * 0.022,
                       ),
                       CustomFormField(
                         data: snapshot.data!['email'],
@@ -187,8 +188,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                           return null;
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: Get.height * 0.022,
                       ),
                       CustomFormField(
                         data: snapshot.data?['num'],
@@ -208,8 +209,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                           return null;
                         },
                       ),
-                      const SizedBox(
-                        height: 15,
+                      SizedBox(
+                        height: Get.height * 0.022,
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -293,8 +294,11 @@ class _ProfileEditState extends State<ProfileEdit> {
                                         minute: snapshot.data!['diM']),
                               );
                             } else if (bf == null || lu == null || di == null) {
-                              Get.snackbar('Opps!',
-                                  'Make sure that you picked all meals time');
+                              Get.snackbar(
+                                  S.of(context).failedSnackBar,
+                                  S
+                                      .of(context)
+                                      .makeSureThatYouPickedAllMealTime);
                             }
                           },
                           screenRatio: .9),

@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pulse/Core/managers/notification_services.dart';
 import 'package:pulse/Features/BottomNavBar/data/repo/fire_repo.dart';
 import 'package:pulse/Features/BottomNavBar/presentation/views/bottom_nav_bar_views.dart';
 import 'package:pulse/core/utils/styles.dart';
+import 'package:pulse/generated/l10n.dart';
 
 import '../../../../core/utils/service_locator.dart';
 import '../../../../core/utils/sql_database.dart';
@@ -98,26 +100,37 @@ class _ActiveMedsItemState extends State<ActiveMedsItem> {
                     if (res.exists &&
                         res.data()!['role'] != null &&
                         res.data()!['role'] == 'Care receiver') {
-                      Get.snackbar('Unauthorized edit',
-                          'Change the role in edit profile!');
+                      if (context.mounted) {
+                        Get.snackbar(
+                            S.of(context).activeMedsItemUnauthorizedEdit,
+                            S
+                                .of(context)
+                                .activeMedsItemChangeRoleInEditProfile);
+                      }
                     } else if (mounted) {
                       showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                                content: const Text(
-                                    'Are you sure you want to delete the selected med? '),
+                                content: Text(S
+                                    .of(context)
+                                    .activeMedsItemAreYouSureYouWantToDeleteTheSelectedMed),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: const Text('CANCEL'),
+                                    child: Text(
+                                        S.of(context).activeMedsItemCancel),
                                   ),
                                   TextButton(
                                     onPressed: () async {
                                       await _deleteMed(context);
+                                      LocalNotificationServices()
+                                          .canceledNotificationForMed(
+                                              widget.id);
                                     },
-                                    child: const Text('SUBMIT'),
+                                    child: Text(
+                                        S.of(context).activeMedsItemSubmit),
                                   ),
                                 ],
                               ));
@@ -139,8 +152,10 @@ class _ActiveMedsItemState extends State<ActiveMedsItem> {
                   if (res.exists &&
                       res.data()!['role'] != null &&
                       res.data()!['role'] == 'Care receiver') {
-                    Get.snackbar('Unauthorized edit',
-                        'Change the role in edit profile!');
+                    if (context.mounted) {
+                      Get.snackbar(S.of(context).activeMedsItemUnauthorizedEdit,
+                          S.of(context).activeMedsItemChangeRoleInEditProfile);
+                    }
                   } else {
                     setState(
                       () {
@@ -153,8 +168,15 @@ class _ActiveMedsItemState extends State<ActiveMedsItem> {
                                     ''');
                     if (response > 0) {
                       _updateMedRemote(widget.isActive);
-                      Get.snackbar('Updated Success!',
-                          'update appears next time you load the page');
+                      LocalNotificationServices()
+                          .canceledNotificationForMed(widget.id);
+                      if (context.mounted) {
+                        Get.snackbar(
+                            S.of(context).activeMedsItemUpdatedSuccess,
+                            S
+                                .of(context)
+                                .activeMedsItemUpdateAppearsNextTimeYouLoadThePage);
+                      }
                     }
                   }
                 },
@@ -201,7 +223,10 @@ class _ActiveMedsItemState extends State<ActiveMedsItem> {
       Get.back();
       _deleteMedRemote();
       fireRepo.removeMedFromFire(drugToBeRemoved[0]['name']);
-      Get.snackbar('Deleted Successfully!', 'Refresh to show changes');
+      if (context.mounted) {
+        Get.snackbar(S.of(context).activeMedsItemDeletedSuccessfully,
+            S.of(context).activeMedsItemRefreshToShowChanges);
+      }
       Get.off(const BottomNavBarViews());
     }
   }

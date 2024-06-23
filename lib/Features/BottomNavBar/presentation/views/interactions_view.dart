@@ -6,6 +6,7 @@ import 'package:pulse/Features/Profile/presentation/views/widgets/no_int.dart';
 import 'package:pulse/core/utils/constants.dart';
 import 'package:pulse/core/utils/service_locator.dart';
 import 'package:pulse/core/utils/styles.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class InteractionsView extends StatefulWidget {
   const InteractionsView({super.key});
@@ -28,13 +29,13 @@ class _InteractionsViewState extends State<InteractionsView> {
     return Column(
       children: [
         const SizedBox(
-          height: 5,
+          height: 20,
         ),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Drug-drug interaction',
+              S.of(context).drugDrugInteraction,
               style: Styles.textStyleBold18,
             ),
           ],
@@ -49,7 +50,7 @@ class _InteractionsViewState extends State<InteractionsView> {
                   .get(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return const Center(child: Text('Something went wrong'));
+                  return Center(child: Text(S.of(context).somethingWentWrong));
                 } else if (snapshot.connectionState ==
                     ConnectionState.waiting) {
                   return const Center(
@@ -61,11 +62,7 @@ class _InteractionsViewState extends State<InteractionsView> {
                 try {
                   return Column(
                     children: [
-                      Text(
-                        '''Our algorithims discovered that there are bad interactions between the following drugs.\nRefer back to your doctor with these results!''',
-                        style: Styles.textStyleMedium18
-                            .copyWith(color: Colors.red[900]),
-                      ),
+                      Text(S.of(context).interactionText),
                       const SizedBox(
                         height: 20,
                       ),

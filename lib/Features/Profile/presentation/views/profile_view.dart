@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,8 +17,20 @@ import '../../../../Core/utils/service_locator.dart';
 import 'drug_history.dart';
 import 'profile_edit.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
+
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  String userName = '';
+  @override
+  void initState() {
+    getUserName();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +44,8 @@ class ProfileView extends StatelessWidget {
           SizedBox(
             height: Get.height * .02,
           ),
-          const Text(
-            'Ruchita',
+          Text(
+            userName,
             style: Styles.textStyleSemiBold14,
           ),
           SizedBox(
@@ -86,15 +99,15 @@ class ProfileView extends StatelessWidget {
               Get.to(() => const ProfileEdit());
             },
           ),
+          // ProfileItem(
+          //   text: S.of(context).drugHistory,
+          //   icon: 'assets/images/Document.svg',
+          //   onTap: () {
+          //     Get.to(() => const DrugHistory());
+          //   },
+          // ),
           ProfileItem(
-            text: S.of(context).drugHistory,
-            icon: 'assets/images/Document.svg',
-            onTap: () {
-              Get.to(() => const DrugHistory());
-            },
-          ),
-          ProfileItem(
-            text: 'Show my UID',
+            text: S.of(context).showMyUID,
             icon: 'assets/images/Wallet.svg',
             onTap: () {
               Get.to(UidView());
@@ -120,5 +133,15 @@ class ProfileView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void getUserName() async {
+    final String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
+    final res =
+        await getIt.get<FirebaseFirestore>().collection('users').doc(uid).get();
+    List<String> ls = res.data()!['name'].toString().split(' ');
+    //print(ls);
+    userName = ls[0];
+    setState(() {});
   }
 }

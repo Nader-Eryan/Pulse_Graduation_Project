@@ -92,10 +92,41 @@
   "careReceiver": "متلقي الرعاية",
   "activeMeds": "الأدوية النشطة",
   "inactiveMeds": "الأدوية الغير نشطة",
-  "noMeds": "لا يوجد أدوية للعرض"
-
-
-
-
+  "noMeds": "لا يوجد أدوية للعرض",
+  "showMyUID": " اظهار رقم تعريف المستخدم",
+  "uidViewTitle": "رقم تعريف المستخدم",
+  "uidViewTapToCopy": "اضغط على رقم تعريف المستخدم لنسخه",
+  "uidViewCopied": "تم النسخ!",
+  "uidViewTextCopiedToClipboard": "تم نسخ النص إلى الحافظة.",
+  "drugDrugInteraction": "تفاعل الأدوية",
+  "somethingWentWrong": "هناك خطأ ما",
+  "noInteractionText": "لم يتم العثور على تفاعل الأدوية!.",
+  "interactionText": "اكتشفت خوارزمياتنا أن هناك تفاعلات سيئة بين الأدوية التالية.\nارجع إلى طبيبك بهذه النتائج!",
+  "awesome": "ممتاز",
+  "addMedical": "اضافة أدوية",
+  "activeMedsItemUnauthorizedEdit": "تعديل غير مصرح به",
+  "activeMedsItemChangeRoleInEditProfile": "تغيير الدور في تعديل الملف الشخصي",
+  "activeMedsItemAreYouSureYouWantToDeleteTheSelectedMed": "هل أنت متأكد أنك تريد حذف الدواء المحدد؟",
+  "activeMedsItemCancel": "إلغاء",
+  "activeMedsItemSubmit": "إرسال",
+  "activeMedsItemUpdatedSuccess": "تم التحديث بنجاح",
+  "activeMedsItemUpdateAppearsNextTimeYouLoadThePage": "يظهر التحديث في المرة القادمة التي تحمل فيها الصفحة",
+  "activeMedsItemDeletedSuccessfully": "تم الحذف بنجاح",
+  "activeMedsItemRefreshToShowChanges": "تحديث لإظهار التغييرات",
+  "alert": "تنبيه",
+  "noDataAvailable": "No data available",
+  "openBoxRequest": "طلبات فتح الصندوق",
+  "asPatient": "ك مريض",
+  "asCareGiver": "ك راعي",
+  "closeBox": "اغلاق الصندوق",
+  "enterAMedToGetAlternatives": "أدخل دواء للحصول على البدائل",
+  "searchForAlternatives": "ابحث عن البدائل",
+  "enterACompleteMedName": "أدخل اسم دواء كامل",
+  "alternatives": "البدائل",
+  "noInternet": "لا يوجد اتصال بالانترنت",
+  "noInternetText": "يرجى التحقق من اتصالك بالانترنت والمحاوله مره اخري.",
+  "makeSureThatYouPickedAllMealTime": "يرجى التحقق من تحديد جميع الوقتات الغذائية.",
+  "careGiverUid": "رقم تعريف الراعي(اختياري)",
+  "drugBox": "صندوق الأدوية"
 
 }

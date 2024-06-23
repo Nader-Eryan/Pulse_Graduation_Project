@@ -8,6 +8,7 @@ import 'package:pulse/core/utils/service_locator.dart';
 import 'package:pulse/core/widgets/custom_appbar.dart';
 import 'package:pulse/core/widgets/custom_material_button.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:pulse/generated/l10n.dart';
 
 class PillBoxView extends StatelessWidget {
   PillBoxView({super.key});
@@ -15,8 +16,8 @@ class PillBoxView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'drug box',
+      appBar: CustomAppBar(
+        title: S.of(context).drugBox,
       ),
       body: SafeArea(
         child: Padding(
@@ -25,19 +26,19 @@ class PillBoxView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Text(
-                'Open box request:',
+              Text(
+                S.of(context).openBoxRequest,
                 textAlign: TextAlign.start,
                 style: Styles.textStyleBold22,
               ),
               CustomMaterialButton(
-                  text: 'As a patient',
+                  text: S.of(context).asPatient,
                   onPressed: () {
-                    getIt.get<FirebaseDatabase>().ref('box').set({"emb": 1});
+                    getIt.get<FirebaseDatabase>().ref('box').set({"emb": 2});
                   },
                   screenRatio: 0.9),
               CustomMaterialButton(
-                  text: 'As a Care giver',
+                  text: S.of(context).asCareGiver,
                   onPressed: () async {
                     final String uid =
                         getIt.get<FirebaseAuth>().currentUser!.uid;
@@ -50,15 +51,20 @@ class PillBoxView extends StatelessWidget {
                     if (res.exists &&
                         res.data()!['role'] != null &&
                         res.data()!['role'] == 'Care receiver') {
-                      Get.snackbar('Unauthorized edit',
-                          'Change the role in edit profile!');
+                      if (context.mounted) {
+                        Get.snackbar(
+                            S.of(context).activeMedsItemUnauthorizedEdit,
+                            S
+                                .of(context)
+                                .activeMedsItemChangeRoleInEditProfile);
+                      }
                     } else {
                       getIt.get<FirebaseDatabase>().ref('box').set({"emb": 2});
                     }
                   },
                   screenRatio: 0.9),
               CustomMaterialButton(
-                  text: 'Close box',
+                  text: S.of(context).closeBox,
                   onPressed: () {
                     getIt.get<FirebaseDatabase>().ref('box').set({"emb": 0});
                   },

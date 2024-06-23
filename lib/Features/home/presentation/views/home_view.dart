@@ -80,29 +80,6 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(FontAwesomeIcons.magnifyingGlass,
-                          color: Colors.grey, size: 22),
-                      hintText: 'Search for alternatives',
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff407CE2)),
-                        borderRadius: BorderRadius.all(Radius.circular(40)),
-                      ),
-                      contentPadding: EdgeInsets.all(23.0),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xffE4E4E5)),
-                        borderRadius: BorderRadius.all(Radius.circular(40)),
-                      ),
-                    ),
-                    onSubmitted: (value) {
-                      print(value);
-                      isSearched = true;
-                      searchForAlternatives(value);
-                    },
-                  ),
-                  const SizedBox(height: 15.0),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -120,6 +97,29 @@ class _HomeViewState extends State<HomeView> {
                           },
                         ),
                       ]),
+                  const SizedBox(height: 15.0),
+                  TextField(
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(FontAwesomeIcons.magnifyingGlass,
+                          color: Colors.grey, size: 22),
+                      hintText: S.of(context).searchForAlternatives,
+                      border: const OutlineInputBorder(),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff407CE2)),
+                        borderRadius: BorderRadius.all(Radius.circular(40)),
+                      ),
+                      contentPadding: const EdgeInsets.all(23.0),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xffE4E4E5)),
+                        borderRadius: BorderRadius.all(Radius.circular(40)),
+                      ),
+                    ),
+                    onSubmitted: (value) {
+                      //print(value);
+                      isSearched = true;
+                      searchForAlternatives(value);
+                    },
+                  ),
                   const SizedBox(height: 10.0),
                   SizedBox(
                     height: Get.height / 2.5,
@@ -133,8 +133,9 @@ class _HomeViewState extends State<HomeView> {
                                 .get(),
                             builder: (context, snapshot) {
                               if (snapshot.hasError) {
-                                return const Center(
-                                    child: Text('Something went wrong'));
+                                return Center(
+                                  child: Text(S.of(context).somethingWentWrong),
+                                );
                               } else if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
                                 return const Center(
@@ -146,14 +147,15 @@ class _HomeViewState extends State<HomeView> {
                               }
                               try {
                                 if (snapshot.data!['drug_rec'].length < 1) {
-                                  return const Center(
-                                      child: Text('Enter a complete med name',
+                                  return Center(
+                                      child: Text(
+                                          S.of(context).enterACompleteMedName,
                                           style: Styles.textStyleNormal16));
                                 }
                                 return Column(
                                   children: [
                                     Text(
-                                      'Alternatives',
+                                      S.of(context).alternatives,
                                       style: Styles.textStyleMedium18
                                           .copyWith(color: Colors.blue[700]),
                                     ),
@@ -242,20 +244,20 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 }
-                  // ReservedMedicine(
-                  //   isTaken: true,
-                  //   text: S.of(context).paracetamol,
-                  //   image: 'assets/images/tablet.png',
-                  //   medicationTime: S.of(context).medicationTime,
-                  //   date: S.of(context).date,
-                  //   frequency: S.of(context).frequency,
-                  // ),
-                  // SizedBox(height: Get.height * .01),
-                  // ReservedMedicine(
-                  //   isTaken: false,
-                  //   text: S.of(context).paracetamol,
-                  //   image: 'assets/images/tablet.png',
-                  //   medicationTime: S.of(context).medicationTime,
-                  //   date: S.of(context).date,
-                  //   frequency: S.of(context).weekly,
-                  // ),
+// ReservedMedicine(
+//   isTaken: true,
+//   text: S.of(context).paracetamol,
+//   image: 'assets/images/tablet.png',
+//   medicationTime: S.of(context).medicationTime,
+//   date: S.of(context).date,
+//   frequency: S.of(context).frequency,
+// ),
+// SizedBox(height: Get.height * .01),
+// ReservedMedicine(
+//   isTaken: false,
+//   text: S.of(context).paracetamol,
+//   image: 'assets/images/tablet.png',
+//   medicationTime: S.of(context).medicationTime,
+//   date: S.of(context).date,
+//   frequency: S.of(context).weekly,
+// ),
