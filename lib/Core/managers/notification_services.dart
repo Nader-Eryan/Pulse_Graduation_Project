@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:pulse/Core/utils/sql_database.dart';
@@ -8,6 +10,7 @@ class LocalNotificationServices {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   static void onTap(NotificationResponse details) async {
+    await Firebase.initializeApp();
     final payload = details.payload!;
     final parts = payload.split(',');
     final int indexOfScheduled = int.parse(parts[0].trim()); //0
@@ -58,8 +61,9 @@ class LocalNotificationServices {
       //print(details.id);
     } else if (details.actionId == 'will_take_it') {
       //TODO: Will take it
+      FirebaseDatabase.instance.ref('box').set({"emb": 1});
       //getIt.get<FirebaseDatabase>().ref('box').set({"emb": 1});
-      //print('User pressed I will take it');
+      print('User pressed I will take it');
     }
   }
 
