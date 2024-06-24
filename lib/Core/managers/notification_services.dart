@@ -63,7 +63,7 @@ class LocalNotificationServices {
       //TODO: Will take it
       FirebaseDatabase.instance.ref('box').set({"emb": 1});
       //getIt.get<FirebaseDatabase>().ref('box').set({"emb": 1});
-      print('User pressed I will take it');
+      //print('User pressed I will take it');
     }
   }
 

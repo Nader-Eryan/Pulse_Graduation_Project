@@ -95,8 +95,10 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                                   S.of(context).checkYourEmail);
                             });
                           } catch (e) {
-                            Get.snackbar(S.of(context).failedSnackBar,
-                                S.of(context).errorResettingPassword);
+                            if (mounted) {
+                              Get.snackbar(S.of(context).failedSnackBar,
+                                  S.of(context).errorResettingPassword);
+                            }
                           }
                         }
                       },

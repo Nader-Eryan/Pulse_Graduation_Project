@@ -24,7 +24,7 @@ class SqlDb {
   FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     //await db.execute('ALTER TABLE "notes" ADD COLUMN color');
     //db.execute('''CREATE TABLE 'profileImage' ('image' String)''');
-    print('onUpgrade==============================');
+    //print('onUpgrade==============================');
   }
 
   FutureOr<void> _onCreate(Database db, int version) async {
@@ -58,7 +58,7 @@ class SqlDb {
       )
     ''');
     await batch.commit();
-    print('onCreate==============================');
+    //print('onCreate==============================');
   }
 
   readData(String sql) async {
@@ -79,7 +79,7 @@ class SqlDb {
   ) async {
     Database? mydb = await db;
     int response = await mydb!.insert(table, values);
-    print('inserted==================================');
+    //print('inserted==================================');
 
     return response;
   }
@@ -135,12 +135,12 @@ class SqlDb {
         whereArgs: [medId],
       );
       if (response.isNotEmpty) {
-        print('getMedName==================================');
+        // print('getMedName==================================');
         return response.first['name'];
       }
       return null;
     } catch (e) {
-      print("Error getting med name: $e");
+      //print("Error getting med name: $e");
       return null;
     }
   }
@@ -148,7 +148,7 @@ class SqlDb {
   Future<int> insertNotification(NotificationModel notification) async {
     Database? mydb = await db;
     int response = await mydb!.insert('notifications', notification.toMap());
-    print('Notification inserted==================================');
+    //print('Notification inserted==================================');
     return response;
   }
 
@@ -202,7 +202,7 @@ class SqlDb {
       whereArgs: [id],
     );
     if (response.isNotEmpty) {
-      print('getPeriods==================================');
+      //print('getPeriods==================================');
       return response.first['periods'];
     }
     return null;
@@ -215,10 +215,10 @@ class SqlDb {
         'medId': medId,
         'history': history,
       });
-      print('Inserted into medHistory==================================');
+      //print('Inserted into medHistory==================================');
       return response;
     } catch (e) {
-      print("Error inserting into medHistory: $e");
+      //print("Error inserting into medHistory: $e");
       return -1;
     }
   }
@@ -233,12 +233,12 @@ class SqlDb {
         whereArgs: [medId],
       );
       if (response.isNotEmpty) {
-        print('getHistory==================================');
+        //print('getHistory==================================');
         return response.first['history'];
       }
       return null;
     } catch (e) {
-      print("Error getting history: $e");
+      //print("Error getting history: $e");
       return null;
     }
   }
@@ -250,7 +250,7 @@ class SqlDb {
 
       if (currentHistory == null) {
         currentHistory = history;
-        print(currentHistory);
+        //print(currentHistory);
       } else {
         currentHistory += history;
         if (currentHistory.length >= 7) {
@@ -265,10 +265,10 @@ class SqlDb {
         whereArgs: [medId],
       );
 
-      print('updateHistory==================================');
+      //print('updateHistory==================================');
       return response;
     } catch (e) {
-      print("Error updating history: $e");
+      //print("Error updating history: $e");
       return -1;
     }
   }

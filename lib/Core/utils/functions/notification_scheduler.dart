@@ -16,7 +16,7 @@ Future<void> notificationScheduler({
   tz.setLocalLocation(tz.getLocation(currentTimeZone));
   var now = tz.TZDateTime.now(tz.local);
   List<TimeOfDay> listScheduledTime = await fetchTimeFromFirebase();
-  print('listScheduledTime: $listScheduledTime');
+  //print('listScheduledTime: $listScheduledTime');
 
   tz.TZDateTime getConvertedTime(TimeOfDay time) {
     return tz.TZDateTime(
@@ -52,7 +52,7 @@ Future<void> notificationScheduler({
         return;
     }
     while (scheduledDate.isBefore(now.add(const Duration(minutes: 10)))) {
-      print('ScheduledDate: $scheduledDate');
+      //print('ScheduledDate: $scheduledDate');
       NotificationModel notification = NotificationModel(
         medId: medId,
         notificationTime: scheduledDate,
@@ -70,11 +70,11 @@ Future<List<TimeOfDay>> fetchTimeFromFirebase() async {
   DocumentSnapshot docSnapshot = await users.doc(uid).get();
 
   TimeOfDay scheduledTimeBF =
-  TimeOfDay(hour: docSnapshot['bfH'], minute: docSnapshot['bfM']);
+      TimeOfDay(hour: docSnapshot['bfH'], minute: docSnapshot['bfM']);
   TimeOfDay scheduledTimeLU =
-  TimeOfDay(hour: docSnapshot['luH'], minute: docSnapshot['luM']);
+      TimeOfDay(hour: docSnapshot['luH'], minute: docSnapshot['luM']);
   TimeOfDay scheduledTimeDI =
-  TimeOfDay(hour: docSnapshot['diH'], minute: docSnapshot['diM']);
+      TimeOfDay(hour: docSnapshot['diH'], minute: docSnapshot['diM']);
 
   return [scheduledTimeBF, scheduledTimeLU, scheduledTimeDI];
 }

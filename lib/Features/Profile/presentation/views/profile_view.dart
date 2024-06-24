@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,7 +13,6 @@ import 'package:pulse/core/utils/sql_database.dart';
 import 'package:pulse/generated/l10n.dart';
 
 import '../../../../Core/utils/service_locator.dart';
-import 'drug_history.dart';
 import 'profile_edit.dart';
 
 class ProfileView extends StatefulWidget {
@@ -25,10 +23,8 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  String userName = '';
   @override
   void initState() {
-    getUserName();
     super.initState();
   }
 
@@ -43,10 +39,6 @@ class _ProfileViewState extends State<ProfileView> {
           const ProfilePic(),
           SizedBox(
             height: Get.height * .02,
-          ),
-          Text(
-            userName,
-            style: Styles.textStyleSemiBold14,
           ),
           SizedBox(
             height: Get.height * .05,
@@ -133,15 +125,5 @@ class _ProfileViewState extends State<ProfileView> {
         ],
       ),
     );
-  }
-
-  void getUserName() async {
-    final String uid = getIt.get<FirebaseAuth>().currentUser!.uid;
-    final res =
-        await getIt.get<FirebaseFirestore>().collection('users').doc(uid).get();
-    List<String> ls = res.data()!['name'].toString().split(' ');
-    //print(ls);
-    userName = ls[0];
-    setState(() {});
   }
 }

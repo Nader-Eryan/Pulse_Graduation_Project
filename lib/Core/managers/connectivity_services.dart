@@ -27,7 +27,7 @@ class ConnectivityController extends GetxController {
 
   void _updateConnectionStatus(ConnectivityResult result) {
     isConnected.value = result != ConnectivityResult.none;
-    print(isConnected.value);
+    // print(isConnected.value);
   }
 
   @override

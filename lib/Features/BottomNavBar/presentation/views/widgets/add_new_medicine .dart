@@ -188,7 +188,7 @@ class _CustomFloatingActionButtonState
     for (var element in timeController.selectedIndexes) {
       periods += element.toString();
     }
-    print(periods);
+    //print(periods);
     int response = await sqlDb.insert('meds', {
       'name': _nameController.text,
       'type': typeController.chosen,
